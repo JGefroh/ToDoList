@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html data-ng-app="ToDoListApp" manifest="jg_todolist.appcache">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ToDoList</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/query.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/controllers.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+    <style>
+        .inline-button {
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body data-ng-controller="ToDoListController">
+    <div>
+        <div class="container">
+
+            <!--Input Section-->
+            <div class="row">
+                <h1 class="page-header">ToDoList</h1>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    {{ tasks.length }} tasks remaining.
+                    </br>
+                    {{ tasksFinished.length }} tasks finished.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-5">
+                    <div class="form-group">
+                        <label>Task</label>
+                        <input data-ng-model="task.name" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-success inline-button" data-ng-click="addTask(task)">Add Task</button>
+                </div>
+                </div>
+            </div>
+
+            <!--Display Section-->
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1">Action</th>
+                                <th class="col-xs-9">Task</th>
+                                <th class="col-xs-2">Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat='task in tasks'>
+                                <td class="text-center"><button class="btn btn-danger" data-ng-click="removeTask(task)">Finished</button></td>
+                                <td> {{ task.name }}</td>
+                                <td> {{ task.dateAdded.getUTCMonth() + "/" + task.dateAdded.getDay() + "/" + task.dateAdded.getUTCFullYear() + " - " + task.dateAdded.getHours() + ":" + task.dateAdded.getMinutes()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
