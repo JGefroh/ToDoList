@@ -5,3 +5,12 @@
 .badge-tasks-finished {
     background-color: blue;
 }
+
+.task-highlighted {
+    color: red;
+    font-weight: bold;
+}
+
+.table-button {
+    width: 8em;
+}

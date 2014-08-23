@@ -35,7 +35,7 @@
 
             <!--Input Section-->
             <div class="row">
-                <h1 class="page-header">ToDoList</h1>
+                <h1 class="page-header">ToDoList <span class="small">by Joseph Gefroh</span></h1>
             </div>
             <div class="row">
                 <div class="col-xs-12">
@@ -64,15 +64,17 @@
                             <tr>
                                 <th class="col-xs-1">Action</th>
                                 <th class="col-xs-9">Task</th>
-                                <th class="col-xs-2">Date Added</th>
+                                <th class="col-xs-1">Date Added</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat='task in tasks'>
                                 <td class="text-center">
-                                    <button class="btn btn-default btn-xs" data-ng-click="removeTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button>
-                                    <button class="btn btn-default btn-xs" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView"><span class="glyphicon glyphicon-pencil"></span> Edit</button></td>
-                                <td> {{ task.name }}</td>
+                                    <button class="btn btn-default btn-xs table-button" data-ng-click="removeTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button><br />
+                                    <button class="btn btn-default btn-xs table-button" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView"><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
+                                    <button class="btn btn-default btn-xs table-button" data-ng-click="toggleHighlight(task)"><span class="glyphicon glyphicon-heart"></span> Highlight</button>
+                                </td>
+                                <td ng-class="task.isHighlighted ? 'task-highlighted' : ''"> {{ task.name }}</td>
                                 <td> {{ formatDate(task.dateAdded) }}</td>
                             </tr>
                         </tbody>
@@ -98,7 +100,7 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="commitTaskChanges(editedTask)">Save changes</button>
                 </div>
             </div>

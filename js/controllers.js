@@ -36,6 +36,15 @@ toDoListApp.controller('ToDoListController', function ($scope) {
         $scope.editedTask.name = $scope.editedTaskCopy.name;
     }
 
+    $scope.toggleHighlight = function(task) {
+        if (task.isHighlighted === true) {
+            task.isHighlighted = false;
+        }
+        else {
+            task.isHighlighted = true;
+        }
+    }
+
     $scope.formatDate = function (dateToConvert) {
         return dateToConvert.getMonth() + 1 + "/" + dateToConvert.getDate() + "/"
             + dateToConvert.getUTCFullYear() + " - " +dateToConvert.getHours() + ":" + dateToConvert.getMinutes()
