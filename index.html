@@ -67,7 +67,7 @@
                                 <th class="col-xs-9">Task</th>
                                 <th class="col-xs-1">Date Added</th>
                                 <th class="col-xs-1">Date Completed</th>
-                                <th class="col-xs-1">Hours Taken</th>
+                                <th class="col-xs-1">Hours Tracked</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -75,7 +75,7 @@
                                 <td> {{ task.name }}</td>
                                 <td> {{ formatDate(task.dateAdded) }}</td>
                                 <td> {{ formatDate(task.dateCompleted) }}</td>
-                                <td> {{ getDifferenceInHours(task.dateCompleted, task.dateAdded) }} </td>
+                                <td> {{ task.totalTimeTaken.toFixed(2) }} </td>
                             </tr>
                             </tbody>
                         </table>
@@ -93,18 +93,20 @@
                                     <th class="col-xs-1">Action</th>
                                     <th class="col-xs-9">Task</th>
                                     <th class="col-xs-1">Date Added</th>
+                                    <th class="col-xs-1">Total Hours</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat='task in tasks'>
                                     <td class="text-center">
-                                        <button class="btn btn-default btn-xs table-button" data-ng-click="removeTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button><br />
+                                        <button class="btn btn-default btn-xs table-button" data-ng-click="finishTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button><br />
                                         <hr class="table-button-separator">
                                         <button class="btn btn-default btn-xs table-button" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView"><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
-                                        <button class="btn btn-default btn-xs table-button" data-ng-click="toggleHighlight(task)"><span class="glyphicon glyphicon-heart"></span> Highlight</button>
+                                        <button class="btn btn-default btn-xs table-button" data-ng-click="toggleTracking(task)"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
                                     </td>
-                                    <td data-ng-class="task.isHighlighted ? 'task-highlighted' : ''"> {{ task.name }}</td>
+                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }}</td>
                                     <td> {{ formatDate(task.dateAdded) }}</td>
+                                    <td> {{ task.totalTimeTaken.toFixed(2) }}</td>
                                 </tr>
                             </tbody>
                         </table>

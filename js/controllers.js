@@ -16,17 +16,18 @@ toDoListApp.controller('ToDoListController', function ($scope) {
         }
         var newTask = angular.copy(task);
         newTask.dateAdded = new Date();
+        newTask.totalTimeTaken = 0;
         $scope.tasks.push(newTask);
         $scope.task = undefined;
     };
 
-    $scope.removeTask = function(task) {
+    $scope.finishTask = function(task) {
         var indexOfTask = $scope.tasks.indexOf(task);
         if (indexOfTask < 0) {
             return;
         }
-
         task.dateCompleted = new Date();
+        stopTracking(task);
 
         $scope.tasks.splice(indexOfTask, 1);
         $scope.tasksFinished.push(task);
@@ -41,13 +42,26 @@ toDoListApp.controller('ToDoListController', function ($scope) {
         $scope.editedTask.name = $scope.editedTaskCopy.name;
     }
 
-    $scope.toggleHighlight = function(task) {
-        if (task.isHighlighted === true) {
-            task.isHighlighted = false;
+    $scope.toggleTracking = function(task) {
+        if (task.isTracking === true) {
+            stopTracking(task);
         }
         else {
-            task.isHighlighted = true;
+            startTracking(task);
         }
+    }
+    function startTracking(task) {
+        task.timeTrackingStarted = new Date();
+        task.isTracking = true;
+    }
+
+    function stopTracking(task) {
+        if (typeof task.timeTrackingStarted === 'undefined') {
+            return;
+        }
+        task.totalTimeTaken += parseFloat(($scope.getDifferenceInHours(task.timeTrackingStarted, new Date())));
+        task.timeTrackingStarted = undefined;
+        task.isTracking = false;
     }
 
     $scope.formatDate = function (dateToConvert) {
@@ -57,7 +71,7 @@ toDoListApp.controller('ToDoListController', function ($scope) {
 
     $scope.getDifferenceInHours = function (dateOne, dateTwo) {
         var timeDifference = Math.abs(dateOne.getTime() - dateTwo.getTime());
-        return (Math.round(timeDifference / 60000) / 60).toFixed(2);
+        return (Math.round(timeDifference / 60000) / 60);
     }
 
     $scope.showTasksRemaining = function() {
