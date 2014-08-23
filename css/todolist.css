@@ -14,3 +14,8 @@
 .table-button {
     width: 8em;
 }
+
+.table-button-separator {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}

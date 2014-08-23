@@ -39,8 +39,8 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <span class="badge badge-tasks-remaining">{{ tasks.length }} tasks remaining.</span>
-                    <span class="badge badge-tasks-finished">{{ tasksFinished.length }} tasks completed.</span>
+                    <button class="btn btn-link" data-ng-click="showTasksRemaining()"><span class="badge badge-tasks-remaining">{{ tasks.length }} tasks remaining.</span></button>
+                    <button class="btn btn-link" data-ng-click="showTasksCompleted()"><span class="badge badge-tasks-finished">{{ tasksFinished.length }} tasks completed.</span></button>
                 </div>
             </div>
             <div class="row">
@@ -51,36 +51,67 @@
                     </div>
                 </div>
                 <div class="col-xs-1">
-                    <button class="btn btn-success inline-button" data-ng-click="addTask(task)"><span class="glyphicon glyphicon-plus"></span> Add Task</button>
+                    <button class="btn btn-success inline-button" data-ng-click="addTask(task); showTasksRemaining()"><span class="glyphicon glyphicon-plus"></span> Add Task</button>
                 </div>
                 </div>
             </div>
 
-            <!--Display Section-->
-            <div class="row">
-                <div class="col-xs-12">
-                    <table class="table table-bordered">
-                        <thead>
+
+            <!--Display Section (Completed tasks)-->
+            <div data-ng-class="currentTable === TABLE_TASKS_COMPLETED ? '' : 'hidden'">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table table-bordered">
+                            <thead>
                             <tr>
-                                <th class="col-xs-1">Action</th>
                                 <th class="col-xs-9">Task</th>
                                 <th class="col-xs-1">Date Added</th>
+                                <th class="col-xs-1">Date Completed</th>
+                                <th class="col-xs-1">Hours Taken</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat='task in tasks'>
-                                <td class="text-center">
-                                    <button class="btn btn-default btn-xs table-button" data-ng-click="removeTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button><br />
-                                    <button class="btn btn-default btn-xs table-button" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView"><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
-                                    <button class="btn btn-default btn-xs table-button" data-ng-click="toggleHighlight(task)"><span class="glyphicon glyphicon-heart"></span> Highlight</button>
-                                </td>
-                                <td ng-class="task.isHighlighted ? 'task-highlighted' : ''"> {{ task.name }}</td>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat='task in tasksFinished'>
+                                <td> {{ task.name }}</td>
                                 <td> {{ formatDate(task.dateAdded) }}</td>
+                                <td> {{ formatDate(task.dateCompleted) }}</td>
+                                <td> {{ getDifferenceInHours(task.dateCompleted, task.dateAdded) }} </td>
                             </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+            <!--Display Section (Remaining tasks)-->
+            <div data-ng-class="currentTable === TABLE_TASKS_REMAINING ? '' : 'hidden'">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-1">Action</th>
+                                    <th class="col-xs-9">Task</th>
+                                    <th class="col-xs-1">Date Added</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat='task in tasks'>
+                                    <td class="text-center">
+                                        <button class="btn btn-default btn-xs table-button" data-ng-click="removeTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button><br />
+                                        <hr class="table-button-separator">
+                                        <button class="btn btn-default btn-xs table-button" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView"><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
+                                        <button class="btn btn-default btn-xs table-button" data-ng-click="toggleHighlight(task)"><span class="glyphicon glyphicon-heart"></span> Highlight</button>
+                                    </td>
+                                    <td data-ng-class="task.isHighlighted ? 'task-highlighted' : ''"> {{ task.name }}</td>
+                                    <td> {{ formatDate(task.dateAdded) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

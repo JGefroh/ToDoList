@@ -4,6 +4,9 @@
 var toDoListApp = angular.module('ToDoListApp', []);
 
 toDoListApp.controller('ToDoListController', function ($scope) {
+    $scope.TABLE_TASKS_REMAINING = "tasksRemainingView";
+    $scope.TABLE_TASKS_COMPLETED = "tasksCompletedView";
+    $scope.currentTable = $scope.TABLE_TASKS_REMAINING;
     $scope.tasks = [];
     $scope.tasksFinished = [];
 
@@ -22,6 +25,8 @@ toDoListApp.controller('ToDoListController', function ($scope) {
         if (indexOfTask < 0) {
             return;
         }
+
+        task.dateCompleted = new Date();
 
         $scope.tasks.splice(indexOfTask, 1);
         $scope.tasksFinished.push(task);
@@ -47,6 +52,20 @@ toDoListApp.controller('ToDoListController', function ($scope) {
 
     $scope.formatDate = function (dateToConvert) {
         return dateToConvert.getMonth() + 1 + "/" + dateToConvert.getDate() + "/"
-            + dateToConvert.getUTCFullYear() + " - " +dateToConvert.getHours() + ":" + dateToConvert.getMinutes()
+            + dateToConvert.getUTCFullYear() + " - " +dateToConvert.getHours() + ":" + (dateToConvert.getMinutes() < 10 ? "0" + dateToConvert.getMinutes(): dateToConvert.getMinutes());
+    }
+
+    $scope.getDifferenceInHours = function (dateOne, dateTwo) {
+        var timeDifference = Math.abs(dateOne.getTime() - dateTwo.getTime());
+        return (Math.round(timeDifference / 60000) / 60).toFixed(2);
+    }
+
+    $scope.showTasksRemaining = function() {
+        $scope.currentTable = $scope.TABLE_TASKS_REMAINING;
+
+    }
+
+    $scope.showTasksCompleted = function() {
+        $scope.currentTable = $scope.TABLE_TASKS_COMPLETED;
     }
 });
