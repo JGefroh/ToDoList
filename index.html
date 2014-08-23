@@ -8,7 +8,8 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/query.min.js"></script>
+    <link href="css/todolist.css" rel="stylesheet">
+    <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/controllers.js"></script>
@@ -38,9 +39,8 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    {{ tasks.length }} tasks remaining.
-                    </br>
-                    {{ tasksFinished.length }} tasks finished.
+                    <span class="badge badge-tasks-remaining">{{ tasks.length }} tasks remaining.</span>
+                    <span class="badge badge-tasks-finished">{{ tasksFinished.length }} tasks completed.</span>
                 </div>
             </div>
             <div class="row">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col-xs-1">
-                    <button class="btn btn-success inline-button" data-ng-click="addTask(task)">Add Task</button>
+                    <button class="btn btn-success inline-button" data-ng-click="addTask(task)"><span class="glyphicon glyphicon-plus"></span> Add Task</button>
                 </div>
                 </div>
             </div>
@@ -69,12 +69,37 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat='task in tasks'>
-                                <td class="text-center"><button class="btn btn-danger" data-ng-click="removeTask(task)">Finished</button></td>
+                                <td class="text-center">
+                                    <button class="btn btn-default btn-xs" data-ng-click="removeTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button>
+                                    <button class="btn btn-default btn-xs" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView"><span class="glyphicon glyphicon-pencil"></span> Edit</button></td>
                                 <td> {{ task.name }}</td>
-                                <td> {{ task.dateAdded.getUTCMonth() + "/" + task.dateAdded.getDay() + "/" + task.dateAdded.getUTCFullYear() + " - " + task.dateAdded.getHours() + ":" + task.dateAdded.getMinutes()}}</td>
+                                <td> {{ formatDate(task.dateAdded) }}</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="editTaskView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Edit Task</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label>Task</label>
+                            <input data-ng-model="editedTaskCopy.name" class="form-control"/>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="commitTaskChanges(editedTask)">Save changes</button>
                 </div>
             </div>
         </div>

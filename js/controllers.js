@@ -26,4 +26,18 @@ toDoListApp.controller('ToDoListController', function ($scope) {
         $scope.tasks.splice(indexOfTask, 1);
         $scope.tasksFinished.push(task);
     }
+
+    $scope.editTask = function(task) {
+        $scope.editedTaskCopy = angular.copy(task);
+        $scope.editedTask = task;
+    }
+
+    $scope.commitTaskChanges = function(task) {
+        $scope.editedTask.name = $scope.editedTaskCopy.name;
+    }
+
+    $scope.formatDate = function (dateToConvert) {
+        return dateToConvert.getMonth() + 1 + "/" + dateToConvert.getDate() + "/"
+            + dateToConvert.getUTCFullYear() + " - " +dateToConvert.getHours() + ":" + dateToConvert.getMinutes()
+    }
 });
