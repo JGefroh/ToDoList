@@ -53,6 +53,9 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
         task.isHidden = true;
         stopTracking(task);
         $timeout(function () {
+            if ($scope.tasksFinished.indexOf(task) != -1) {
+                return;
+            }
             $scope.tasks.splice(indexOfTask, 1);
             $scope.tasksFinished.push(task);
         }, 250);
