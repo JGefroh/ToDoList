@@ -50,6 +50,7 @@ toDoListApp.controller('ToDoListController', function ($scope) {
             startTracking(task);
         }
     }
+
     function startTracking(task) {
         task.timeTrackingStarted = new Date();
         task.isTracking = true;

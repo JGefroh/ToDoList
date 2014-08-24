@@ -39,8 +39,14 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-link" data-ng-click="showTasksRemaining()"><span class="badge badge-tasks-remaining">{{ tasks.length }} tasks remaining.</span></button>
-                    <button class="btn btn-link" data-ng-click="showTasksCompleted()"><span class="badge badge-tasks-finished">{{ tasksFinished.length }} tasks completed.</span></button>
+                    <button class="btn btn-danger" data-ng-click="showTasksRemaining()">
+                        <span class="glyphicon glyphicon-tasks"></span>
+                        Show Remaining <span class="badge">{{ tasks.length }}</span>
+                    </button>
+                    <button class="btn btn-primary" data-ng-click="showTasksCompleted()">
+                        <span class="glyphicon glyphicon-check"></span>
+                        Show Completed  <span class="badge">{{ tasksFinished.length }}</span>
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -93,13 +99,13 @@
                                     <th class="col-xs-1">Action</th>
                                     <th class="col-xs-9">Task</th>
                                     <th class="col-xs-1">Date Added</th>
-                                    <th class="col-xs-1">Total Hours</th>
+                                    <th class="col-xs-1">Hours Tracked</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat='task in tasks'>
                                     <td class="text-center">
-                                        <button class="btn btn-default btn-xs table-button" data-ng-click="finishTask(task)"><span class="glyphicon glyphicon-check"></span> Finish</button><br />
+                                        <button class="btn btn-default btn-xs table-button" data-ng-click="finishTask(task)"><span class="glyphicon glyphicon-ok"></span> Finish</button><br />
                                         <hr class="table-button-separator">
                                         <button class="btn btn-default btn-xs table-button" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView"><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
                                         <button class="btn btn-default btn-xs table-button" data-ng-click="toggleTracking(task)"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
