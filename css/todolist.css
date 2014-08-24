@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 .badge-tasks-remaining {
     background-color: red;
 }
