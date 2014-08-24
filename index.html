@@ -91,7 +91,7 @@
                                 <td> {{ task.name }}</td>
                                 <td> {{ formatDate(task.dateAdded) }}</td>
                                 <td> {{ formatDate(task.dateCompleted) }}</td>
-                                <td> {{ task.totalTimeTaken.toFixed(2) }} </td>
+                                <td> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }} </td>
                             </tr>
                             </tbody>
                         </table>
@@ -127,7 +127,7 @@
                                     </td>
                                     <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }}</td>
                                     <td> {{ formatDate(task.dateAdded) }}</td>
-                                    <td> {{ task.totalTimeTaken.toFixed(2) }}</td>
+                                    <td> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }}</td>
                                 </tr>
                             </tbody>
                         </table>

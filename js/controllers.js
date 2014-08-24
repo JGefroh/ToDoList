@@ -10,6 +10,25 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     $scope.tasks = [];
     $scope.tasksFinished = [];
 
+    updateTimeTracked();
+    var timesUpdated = 0;
+
+    function updateTimeTracked() {
+        timesUpdated++;
+        for (var objectIndex = 0; objectIndex < $scope.tasks.length; objectIndex++) {
+            var task = $scope.tasks[objectIndex];
+            if (task.isTracking === true) {
+                stopTracking(task);
+                startTracking(task);
+            }
+        }
+
+        var trackingUpdateTimer = $timeout(function () {
+            $timeout.cancel(trackingUpdateTimer);
+            updateTimeTracked();
+        }, 30000);
+    }
+
     $scope.addTask = function (task) {
         if (typeof task === 'undefined') {
             return;
@@ -67,7 +86,7 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
         if (typeof task.timeTrackingStarted === 'undefined') {
             return;
         }
-        task.totalTimeTaken += parseFloat(($scope.getDifferenceInHours(task.timeTrackingStarted, new Date())));
+        task.totalTimeTaken += $scope.getDifferenceInMS(task.timeTrackingStarted, new Date());
         task.timeTrackingStarted = undefined;
         task.isTracking = false;
     }
@@ -77,9 +96,9 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
             + dateToConvert.getUTCFullYear() + " - " +dateToConvert.getHours() + ":" + (dateToConvert.getMinutes() < 10 ? "0" + dateToConvert.getMinutes(): dateToConvert.getMinutes());
     }
 
-    $scope.getDifferenceInHours = function (dateOne, dateTwo) {
+    $scope.getDifferenceInMS = function (dateOne, dateTwo) {
         var timeDifference = Math.abs(dateOne.getTime() - dateTwo.getTime());
-        return (Math.round(timeDifference / 60000) / 60);
+        return timeDifference;
     }
 
     $scope.showTasksRemaining = function() {
@@ -89,5 +108,9 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
 
     $scope.showTasksCompleted = function() {
         $scope.currentTable = $scope.TABLE_TASKS_COMPLETED;
+    }
+
+    $scope.convertMSToHours = function(time) {
+        return (Math.round(time / 60000) / 60);
     }
 });
