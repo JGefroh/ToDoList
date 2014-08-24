@@ -118,7 +118,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat='task in tasks'>
+                                <tr ng-repeat='task in tasks' class="{{task.isHidden === true ? 'hide-row' : 'show-row'}}">
                                     <td class="text-center">
                                         <button class="btn btn-default btn-xs table-button" data-ng-click="finishTask(task)" title="Mark this task as completed."><span class="glyphicon glyphicon-ok"></span> Complete</button><br />
                                         <hr class="table-button-separator">

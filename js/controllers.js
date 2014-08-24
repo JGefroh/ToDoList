@@ -3,7 +3,7 @@
  */
 var toDoListApp = angular.module('ToDoListApp', []);
 
-toDoListApp.controller('ToDoListController', function ($scope) {
+toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     $scope.TABLE_TASKS_REMAINING = "tasksRemainingView";
     $scope.TABLE_TASKS_COMPLETED = "tasksCompletedView";
     $scope.currentTable = $scope.TABLE_TASKS_REMAINING;
@@ -17,7 +17,11 @@ toDoListApp.controller('ToDoListController', function ($scope) {
         var newTask = angular.copy(task);
         newTask.dateAdded = new Date();
         newTask.totalTimeTaken = 0;
+        newTask.isHidden = true;
         $scope.tasks.push(newTask);
+        $timeout(function () {
+            newTask.isHidden = false;
+        }, 20);
         $scope.task = undefined;
     };
 
@@ -27,10 +31,13 @@ toDoListApp.controller('ToDoListController', function ($scope) {
             return;
         }
         task.dateCompleted = new Date();
+        task.isHidden = true;
         stopTracking(task);
+        $timeout(function () {
+            $scope.tasks.splice(indexOfTask, 1);
+            $scope.tasksFinished.push(task);
+        }, 250);
 
-        $scope.tasks.splice(indexOfTask, 1);
-        $scope.tasksFinished.push(task);
     }
 
     $scope.editTask = function(task) {

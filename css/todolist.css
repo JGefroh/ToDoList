@@ -19,3 +19,14 @@
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
+.hide-row {
+    opacity: 0;
+    transition-property: all;
+    transition-duration: 0.25s;
+}
+.show-row {
+    opacity: 100;
+    transition-property: all;
+    transition-duration: 0.25s;
+}
