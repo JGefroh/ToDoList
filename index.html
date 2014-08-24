@@ -27,6 +27,10 @@
         .inline-button {
             margin-top: 24px;
         }
+
+        .navigation-button {
+            margin-left: 4px;
+        }
     </style>
 </head>
 <body data-ng-controller="ToDoListController">
@@ -39,35 +43,22 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-danger" data-ng-click="showTasksRemaining()"
-                            title="Show the list of incomplete tasks.">
-                        <span class="glyphicon glyphicon-tasks"></span>
-                        Show Remaining <span class="badge">{{ tasks.length }}</span>
-                    </button>
-                    <button class="btn btn-primary" data-ng-click="showTasksCompleted()"
+                    <button class="btn btn-primary pull-right navigation-button" data-ng-click="showTasksCompleted()"
                             title="Show the list of completed tasks.">
                         <span class="glyphicon glyphicon-check"></span>
                         Show Completed  <span class="badge">{{ tasksFinished.length }}</span>
                     </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-5">
-                    <div class="form-group">
-                        <label>Task</label>
-                        <input data-ng-model="task.name" class="form-control"/>
-                    </div>
-                </div>
-                <div class="col-xs-1">
-                    <button class="btn btn-success inline-button" data-ng-click="addTask(task); showTasksRemaining()"
-                            title="Add a new task to the To Do List.">
-                        <span class="glyphicon glyphicon-plus"></span> Add Task
+                    <button class="btn btn-danger pull-right" data-ng-click="showTasksRemaining()"
+                            title="Show the list of incomplete tasks.">
+                        <span class="glyphicon glyphicon-tasks"></span>
+                        Show Remaining <span class="badge">{{ tasks.length }}</span>
                     </button>
                 </div>
-                </div>
             </div>
+        </div>
 
 
+        <div class="container">
             <!--Display Section (Completed tasks)-->
             <div data-ng-class="currentTable === TABLE_TASKS_COMPLETED ? '' : 'hidden'">
                 <div class="row">
@@ -81,17 +72,17 @@
                             <thead>
                             <tr>
                                 <th class="col-xs-9">Task</th>
-                                <th class="col-xs-1">Date Added</th>
-                                <th class="col-xs-1">Date Completed</th>
-                                <th class="col-xs-1">Hours Tracked</th>
+                                <th class="col-xs-1 text-center">Time Added</th>
+                                <th class="col-xs-1 text-center">Time Completed</th>
+                                <th class="col-xs-1 text-center">Hours Tracked</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat='task in tasksFinished'>
                                 <td> {{ task.name }}</td>
-                                <td> {{ formatDate(task.dateAdded) }}</td>
-                                <td> {{ formatDate(task.dateCompleted) }}</td>
-                                <td> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }} </td>
+                                <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
+                                <td class="text-center"> {{ formatDate(task.dateCompleted) }}</td>
+                                <td class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }} </td>
                             </tr>
                             </tbody>
                         </table>
@@ -106,15 +97,31 @@
                         <h3>Remaining Tasks<span class="small"> - tasks that you have not yet completed.</span></h3>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="form-group">
+                            <label>Task</label>
+                            <input data-ng-model="task.name" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <button class="btn btn-success inline-button" data-ng-click="addTask(task)"
+                                title="Add a new task to the To Do List.">
+                            <span class="glyphicon glyphicon-plus"></span> Add Task
+                        </button>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-xs-12">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="col-xs-1">Action</th>
+                                    <th class="col-xs-1 text-center">Action</th>
                                     <th class="col-xs-9">Task</th>
-                                    <th class="col-xs-1">Date Added</th>
-                                    <th class="col-xs-1">Hours Tracked</th>
+                                    <th class="col-xs-1 text-center">Time Added</th>
+                                    <th class="col-xs-1 text-center">Hours Tracked</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -126,15 +133,14 @@
                                         <button class="btn btn-default btn-xs table-button" data-ng-click="toggleTracking(task)" title="{{ task.isTracking === true ? 'Stop the timer for this task.' : 'Start a timer for this task.'}}"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
                                     </td>
                                     <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }}</td>
-                                    <td> {{ formatDate(task.dateAdded) }}</td>
-                                    <td> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }}</td>
+                                    <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
+                                    <td class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 

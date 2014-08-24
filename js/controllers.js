@@ -92,8 +92,7 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     }
 
     $scope.formatDate = function (dateToConvert) {
-        return dateToConvert.getMonth() + 1 + "/" + dateToConvert.getDate() + "/"
-            + dateToConvert.getUTCFullYear() + " - " +dateToConvert.getHours() + ":" + (dateToConvert.getMinutes() < 10 ? "0" + dateToConvert.getMinutes(): dateToConvert.getMinutes());
+        return dateToConvert.getHours() + ":" + (dateToConvert.getMinutes() < 10 ? "0" + dateToConvert.getMinutes(): dateToConvert.getMinutes());
     }
 
     $scope.getDifferenceInMS = function (dateOne, dateTwo) {
