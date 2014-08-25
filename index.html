@@ -99,14 +99,14 @@
                             <thead>
                                 <tr>
                                     <th class="col-xs-1 text-center">Action</th>
-                                    <th class="col-xs-8">Task</th>
-                                    <th class="col-xs-1 text-center">Group</th>
-                                    <th class="col-xs-1 text-center">Time Added</th>
-                                    <th class="col-xs-1 text-center">Hours Tracked</th>
+                                    <th class="col-xs-8" data-ng-click="sort_field_remaining = 'name'; sort_reverse_remaining = !sort_reverse_remaining">Task <span class="{{sort_field_remaining === 'name' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_remaining = 'group'; sort_reverse_remaining = !sort_reverse_remaining">Group <span class="{{sort_field_remaining === 'group' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_remaining = 'dateAdded'; sort_reverse_remaining = !sort_reverse_remaining">Time Added <span class="{{sort_field_remaining === 'dateAdded' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_remaining = 'totalTimeTaken'; sort_reverse_remaining = !sort_reverse_remaining">Hours Tracked <span class="{{sort_field_remaining === 'totalTimeTaken' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat='task in tasks' class="{{task.isHidden === true ? 'hide-row' : 'show-row'}}">
+                                <tr ng-repeat='task in tasks | orderBy:sort_field_remaining:sort_reverse_remaining' class="{{task.isHidden === true ? 'hide-row' : 'show-row'}}">
                                     <td class="text-center">
                                         <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="finishTask(task)" title="Mark this task as completed."><span class="glyphicon glyphicon-ok"></span> Complete</button><br />
                                         <hr class="table-button-separator">
@@ -138,15 +138,15 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th class="col-xs-9">Task</th>
-                                <th class="col-xs-1 text-center">Group</th>
-                                <th class="col-xs-1 text-center">Time Added</th>
-                                <th class="col-xs-1 text-center">Time Completed</th>
-                                <th class="col-xs-1 text-center">Hours Tracked</th>
+                                <th class="col-xs-9" data-ng-click="sort_field_finished = 'name'; sort_reverse_finished = !sort_reverse_finished">Task <span class="{{sort_field_finished === 'name' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'group'; sort_reverse_finished = !sort_reverse_finished">Group <span class="{{sort_field_finished === 'group' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'dateAdded'; sort_reverse_finished = !sort_reverse_finished">Time Added <span class="{{sort_field_finished === 'dateAdded' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'dateCompleted'; sort_reverse_finished = !sort_reverse_finished">Time Completed <span class="{{sort_field_finished === 'dateCompleted' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'totalTimeTaken'; sort_reverse_finished = !sort_reverse_finished">Hours Tracked <span class="{{sort_field_finished === 'totalTimeTaken' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat='task in tasksFinished'>
+                            <tr ng-repeat='task in tasksFinished | orderBy:sort_field_finished:sort_reverse_finished'>
                                 <td> {{ task.name }}</td>
                                 <td class="text-center"> {{ task.group }}</td>
                                 <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
@@ -174,15 +174,19 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th class="col-xs-9">Group</th>
-                                    <th class="col-xs-1 text-center">Number of Tasks</th>
-                                    <th class="col-xs-1 text-center">Total Time Tracked</th>
+                                    <th class="col-xs-9" data-ng-click="sort_field_stats = 'group'; sort_reverse_stats = !sort_reverse_stats">Group <span class="{{sort_field_stats === 'group' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'taskCount'; sort_reverse_stats = !sort_reverse_stats"># Tasks <span class="{{sort_field_stats === 'taskCount' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'remainingCount'; sort_reverse_stats = !sort_reverse_stats"># Remaining <span class="{{sort_field_stats === 'remainingCount' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'completedCount'; sort_reverse_stats = !sort_reverse_stats"># Completed <span class="{{sort_field_stats === 'completedCount' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
+                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'totalTimeTaken'; sort_reverse_stats = !sort_reverse_stats">Total Hours Tracked <span class="{{sort_field_stats === 'totalTimeTaken' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="groupStat in groupStats | orderBy:'group'">
+                                <tr ng-repeat="groupStat in groupStats | orderBy:sort_field_stats:sort_reverse_stats">
                                     <td> {{ groupStat.group }}</td>
                                     <td class="text-center"> {{ groupStat.taskCount }}</td>
+                                    <td class="text-center"> {{ groupStat.remainingCount }}</td>
+                                    <td class="text-center"> {{ groupStat.completedCount }}</td>
                                     <td class="text-right"> {{ convertMSToHours(groupStat.totalTimeTaken).toFixed(2) }} </td>
                                 </tr>
                             </tbody>

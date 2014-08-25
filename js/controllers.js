@@ -94,11 +94,14 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
             groupStat.group = $scope.usedGroups[index];
             groupStat.taskCount = 0;
             groupStat.totalTimeTaken = 0;
+            groupStat.completedCount = 0;
+            groupStat.remainingCount = 0;
             for (index2 = 0; index2 < $scope.tasksFinished.length; index2++) {
                 var currentTask = $scope.tasksFinished[index2];
                 if (currentTask.group === groupStat.group) {
                     groupStat.taskCount++;
                     groupStat.totalTimeTaken += currentTask.totalTimeTaken;
+                    groupStat.completedCount++;
                 }
             }
             for (index3 = 0; index3 < $scope.tasks.length; index3++) {
@@ -106,6 +109,7 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
                 if (currentTask.group === groupStat.group) {
                     groupStat.taskCount++;
                     groupStat.totalTimeTaken += currentTask.totalTimeTaken;
+                    groupStat.remainingCount++;
                 }
             }
             $scope.groupStats.push(groupStat);
