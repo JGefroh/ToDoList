@@ -34,3 +34,8 @@ html {
     transition-property: all;
     transition-duration: 0.25s;
 }
+
+
+td {
+    word-wrap: break-word;
+}
