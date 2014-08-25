@@ -79,6 +79,12 @@
                             <input data-ng-model="task.name" class="form-control" placeholder="Enter your task name or description..."/>
                         </div>
                     </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <label>Group</label>
+                            <input data-ng-model="task.group" class="form-control" placeholder="Enter a group name for this task..."/>
+                        </div>
+                    </div>
                     <div class="col-xs-1">
                         <button class="btn btn-success inline-button" data-ng-click="addTask(task)"
                                 title="Add a new task to the To Do List.">
@@ -107,10 +113,10 @@
                                         <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView" title="Edit the details of this task."><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
                                         <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="toggleTracking(task)" title="{{ task.isTracking === true ? 'Stop the timer for this task.' : 'Start a timer for this task.'}}"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
                                     </td>
-                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }}
-                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''; 'text-center'"> {{ task.group }}</td>
-                                    <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
-                                    <td class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }}</td>
+                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }} </td>
+                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''" class="text-center"> {{ task.group }}</td>
+                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''" class="text-center"> {{ formatDate(task.dateAdded) }}</td>
+                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''" class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
