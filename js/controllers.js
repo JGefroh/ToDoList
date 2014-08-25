@@ -2,16 +2,23 @@
  * Created by Joseph on 8/16/2014.
  */
 var toDoListApp = angular.module('ToDoListApp', []);
-
 toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
+
     $scope.TABLE_TASKS_REMAINING = "tasksRemainingView";
     $scope.TABLE_TASKS_COMPLETED = "tasksCompletedView";
     $scope.currentTable = $scope.TABLE_TASKS_REMAINING;
     $scope.tasks = [];
     $scope.tasksFinished = [];
 
+    initializePageLeaveWarning();
     updateTimeTracked();
     var timesUpdated = 0;
+
+    function initializePageLeaveWarning() {
+        window.onbeforeunload = function() {
+            return 'Are you sure you want to leave this page? Your tasks will not be saved.';
+        };
+    }
 
     function updateTimeTracked() {
         timesUpdated++;
