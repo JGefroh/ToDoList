@@ -127,10 +127,10 @@
                             <tbody>
                                 <tr ng-repeat='task in tasks' class="{{task.isHidden === true ? 'hide-row' : 'show-row'}}">
                                     <td class="text-center">
-                                        <button class="btn btn-default btn-xs table-button" data-ng-click="finishTask(task)" title="Mark this task as completed."><span class="glyphicon glyphicon-ok"></span> Complete</button><br />
+                                        <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="finishTask(task)" title="Mark this task as completed."><span class="glyphicon glyphicon-ok"></span> Complete</button><br />
                                         <hr class="table-button-separator">
-                                        <button class="btn btn-default btn-xs table-button" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView" title="Edit the details of this task."><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
-                                        <button class="btn btn-default btn-xs table-button" data-ng-click="toggleTracking(task)" title="{{ task.isTracking === true ? 'Stop the timer for this task.' : 'Start a timer for this task.'}}"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
+                                        <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView" title="Edit the details of this task."><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
+                                        <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="toggleTracking(task)" title="{{ task.isTracking === true ? 'Stop the timer for this task.' : 'Start a timer for this task.'}}"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
                                     </td>
                                     <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }}</td>
                                     <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
