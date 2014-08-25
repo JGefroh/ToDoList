@@ -43,6 +43,11 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
+                    <button class="btn btn-info pull-right pull-right navigation-button" data-ng-click="showStats()"
+                            title="Show statistics about your To Do List.">
+                        <span class="glyphicon glyphicon-stats"></span>
+                        Show Stats
+                    </button>
                     <button class="btn btn-primary pull-right navigation-button" data-ng-click="showTasksCompleted()"
                             title="Show the list of completed tasks.">
                         <span class="glyphicon glyphicon-check"></span>
@@ -59,37 +64,6 @@
 
 
         <div class="container">
-            <!--Display Section (Completed tasks)-->
-            <div data-ng-class="currentTable === TABLE_TASKS_COMPLETED ? '' : 'hidden'">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Completed Tasks<span class="small"> - tasks that you have completed.</span></h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th class="col-xs-9">Task</th>
-                                <th class="col-xs-1 text-center">Time Added</th>
-                                <th class="col-xs-1 text-center">Time Completed</th>
-                                <th class="col-xs-1 text-center">Hours Tracked</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat='task in tasksFinished'>
-                                <td> {{ task.name }}</td>
-                                <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
-                                <td class="text-center"> {{ formatDate(task.dateCompleted) }}</td>
-                                <td class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }} </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
             <!--Display Section (Remaining tasks)-->
             <div data-ng-class="currentTable === TABLE_TASKS_REMAINING ? '' : 'hidden'">
                 <div class="row">
@@ -102,7 +76,7 @@
                     <div class="col-xs-5">
                         <div class="form-group">
                             <label>Task</label>
-                            <input data-ng-model="task.name" class="form-control"/>
+                            <input data-ng-model="task.name" class="form-control" placeholder="Enter your task name or description..."/>
                         </div>
                     </div>
                     <div class="col-xs-1">
@@ -119,7 +93,8 @@
                             <thead>
                                 <tr>
                                     <th class="col-xs-1 text-center">Action</th>
-                                    <th class="col-xs-9">Task</th>
+                                    <th class="col-xs-8">Task</th>
+                                    <th class="col-xs-1 text-center">Group</th>
                                     <th class="col-xs-1 text-center">Time Added</th>
                                     <th class="col-xs-1 text-center">Hours Tracked</th>
                                 </tr>
@@ -132,9 +107,77 @@
                                         <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView" title="Edit the details of this task."><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
                                         <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="toggleTracking(task)" title="{{ task.isTracking === true ? 'Stop the timer for this task.' : 'Start a timer for this task.'}}"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
                                     </td>
-                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }}</td>
+                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }}
+                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''; 'text-center'"> {{ task.group }}</td>
                                     <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
                                     <td class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Display Section (Completed tasks)-->
+            <div data-ng-class="currentTable === TABLE_TASKS_COMPLETED ? '' : 'hidden'">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Completed Tasks<span class="small"> - tasks that you have completed.</span></h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th class="col-xs-9">Task</th>
+                                <th class="col-xs-1 text-center">Group</th>
+                                <th class="col-xs-1 text-center">Time Added</th>
+                                <th class="col-xs-1 text-center">Time Completed</th>
+                                <th class="col-xs-1 text-center">Hours Tracked</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat='task in tasksFinished'>
+                                <td> {{ task.name }}</td>
+                                <td class="text-center"> {{ task.group }}</td>
+                                <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
+                                <td class="text-center"> {{ formatDate(task.dateCompleted) }}</td>
+                                <td class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }} </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!--Display Section (Stats)-->
+
+            <div data-ng-class="currentTable === STATS ? '' : 'hidden'">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Statistics<span class="small"> - data about your ToDoList.</span></h3>
+                    </div>
+                </div>
+
+                <h4>Stats by Group<span class="small"> - a breakdown of all tasks by group.</span></h4>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-9">Group</th>
+                                    <th class="col-xs-1 text-center">Number of Tasks</th>
+                                    <th class="col-xs-1 text-center">Total Time Tracked</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="groupStat in groupStats | orderBy:'group'">
+                                    <td> {{ groupStat.group }}</td>
+                                    <td class="text-center"> {{ groupStat.taskCount }}</td>
+                                    <td class="text-right"> {{ convertMSToHours(groupStat.totalTimeTaken).toFixed(2) }} </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -154,10 +197,14 @@
                     <h4 class="modal-title">Edit Task</h4>
                 </div>
                 <div class="modal-body">
-                        <div class="form-group">
-                            <label>Task</label>
-                            <input data-ng-model="editedTaskCopy.name" class="form-control"/>
-                        </div>
+                    <div class="form-group">
+                        <label>Task</label>
+                        <input data-ng-model="editedTaskCopy.name" placeholder="Enter your task name or description..." class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Group</label>
+                        <input data-ng-model="editedTaskCopy.group" placeholder="Enter a group name for this task..." class="form-control"/>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
