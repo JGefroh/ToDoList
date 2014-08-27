@@ -4,223 +4,47 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>ToDoList</title>
 
-    <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/todolist.css" rel="stylesheet">
+
     <script src="js/jquery-1.11.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
-    <script src="js/controllers.js"></script>
+    <script src="js/utilities/ConversionUtil.js"></script>
+    <script src="js/models/Task.js"></script>
+    <script src="js/models/GroupStat.js"></script>
+    <script src="js/controllers/ToDoController.js"></script>
+    <script src="js/directives/SortableHeader.js"></script>
+    <script src="js/directives/RemainingTasks.js"></script>
+    <script src="js/directives/TaskStatistics.js"></script>
+    <script src="js/directives/CompletedTasks.js"></script>
+    <script src="js/directives/TaskCreation.js"></script>
+    <script src="js/filters/DateFilter.js"></script>
+    <script src="js/filters/TimeFilter.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="js/html5shiv-3.7.2.min.js"></script>
+    <script src="js/respond-1.4.2.min.js"></script>
     <![endif]-->
-
-
-
-    <style>
-        .inline-button {
-            margin-top: 24px;
-        }
-
-        .navigation-button {
-            margin-left: 4px;
-        }
-    </style>
 </head>
 <body data-ng-controller="ToDoListController">
     <div>
         <div class="container">
-
-            <!--Input Section-->
-            <div class="row">
-                <h1 class="page-header">ToDoList <span class="small">v0.1.0, by <a href="http://www.jgefroh.com">Joseph Gefroh</a></span></h1>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <button class="btn btn-info pull-right pull-right navigation-button" data-ng-click="showStats()"
-                            title="Show statistics about your To Do List.">
-                        <span class="glyphicon glyphicon-stats"></span>
-                        Show Stats
-                    </button>
-                    <button class="btn btn-primary pull-right navigation-button" data-ng-click="showTasksCompleted()"
-                            title="Show the list of completed tasks.">
-                        <span class="glyphicon glyphicon-check"></span>
-                        Show Completed  <span class="badge">{{ tasksFinished.length }}</span>
-                    </button>
-                    <button class="btn btn-danger pull-right" data-ng-click="showTasksRemaining()"
-                            title="Show the list of incomplete tasks.">
-                        <span class="glyphicon glyphicon-tasks"></span>
-                        Show Remaining <span class="badge">{{ tasks.length }}</span>
-                    </button>
-                </div>
-            </div>
+            <div ng-include="'partials/HeaderView.html'"></div>
+            <div ng-include="'partials/NavigationView.html'"></div>
         </div>
 
 
         <div class="container">
-            <!--Display Section (Remaining tasks)-->
-            <div data-ng-class="currentTable === TABLE_TASKS_REMAINING ? '' : 'hidden'">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Remaining Tasks<span class="small"> - tasks that you have not yet completed.</span></h3>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-5">
-                        <div class="form-group">
-                            <label>Task</label>
-                            <input data-ng-model="task.name" class="form-control" placeholder="Enter your task name or description..."/>
-                        </div>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <label>Group</label>
-                            <input data-ng-model="task.group" class="form-control" placeholder="Enter a group name for this task..."/>
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <button class="btn btn-success inline-button" data-ng-click="addTask(task)"
-                                title="Add a new task to the To Do List.">
-                            <span class="glyphicon glyphicon-plus"></span> Add Task
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="col-xs-1 text-center">Action</th>
-                                    <th class="col-xs-8" data-ng-click="sort_field_remaining = 'name'; sort_reverse_remaining = !sort_reverse_remaining">Task <span class="{{sort_field_remaining === 'name' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_remaining = 'group'; sort_reverse_remaining = !sort_reverse_remaining">Group <span class="{{sort_field_remaining === 'group' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_remaining = 'dateAdded'; sort_reverse_remaining = !sort_reverse_remaining">Time Added <span class="{{sort_field_remaining === 'dateAdded' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_remaining = 'totalTimeTaken'; sort_reverse_remaining = !sort_reverse_remaining">Hours Tracked <span class="{{sort_field_remaining === 'totalTimeTaken' ? '' : 'hidden' }} glyphicon {{sort_reverse_remaining ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat='task in tasks | orderBy:sort_field_remaining:sort_reverse_remaining' class="{{task.isHidden === true ? 'hide-row' : 'show-row'}}">
-                                    <td class="text-center">
-                                        <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="finishTask(task)" title="Mark this task as completed."><span class="glyphicon glyphicon-ok"></span> Complete</button><br />
-                                        <hr class="table-button-separator">
-                                        <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="editTask(task)" data-toggle="modal" data-target="#editTaskView" title="Edit the details of this task."><span class="glyphicon glyphicon-pencil"></span> Edit</button><br />
-                                        <button class="btn btn-default btn-xs table-button" ng-disabled="task.isHidden" data-ng-click="toggleTracking(task)" title="{{ task.isTracking === true ? 'Stop the timer for this task.' : 'Start a timer for this task.'}}"><span class="glyphicon glyphicon-time"></span> {{ task.isTracking === true ? 'Untrack' : 'Track'}}</button>
-                                    </td>
-                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''"> {{ task.name }} </td>
-                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''" class="text-center"> {{ task.group }}</td>
-                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''" class="text-center"> {{ formatDate(task.dateAdded) }}</td>
-                                    <td data-ng-class="task.isTracking ? 'task-highlighted' : ''" class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-
-            <!--Display Section (Completed tasks)-->
-            <div data-ng-class="currentTable === TABLE_TASKS_COMPLETED ? '' : 'hidden'">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Completed Tasks<span class="small"> - tasks that you have completed.</span></h3>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th class="col-xs-9" data-ng-click="sort_field_finished = 'name'; sort_reverse_finished = !sort_reverse_finished">Task <span class="{{sort_field_finished === 'name' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'group'; sort_reverse_finished = !sort_reverse_finished">Group <span class="{{sort_field_finished === 'group' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'dateAdded'; sort_reverse_finished = !sort_reverse_finished">Time Added <span class="{{sort_field_finished === 'dateAdded' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'dateCompleted'; sort_reverse_finished = !sort_reverse_finished">Time Completed <span class="{{sort_field_finished === 'dateCompleted' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                <th class="col-xs-1 text-center" data-ng-click="sort_field_finished = 'totalTimeTaken'; sort_reverse_finished = !sort_reverse_finished">Hours Tracked <span class="{{sort_field_finished === 'totalTimeTaken' ? '' : 'hidden' }} glyphicon {{sort_reverse_finished ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat='task in tasksFinished | orderBy:sort_field_finished:sort_reverse_finished'>
-                                <td> {{ task.name }}</td>
-                                <td class="text-center"> {{ task.group }}</td>
-                                <td class="text-center"> {{ formatDate(task.dateAdded) }}</td>
-                                <td class="text-center"> {{ formatDate(task.dateCompleted) }}</td>
-                                <td class="text-right"> {{ convertMSToHours(task.totalTimeTaken).toFixed(2) }} </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!--Display Section (Stats)-->
-
-            <div data-ng-class="currentTable === STATS ? '' : 'hidden'">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h3>Statistics<span class="small"> - data about your ToDoList.</span></h3>
-                    </div>
-                </div>
-
-                <h4>Stats by Group<span class="small"> - a breakdown of all tasks by group.</span></h4>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="col-xs-9" data-ng-click="sort_field_stats = 'group'; sort_reverse_stats = !sort_reverse_stats">Group <span class="{{sort_field_stats === 'group' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'taskCount'; sort_reverse_stats = !sort_reverse_stats"># Tasks <span class="{{sort_field_stats === 'taskCount' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'remainingCount'; sort_reverse_stats = !sort_reverse_stats"># Remaining <span class="{{sort_field_stats === 'remainingCount' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'completedCount'; sort_reverse_stats = !sort_reverse_stats"># Completed <span class="{{sort_field_stats === 'completedCount' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                    <th class="col-xs-1 text-center" data-ng-click="sort_field_stats = 'totalTimeTaken'; sort_reverse_stats = !sort_reverse_stats">Hours Tracked <span class="{{sort_field_stats === 'totalTimeTaken' ? '' : 'hidden' }} glyphicon {{sort_reverse_stats ? 'glyphicon-chevron-down' : 'glyphicon-chevron-up'}}"></span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="groupStat in groupStats | orderBy:sort_field_stats:sort_reverse_stats">
-                                    <td> {{ groupStat.group }}</td>
-                                    <td class="text-center"> {{ groupStat.taskCount }}</td>
-                                    <td class="text-center"> {{ groupStat.remainingCount }}</td>
-                                    <td class="text-center"> {{ groupStat.completedCount }}</td>
-                                    <td class="text-right"> {{ convertMSToHours(groupStat.totalTimeTaken).toFixed(2) }} </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="editTaskView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Edit Task</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Task</label>
-                        <input data-ng-model="editedTaskCopy.name" placeholder="Enter your task name or description..." class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label>Group</label>
-                        <input data-ng-model="editedTaskCopy.group" placeholder="Enter a group name for this task..." class="form-control"/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="commitTaskChanges(editedTask)">Save changes</button>
-                </div>
-            </div>
+            <div data-remaining-tasks="" ng-show="isShowingTasksRemaining()"></div>
+            <div data-completed-tasks="" ng-show="isShowingTasksCompleted()"></div>
+            <div data-task-statistics="" ng-show="isShowingStatistics()"></div>
+    <!--        <div ng-include="'partials/CompletedTasksView.html'"></div>
+            <div ng-include="'partials/StatsView.html'"></div>
+            <div ng-include="'partials/TaskModificationView.html'"></div>-->
         </div>
     </div>
 </body>

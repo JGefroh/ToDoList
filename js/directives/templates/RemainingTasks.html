@@ -1,0 +1,74 @@
+<div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Remaining Tasks<span class="small"> - tasks that you have not yet completed.</span></h3>
+        </div>
+    </div>
+    <div data-task-creation=""></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="col-xs-1 text-center">Action</th>
+                    <th class="col-xs-8" data-ng-click="sort_field = 'name'; isSortingAscending = !isSortingAscending">
+                        Task
+                            <span ng-show="sort_field === 'name'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                    </th>
+                    <th class="col-xs-1 text-center" data-ng-click="sort_field = 'group'; isSortingAscending = !isSortingAscending">
+                        Group
+                            <span ng-show="sort_field === 'group'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                    </th>
+                    <th class="col-xs-1 text-center" data-ng-click="sort_field = 'dateAdded'; isSortingAscending = !isSortingAscending">
+                        Date Added
+                            <span ng-show="sort_field === 'dateAdded'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                    </th>
+                    <th class="col-xs-1 text-center" data-ng-click="sort_field = 'totalTimeTracked'; isSortingAscending = !isSortingAscending">
+                        Hours Tracked
+                            <span ng-show="sort_field === 'totalTimeTracked'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="task in tasks | filter: { isCompleted: 'false'}  | orderBy:sort_field:isSortingAscending">
+                    <td class="text-center">
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="markComplete(task)" title="Mark this task as completed.">
+                            <span class="glyphicon glyphicon-ok"></span> Complete
+                        </button>
+                        <br />
+
+                        <hr class="table-button-separator">
+
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="editTask(task)" title="Edit the details of this task." data-toggle="modal" data-target="#editTaskView">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>
+                        <br />
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="startTrackingTask(task)" title="Start a timer for this task." ng-show="!task.isTracking"  >
+                            <span class="glyphicon glyphicon-time"></span> Track
+                        </button>
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="stopTrackingTask(task)"  title="Stop the timer for this task."ng-show="task.isTracking" >
+                            <span class="glyphicon glyphicon-time"></span> Untrack
+                        </button>
+                    </td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | get24HourTime }}</td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}"> {{ task.totalTimeTracked | msToHours:2 }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

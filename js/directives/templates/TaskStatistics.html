@@ -1,0 +1,66 @@
+<!--
+author: Joseph Gefroh
+-->
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Statistics<span class="small"> - data about your ToDoList.</span></h3>
+    </div>
+</div>
+
+<h4>Stats by Group<span class="small"> - a breakdown of all tasks by group.</span></h4>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th class="col-xs-8" data-ng-click="sort_field = 'group'; isSortingAscending = !isSortingAscending">
+                    Group
+                            <span ng-show="sort_field === 'group'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+                <th class="col-xs-1" data-ng-click="sort_field = 'taskCount'; isSortingAscending = !isSortingAscending">
+                    # Tasks
+                            <span ng-show="sort_field === 'taskCount'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+
+                <th class="col-xs-1" data-ng-click="sort_field = 'remainingCount'; isSortingAscending = !isSortingAscending">
+                    # Remaining
+                            <span ng-show="sort_field === 'remainingCount'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+
+                <th class="col-xs-1" data-ng-click="sort_field = 'completedCount'; isSortingAscending = !isSortingAscending">
+                    # Completed
+                            <span ng-show="sort_field === 'completedCount'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+                <th class="col-xs-1" data-ng-click="sort_field = 'hoursTracked'; isSortingAscending = !isSortingAscending">
+                    Hours Tracked
+                            <span ng-show="sort_field === 'hoursTracked'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="groupStat in groupStats | orderBy:sort_field:isSortingAscending">
+                    <td> {{ groupStat.group }}</td>
+                    <td class="text-center"> {{ groupStat.taskCount }}</td>
+                    <td class="text-center"> {{ groupStat.remainingCount }}</td>
+                    <td class="text-center"> {{ groupStat.completedCount }}</td>
+                    <td class="text-right"> {{ groupStat.totalTimeTracked | msToHours:2 }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

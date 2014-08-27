@@ -44,7 +44,7 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     }
 
     $scope.addTask = function (task) {
-        if (typeof task === 'undefined') {
+        if (typeof task === 'undefined' || (typeof task.name === 'undefined' && typeof task.group === 'undefined')) {
             return;
         }
         var newTask = angular.copy(task);
@@ -52,10 +52,11 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
         newTask.totalTimeTaken = 0;
         newTask.isHidden = true;
         $scope.tasks.push(newTask);
+        task.name = undefined;
+        task.group = undefined;
         $timeout(function () {
             newTask.isHidden = false;
         }, 20);
-        $scope.task = undefined;
     };
 
     $scope.finishTask = function(task) {
@@ -153,9 +154,6 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
         task.isTracking = false;
     }
 
-    $scope.formatDate = function (dateToConvert) {
-        return dateToConvert.getHours() + ":" + (dateToConvert.getMinutes() < 10 ? "0" + dateToConvert.getMinutes(): dateToConvert.getMinutes());
-    }
 
     $scope.getDifferenceInMS = function (dateOne, dateTwo) {
         var timeDifference = Math.abs(dateOne.getTime() - dateTwo.getTime());
@@ -176,8 +174,4 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
         $scope.currentTable = $scope.STATS;
     }
 
-
-    $scope.convertMSToHours = function(time) {
-        return (Math.round(time / 60000) / 60);
-    }
 });
