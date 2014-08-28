@@ -6,7 +6,7 @@ angular.module('CompletedTasks', [])
         return {
             restrict: 'A',
             scope: true,
-            templateUrl: "js/directives/templates/CompletedTasks.html",
+            templateUrl: "templates/CompletedTasks.html",
             controller: function() {
             }
         }

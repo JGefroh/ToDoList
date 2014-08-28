@@ -1,13 +1,14 @@
 /**
  * Created by Joseph on 8/16/2014.
  */
-var toDoListApp = angular.module('ToDoListApp', ['DateFilter', 'TimeFilter', 'SortableHeader', 'CompletedTasks', 'RemainingTasks', 'TaskStatistics', 'TaskCreation']);
+var toDoListApp = angular.module('ToDoListApp', ['ngAnimate', 'DateFilter', 'TimeFilter', 'SortableHeader', 'CompletedTasks', 'RemainingTasks', 'TaskStatistics', 'TaskCreation' ,'TaskModification']);
 toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
 
     /**
      * FIELDS
      */
     var tasks = [];
+    var currentlyEditedTask = null;
     var groupStats = [];
     var REMAINING_VIEW = 'REMAINING';
     var COMPLETED_VIEW = 'COMPLETED';
@@ -77,6 +78,23 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     function resetTaskFields(taskFieldsToReset) {
         taskFieldsToReset.name = null;
         taskFieldsToReset.group = null;
+    };
+
+
+    /**
+     * Add a task to the list of tasks.
+     * @param taskFields
+     */
+    $scope.prepareEditTask = function(taskToEdit) {
+        currentlyEditedTask = taskToEdit;
+        $scope.inputCopy = angular.copy(currentlyEditedTask);
+    };
+
+    $scope.editTask = function(taskFields) {
+        currentlyEditedTask.name = taskFields.name;
+        currentlyEditedTask.group = taskFields.group;
+        $scope.inputCopy = null;
+        currentlyEditedTask = null;
     };
 
     /**
@@ -149,6 +167,9 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
      * NAVIGATION
      */
 
+    $scope.getCurrentView = function() {
+        return currentView;
+    }
     $scope.showStats = function() {
         currentView = STATISTICS_VIEW;
     };
@@ -160,16 +181,4 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     $scope.showTasksRemaining = function() {
         currentView = REMAINING_VIEW;
     };
-
-    $scope.isShowingStatistics = function() {
-        return currentView === STATISTICS_VIEW;
-    }
-
-    $scope.isShowingTasksRemaining = function() {
-        return currentView === REMAINING_VIEW;
-    }
-
-    $scope.isShowingTasksCompleted = function() {
-        return currentView === COMPLETED_VIEW;
-    }
 });

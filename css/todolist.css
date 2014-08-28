@@ -1,15 +1,19 @@
 html {
     overflow-y: scroll;
 }
-
-.badge-tasks-remaining {
-    background-color: red;
+.view_change_animation.ng-enter,
+.view_change_animation.ng-leave {
+    opacity: 0;
 }
 
-.badge-tasks-finished {
-    background-color: blue;
+.view_change_animation.ng-leave.view_change_animation.ng-leave-active,
+.view_change_animation.ng-enter {
 }
 
+.view_change_animation.ng-enter.ng-enter-active,
+.view_change_animation.ng-leave {
+    
+}
 .task-highlighted {
     color: red;
     font-weight: bold;
@@ -35,7 +39,7 @@ html {
     transition-duration: 0.25s;
 }
 
-
 td {
     word-wrap: break-word;
+    word-break: break-all;
 }

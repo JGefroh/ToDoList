@@ -11,7 +11,7 @@ angular.module('SortableHeader', [])
                 isAscending: '='
             },
             transclude: true,
-            templateUrl: "js/directives/templates/SortableHeaderTemplate.html",
+            templateUrl: "templates/SortableHeaderTemplate.html",
             controller: function() {
 
             }

@@ -6,7 +6,7 @@ angular.module('TaskCreation', [])
         return {
             restrict: 'A',
             scope: true,
-            templateUrl: "js/directives/templates/TaskCreation.html",
+            templateUrl: "templates/TaskCreation.html",
             controller: function() {
 
             }

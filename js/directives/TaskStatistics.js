@@ -6,7 +6,7 @@ angular.module('TaskStatistics', [])
         return {
             restrict: 'A',
             scope: true,
-            templateUrl: "js/directives/templates/TaskStatistics.html",
+            templateUrl: "templates/TaskStatistics.html",
             controller: function() {
             }
         }
