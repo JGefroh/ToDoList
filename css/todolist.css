@@ -3,16 +3,17 @@ html {
 }
 .view_change_animation.ng-enter,
 .view_change_animation.ng-leave {
-    opacity: 0;
 }
 
 .view_change_animation.ng-leave.view_change_animation.ng-leave-active,
 .view_change_animation.ng-enter {
+    opacity: 0;
+    transition: 0.5s all linear;
 }
 
 .view_change_animation.ng-enter.ng-enter-active,
 .view_change_animation.ng-leave {
-    
+    opacity: 1;
 }
 .task-highlighted {
     color: red;
