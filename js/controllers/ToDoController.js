@@ -15,7 +15,7 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     var STATISTICS_VIEW = 'STATISTICS';
     var currentView = REMAINING_VIEW;
 
-    var TRACKING_UPDATE_INTERVAL_IN_MS = 30000; //[JG] 08/27/2014: 30 seconds is pretty safe since hours are displayed to 2 decimal places.
+    var TRACKING_UPDATE_INTERVAL_IN_MS = 30; //[JG] 08/27/2014: 30 seconds is pretty safe since hours are displayed to 2 decimal places.
 
     $scope.tasks = tasks;
     $scope.groupStats = groupStats;
@@ -42,7 +42,7 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
 
     function startStatisticsUpdateRepeatingTimer() {
         var statisticsUpdateTimer = $timeout(function () {
-            if ($scope.isShowingStatistics()) {
+            if ($scope.getCurrentView() === STATISTICS_VIEW) {
                 $scope.updateStats();
             }
             startStatisticsUpdateRepeatingTimer();
@@ -142,7 +142,13 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
             var groupStat = uniqueGroups[currentTask.group];
             groupStat.taskCount++;
             groupStat.totalTimeTracked += currentTask.totalTimeTracked;
-            groupStat.remainingCount++;
+
+            if (currentTask.isCompleted) {
+                groupStat.completedCount++;
+            }
+            else {
+                groupStat.remainingCount++;
+            }
         }
 
         for (var group in uniqueGroups) {
