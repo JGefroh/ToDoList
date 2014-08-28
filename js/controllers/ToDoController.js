@@ -1,7 +1,7 @@
 /**
  * Created by Joseph on 8/16/2014.
  */
-var toDoListApp = angular.module('ToDoListApp', ['ngAnimate', 'DateFilter', 'TimeFilter', 'SortableHeader', 'CompletedTasks', 'RemainingTasks', 'TaskStatistics', 'TaskCreation' ,'TaskModification']);
+var toDoListApp = angular.module('ToDoListApp', ['DateFilter', 'TimeFilter', 'SortableHeader', 'CompletedTasks', 'RemainingTasks', 'TaskStatistics', 'TaskCreation' ,'TaskModification']);
 toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
 
     /**
@@ -15,10 +15,12 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     var STATISTICS_VIEW = 'STATISTICS';
     var currentView = REMAINING_VIEW;
 
-    var TRACKING_UPDATE_INTERVAL_IN_MS = 30000; //30 seconds is pretty safe since hours are displayed to 2 decimal places.
+    var TRACKING_UPDATE_INTERVAL_IN_MS = 30000; //[JG] 08/27/2014: 30 seconds is pretty safe since hours are displayed to 2 decimal places.
 
     $scope.tasks = tasks;
     $scope.groupStats = groupStats;
+
+    $scope.creationInput = {name:null, group:null}; //[JG] 08/27/2014: Used to avoid input resetting on page change.
 
     /**
      * INITIALIZATION
