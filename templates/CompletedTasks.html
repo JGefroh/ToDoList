@@ -1,0 +1,63 @@
+<!--
+author: Joseph Gefroh
+-->
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Completed Tasks<span class="small"> - tasks that you have completed.</span></h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+            <tr>
+                <th class="col-xs-8" data-ng-click="sort_field = 'name'; isSortingAscending = !isSortingAscending">
+                    Task
+                            <span ng-show="sort_field === 'name'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+                <th class="col-xs-1 text-center" data-ng-click="sort_field = 'group'; isSortingAscending = !isSortingAscending">
+                    Group
+                            <span ng-show="sort_field === 'group'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+                <th class="col-xs-1 text-center" data-ng-click="sort_field = 'dateAdded'; isSortingAscending = !isSortingAscending">
+                    Time Added
+                            <span ng-show="sort_field === 'dateAdded'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+                <th class="col-xs-1 text-center" data-ng-click="sort_field = 'dateCompleted'; isSortingAscending = !isSortingAscending">
+                    Time Completed
+                            <span ng-show="sort_field === 'dateCompleted'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+                <th class="col-xs-1 text-center" data-ng-click="sort_field = 'totalTimeTracked'; isSortingAscending = !isSortingAscending">
+                    Hours Tracked
+                            <span ng-show="sort_field === 'totalTimeTracked'">
+                                <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                </th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in tasks | filter: { isCompleted: 'true'}  | orderBy:sort_field:isSortingAscending">
+                <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
+                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
+                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | get24HourTime }}</td>
+                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateCompleted | get24HourTime }}</td>
+                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}"> {{ task.totalTimeTracked | msToHours:2 }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

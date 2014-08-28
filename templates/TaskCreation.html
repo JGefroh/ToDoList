@@ -1,0 +1,24 @@
+<!--
+author: Joseph Gefroh
+-->
+<div class="row">
+    <div class="col-xs-5">
+        <div class="form-group">
+            <label>Task</label>
+            <input data-ng-model="creationInput.name" class="form-control" placeholder="Enter your task name or description..."/>
+        </div>
+    </div>
+    <div class="col-xs-3">
+        <div class="form-group">
+            <label>Group</label>
+            <input data-ng-model="creationInput.group" class="form-control" placeholder="Enter a group name for this task..."/>
+        </div>
+    </div>
+    <div class="col-xs-1">
+        <button class="btn btn-success inline-button" data-ng-click="addTask(creationInput)"
+                title="Add a new task to the To Do List."
+                style="margin-top: 24px;">
+            <span class="glyphicon glyphicon-plus"></span> Add Task
+        </button>
+    </div>
+</div>

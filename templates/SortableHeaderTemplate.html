@@ -1,0 +1,7 @@
+<th class="col-xs-1 text-center" data-ng-click="currentSortColumn = columnName; isAscending = !isAscending;">
+    s{{ columnName }}
+    <span ng-show="columnName === currentSortColumn">
+        <span ng-show="isAscending" class="glyphicon glyphicon-chevron-down"></span>
+        <span ng-show="!isAscending" class="glyphicon glyphicon-chevron-up"></span>
+    </span>
+</th>

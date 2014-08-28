@@ -2,14 +2,6 @@ html {
     overflow-y: scroll;
 }
 
-.badge-tasks-remaining {
-    background-color: red;
-}
-
-.badge-tasks-finished {
-    background-color: blue;
-}
-
 .task-highlighted {
     color: red;
     font-weight: bold;
@@ -35,7 +27,7 @@ html {
     transition-duration: 0.25s;
 }
 
-
 td {
     word-wrap: break-word;
+    word-break: break-all;
 }
