@@ -22,6 +22,7 @@
     <script src="js/directives/CompletedTasks.js"></script>
     <script src="js/directives/TaskModification.js"></script>
     <script src="js/directives/TaskCreation.js"></script>
+    <script src="js/directives/AlertPanel.js"></script>
     <script src="js/filters/DateFilter.js"></script>
     <script src="js/filters/TimeFilter.js"></script>
 
@@ -40,10 +41,15 @@
     <div>
         <div class="container">
             <div ng-include="'partials/HeaderView.html'"></div>
+            <div class="alertPanel"
+                 data-alert-panel=""
+                 data-subject="alert.subject"
+                 data-message="alert.message"
+                 data-type="alert.type"
+                 data-is-showing="alert.isShowing"></div>
             <div ng-include="'partials/NavigationView.html'"></div>
         </div>
-
-
+        <br/>
         <div class="container" ng-switch on="getCurrentView()">
             <div data-remaining-tasks="" class="view_change_animation" data-ng-switch-when="REMAINING"></div>
             <div data-completed-tasks="" class="view_change_animation" data-ng-switch-when="COMPLETED"></div>
