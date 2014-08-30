@@ -40,4 +40,9 @@ function Task() {
         this.dateCompleted = new Date();
         this.stopTracking();
     };
+
+    this.markIncomplete = function() {
+        this.isCompleted = false;
+        this.dateCompleted = null;
+    };
 }
