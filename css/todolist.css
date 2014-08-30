@@ -20,3 +20,8 @@ td {
     word-wrap: break-word;
     word-break: break-all;
 }
+
+.alertPanel {
+    position: absolute;
+    z-index: 999999999;
+}

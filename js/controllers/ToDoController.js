@@ -1,7 +1,7 @@
 /**
  * Created by Joseph on 8/16/2014.
  */
-var toDoListApp = angular.module('ToDoListApp', ['DateFilter', 'TimeFilter', 'SortableHeader', 'CompletedTasks', 'RemainingTasks', 'TaskStatistics', 'TaskCreation' ,'TaskModification']);
+var toDoListApp = angular.module('ToDoListApp', ['DateFilter', 'TimeFilter', 'AlertPanel', 'SortableHeader', 'CompletedTasks', 'RemainingTasks', 'TaskStatistics', 'TaskCreation' ,'TaskModification']);
 toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
 
     /**
@@ -16,11 +16,13 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     var currentView = REMAINING_VIEW;
 
     var TRACKING_UPDATE_INTERVAL_IN_MS = 30; //[JG] 08/27/2014: 30 seconds is pretty safe since hours are displayed to 2 decimal places.
-
+    var MAX_TASK_ALERT_PANEL_DISPLAY_SIZE = 20;
     $scope.tasks = tasks;
     $scope.groupStats = groupStats;
 
     $scope.creationInput = {name:null, group:null}; //[JG] 08/27/2014: Used to avoid input resetting on page change.
+
+    var alertPanelTimer = null;
 
     /**
      * INITIALIZATION
@@ -105,7 +107,33 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
      */
     $scope.markComplete = function(task) {
         task.markComplete();
+        if (task.name != null) {
+            if (task.name.length > MAX_TASK_ALERT_PANEL_DISPLAY_SIZE) {
+                createAlert('alert-success', 'Task Complete!', task.name.substr(0,  MAX_TASK_ALERT_PANEL_DISPLAY_SIZE) + '... has been marked as complete.', 2000);
+            }
+            else if (task.name.length <=  MAX_TASK_ALERT_PANEL_DISPLAY_SIZE) {
+                createAlert('alert-success', 'Task Complete!', task.name + ' has been marked as complete.', 2000);
+            }
+        }
+        else {
+            createAlert('alert-success', 'Task Complete!', 'A task has been marked as complete.', 2000);
+        }
     };
+
+    function createAlert(type, subject, message, timeout) {
+        $scope.alert = {subject: subject,
+            message: message,
+            type: type,
+            isShowing: true};
+
+        if (alertPanelTimer != null) {
+            $timeout.cancel(alertPanelTimer);
+        }
+        alertPanelTimer = $timeout(function() {
+            $scope.alert.isShowing = false;
+            alertPanelTimer = null;
+        }, timeout);
+    }
 
     /**
      * Marks a task as incompleted.
@@ -113,7 +141,18 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
      */
     $scope.markIncomplete = function(task) {
         task.markIncomplete();
-    }
+        if (task.name != null) {
+            if (task.name.length > MAX_TASK_ALERT_PANEL_DISPLAY_SIZE) {
+                createAlert('alert-warning', 'Task Incomplete!', task.name.substr(0,  MAX_TASK_ALERT_PANEL_DISPLAY_SIZE) + '... has been marked as incomplete.', 2000);
+            }
+            else if (task.name.length <=  MAX_TASK_ALERT_PANEL_DISPLAY_SIZE) {
+                createAlert('alert-warning', 'Task Incomplete!', task.name + ' has been marked as incomplete.', 2000);
+            }
+        }
+        else {
+            createAlert('alert-warning', 'Task Incomplete!', 'A task has been marked as incomplete.', 2000);
+        }
+    };
 
     /**
      * Starts tracking a task.
@@ -121,7 +160,7 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
      */
     $scope.startTrackingTask = function(task) {
         task.startTracking();
-    }
+    };
 
     /**
      * Stops tracking a task.
