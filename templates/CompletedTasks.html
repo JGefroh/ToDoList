@@ -13,7 +13,10 @@ author: Joseph Gefroh
             <thead>
             <tr>
             <tr>
-                <th class="col-xs-8" data-ng-click="sort_field = 'name'; isSortingAscending = !isSortingAscending">
+                <th class="col-xs-1">
+                    Action
+                </th>
+                <th class="col-xs-7" data-ng-click="sort_field = 'name'; isSortingAscending = !isSortingAscending">
                     Task
                             <span ng-show="sort_field === 'name'">
                                 <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
@@ -51,6 +54,11 @@ author: Joseph Gefroh
             </thead>
             <tbody>
             <tr ng-repeat="task in tasks | filter: { isCompleted: 'true'}  | orderBy:sort_field:isSortingAscending">
+                <td class="text-center">
+                    <button class="btn btn-default btn-xs " data-ng-click="markIncomplete(task)" title="Mark this task as incomplete.">
+                        <span class="glyphicon glyphicon-repeat"></span> Mark Incomplete
+                    </button>
+                </td>
                 <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | get24HourTime }}</td>

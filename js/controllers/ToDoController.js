@@ -108,6 +108,14 @@ toDoListApp.controller('ToDoListController', function ($scope, $timeout) {
     };
 
     /**
+     * Marks a task as incompleted.
+     * @param task
+     */
+    $scope.markIncomplete = function(task) {
+        task.markIncomplete();
+    }
+
+    /**
      * Starts tracking a task.
      * @param task
      */
