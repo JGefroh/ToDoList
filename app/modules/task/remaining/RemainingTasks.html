@@ -42,7 +42,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="task in tasks | filter: { isCompleted: 'false'}  | orderBy:sort_field:isSortingAscending">
+                <tr ng-repeat="task in getTasks() | filter: { isCompleted: 'false'}  | orderBy:sort_field:isSortingAscending">
                     <td class="text-center">
                         <button class="btn btn-default btn-xs table-button" data-ng-click="markComplete(task)" title="Mark this task as completed.">
                             <span class="glyphicon glyphicon-ok"></span> Complete
@@ -64,12 +64,12 @@
                     </td>
                     <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
                     <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
-                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | get24HourTime }}</td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | MilHourTime }}</td>
                     <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}"> {{ task.totalTimeTracked | msToHours:2 }}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div data-task-modification=""></div>
+    <div data-ng-include="" src="'modules/task/remaining/TaskModification.html'"></div>
 </div>
