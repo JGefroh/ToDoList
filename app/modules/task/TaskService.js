@@ -26,7 +26,7 @@ taskModule.service('TaskService', function($timeout) {
     this.createTask = function(task) {
         if (isValidInput(task.name, task.group)) {
             var createdTask = createTask(task.name, task.group);
-            taskList.push(createdTask);
+            taskList.unshift(createdTask);
         }
     };
 
