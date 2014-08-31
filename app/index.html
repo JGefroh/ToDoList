@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html data-ng-app="ToDoList" manifest="jg_todolist.appcache">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>ToDoList</title>
+
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+        <link href="resources/css/todolist.css" rel="stylesheet">
+
+        <script src="resources/js/jquery-1.11.1.min.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+        <script src="resources/js/angular.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="resources/js/html5shiv-3.7.2.min.js"></script>
+        <script src="resources/js/respond-1.4.2.min.js"></script>
+        <![endif]-->
+
+        <script src="app.js"></script>
+        <script src="modules/common/models/Task.js"></script>
+        <script src="modules/common/models/GroupStat.js"></script>
+        <script src="modules/common/filters/DateFilter.js"></script>
+        <script src="modules/common/filters/TimeFilter.js"></script>
+        <script src="modules/alert/AlertService.js"></script>
+        <script src="modules/alert/AlertPanel.js"></script>
+        <script src="modules/header/Header.js"></script>
+        <script src="modules/task/TaskService.js"></script>
+        <script src="modules/stats/StatsService.js"></script>
+        <script src="modules/task/creation/TaskCreation.js"></script>
+        <script src="modules/task/remaining/RemainingTasks.js"></script>
+        <script src="modules/task/completed/CompletedTasks.js"></script>
+        <script src="modules/stats/TaskStatistics.js"></script>
+        <script src="modules/navigation/NavigationCtrl.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div data-header=""></div>
+            <div data-alert-panel="" class="alertPanel"></div>
+            <br/>
+            <div ng-controller="NavigationCtrl">
+                <div data-ng-include="" src="'modules/navigation/NavigationView.html'"></div>
+                <div data-ng-switch on="currentView">
+                    <div data-remaining-tasks="" data-ng-switch-when="REMAINING_VIEW"></div>
+                    <div data-completed-tasks="" data-ng-switch-when="COMPLETED_VIEW">></div>
+                    <div data-task-statistics="" data-ng-switch-when="STATS_VIEW">></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -53,7 +53,7 @@ author: Joseph Gefroh
                 </th>
             </thead>
             <tbody>
-            <tr ng-repeat="task in tasks | filter: { isCompleted: 'true'}  | orderBy:sort_field:isSortingAscending">
+            <tr ng-repeat="task in getTasks() | filter: { isCompleted: 'true'}  | orderBy:sort_field:isSortingAscending">
                 <td class="text-center">
                     <button class="btn btn-default btn-xs " data-ng-click="markIncomplete(task)" title="Mark this task as incomplete.">
                         <span class="glyphicon glyphicon-repeat"></span> Mark Incomplete
@@ -61,8 +61,8 @@ author: Joseph Gefroh
                 </td>
                 <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
-                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | get24HourTime }}</td>
-                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateCompleted | get24HourTime }}</td>
+                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | MilHourTime  }}</td>
+                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateCompleted | MilHourTime  }}</td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}"> {{ task.totalTimeTracked | msToHours:2 }}</td>
             </tr>
             </tbody>

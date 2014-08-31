@@ -1,0 +1,4 @@
+<div data-ng-class="['alert', 'alert-dismissible', alert.type]" role="alert" ng-show="alert.isShowing">
+    <button type="button" class="close" data-ng-click="alert.isShowing = false"><span>&times;</span></button>
+    <strong>{{ alert.subject }}</strong> {{ alert.message }}
+</div>
