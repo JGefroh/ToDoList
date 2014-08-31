@@ -17,4 +17,4 @@ angular.module('ToDoList',
         'ToDoList.NavigationModule',
         'ToDoList.HeaderModule'
     ]);
-angular.module('ToDoList').constant('versionNumber', 'v0.3.0');
+angular.module('ToDoList').constant('versionNumber', 'v0.3.1');
