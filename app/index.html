@@ -33,6 +33,11 @@
         <script src="modules/task/completed/CompletedTasks.js"></script>
         <script src="modules/stats/TaskStatistics.js"></script>
         <script src="modules/navigation/NavigationCtrl.js"></script>
+        <script>
+            window.onbeforeunload = function() {
+                return 'Are you sure you want to leave this page? Your tasks will not be saved.';
+            };
+        </script>
     </head>
     <body>
         <div class="container">
