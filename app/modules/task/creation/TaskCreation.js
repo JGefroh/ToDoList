@@ -5,8 +5,10 @@
     function TaskCreation(TaskService) {
         function TaskCreationCtrl($scope) {
             $scope.addTask = function(taskFields) {
-                TaskService.createTask(taskFields);
-                resetInputFields(taskFields);
+                if (taskFields) {
+                    TaskService.createTask(taskFields);
+                    resetInputFields(taskFields);
+                }
             };
 
             function resetInputFields(taskFields) {
