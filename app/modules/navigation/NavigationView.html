@@ -3,22 +3,22 @@ author: Joseph Gefroh
 -->
 <div class="row">
     <div class="col-xs-12">
-        <button class="btn btn-info pull-right pull-right" data-ng-click="showStats()"
+        <button class="btn btn-info pull-right pull-right" data-ng-click="navigation.showStats()"
                 title="Show statistics about your To Do List."
                 style="margin-left: 4px;">
             <span class="glyphicon glyphicon-stats"></span>
             Show Stats
         </button>
-        <button class="btn btn-primary pull-right" data-ng-click="showTasksCompleted()"
+        <button class="btn btn-primary pull-right" data-ng-click="navigation.showTasksCompleted()"
                 title="Show the list of completed tasks."
                 style="margin-left: 4px;">
             <span class="glyphicon glyphicon-check"></span>
-            Show Completed  <span class="badge">{{ (getTasks()|filter:{isCompleted:true}).length }}</span>
+            Show Completed  <span class="badge">{{ (navigation.getTasks()|filter:{isCompleted:true}).length }}</span>
         </button>
-        <button class="btn btn-danger pull-right" data-ng-click="showTasksRemaining()"
+        <button class="btn btn-danger pull-right" data-ng-click="navigation.showTasksRemaining()"
                 title="Show the list of incomplete tasks.">
             <span class="glyphicon glyphicon-tasks"></span>
-            Show Remaining <span class="badge">{{ (getTasks()|filter:{isCompleted:false}).length }}</span>
+            Show Remaining <span class="badge">{{ (navigation.getTasks()|filter:{isCompleted:false}).length }}</span>
         </button>
     </div>
 </div>

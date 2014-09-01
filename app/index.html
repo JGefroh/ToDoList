@@ -41,15 +41,15 @@
     </head>
     <body>
         <div class="container">
-            <div data-header=""></div>
-            <div data-alert-panel="" class="alertPanel"></div>
+            <div data-header></div>
+            <div data-alert-panel class="alertPanel"></div>
             <br/>
-            <div ng-controller="NavigationCtrl">
-                <div data-ng-include="" src="'modules/navigation/NavigationView.html'"></div>
-                <div data-ng-switch on="currentView">
-                    <div data-remaining-tasks="" data-ng-switch-when="REMAINING_VIEW"></div>
-                    <div data-completed-tasks="" data-ng-switch-when="COMPLETED_VIEW">></div>
-                    <div data-task-statistics="" data-ng-switch-when="STATS_VIEW">></div>
+            <div data-ng-controller="NavigationCtrl as navigation">
+                <div data-ng-include src="'modules/navigation/NavigationView.html'"></div>
+                <div data-ng-switch on="navigation.currentView">
+                    <div data-remaining-tasks data-ng-switch-when="REMAINING_VIEW"></div>
+                    <div data-completed-tasks data-ng-switch-when="COMPLETED_VIEW"></div>
+                    <div data-task-statistics data-ng-switch-when="STATS_VIEW"></div>
                 </div>
             </div>
         </div>
