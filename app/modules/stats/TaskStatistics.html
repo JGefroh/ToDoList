@@ -43,12 +43,15 @@ author: Joseph Gefroh
                                 <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
-                <th class="col-xs-1 text-center" data-ng-click="sort_field = 'hoursTracked'; isSortingAscending = !isSortingAscending">
-                    Hours Tracked
-                            <span ng-show="sort_field === 'hoursTracked'">
+                <th class="col-xs-1 text-center">
+                    <button class="btn btn-xs btn-default table-button" data-ng-click="isShowingMinutes = !isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
+                    <div data-ng-click="sort_field = 'totalTimeTracked'; isSortingAscending = !isSortingAscending">
+                        {{ isShowingMinutes ? "Minutes" : "Hours"}} Tracked
+                            <span ng-show="sort_field === 'totalTimeTracked'">
                                 <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
+                    </div>
                 </th>
             </tr>
             </thead>
@@ -58,7 +61,12 @@ author: Joseph Gefroh
                     <td class="text-center"> {{ groupStat.taskCount }}</td>
                     <td class="text-center"> {{ groupStat.remainingCount }}</td>
                     <td class="text-center"> {{ groupStat.completedCount }}</td>
-                    <td class="text-right"> {{ groupStat.totalTimeTracked | msToHours:2 }} </td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
+                        {{ isShowingMinutes
+                        ? (groupStat.totalTimeTracked | msToMinutes)
+                        : (groupStat.totalTimeTracked | msToHours:2)
+                        }}
+                    </td>
                 </tr>
             </tbody>
         </table>
