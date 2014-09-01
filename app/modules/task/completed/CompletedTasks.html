@@ -13,7 +13,7 @@ author: Joseph Gefroh
             <thead>
             <tr>
             <tr>
-                <th class="col-xs-1">
+                <th class="col-xs-1 text-center">
                     Action
                 </th>
                 <th class="col-xs-7" data-ng-click="sort_field = 'name'; isSortingAscending = !isSortingAscending">
@@ -44,12 +44,15 @@ author: Joseph Gefroh
                                 <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
-                <th class="col-xs-1 text-center" data-ng-click="sort_field = 'totalTimeTracked'; isSortingAscending = !isSortingAscending">
-                    Hours Tracked
+                <th class="col-xs-1 text-center">
+                    <button class="btn btn-xs btn-default table-button" data-ng-click="isShowingMinutes = !isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
+                    <div data-ng-click="sort_field = 'totalTimeTracked'; isSortingAscending = !isSortingAscending">
+                        {{ isShowingMinutes ? "Minutes" : "Hours"}} Tracked
                             <span ng-show="sort_field === 'totalTimeTracked'">
                                 <span ng-show="isSortingAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!isSortingAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
+                    </div>
                 </th>
             </thead>
             <tbody>
@@ -63,7 +66,12 @@ author: Joseph Gefroh
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | MilHourTime  }}</td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateCompleted | MilHourTime  }}</td>
-                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}"> {{ task.totalTimeTracked | msToHours:2 }}</td>
+                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
+                    {{ isShowingMinutes
+                        ? (task.totalTimeTracked | msToMinutes)
+                        : (task.totalTimeTracked | msToHours:2)
+                    }}
+                </td>
             </tr>
             </tbody>
         </table>
