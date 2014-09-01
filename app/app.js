@@ -1,14 +1,21 @@
 /**
  * Defines and configures all modules.
  */
-angular.module('ToDoList.Filters', []);
-angular.module('ToDoList.AlertModule', []);
-angular.module('ToDoList.TaskModule', []);
-angular.module('ToDoList.StatsModule', []);
-angular.module('ToDoList.HeaderModule', []);
-angular.module('ToDoList.NavigationModule', []);
+angular
+    .module('ToDoList.Filters', []);
+angular
+    .module('ToDoList.AlertModule', []);
+angular
+    .module('ToDoList.TaskModule', []);
+angular
+    .module('ToDoList.StatsModule', []);
+angular
+    .module('ToDoList.HeaderModule', []);
+angular
+    .module('ToDoList.NavigationModule', []);
 
-angular.module('ToDoList',
+angular
+    .module('ToDoList',
     [
         'ToDoList.Filters',
         'ToDoList.AlertModule',
@@ -17,4 +24,6 @@ angular.module('ToDoList',
         'ToDoList.NavigationModule',
         'ToDoList.HeaderModule'
     ]);
-angular.module('ToDoList').constant('versionNumber', 'v0.3.1');
+angular
+    .module('ToDoList')
+    .constant('versionNumber', 'v0.4.0');

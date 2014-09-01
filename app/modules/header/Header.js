@@ -1,14 +1,19 @@
 /**
  * Created by Joseph on 8/25/2014.
  */
-angular.module('ToDoList.HeaderModule')
-    .directive('header', function(TaskService) {
+(function() {
+    function Header() {
+        function HeaderDirectiveCtrl($scope, versionNumber) {
+            $scope.versionNumber = versionNumber;
+        }
         return {
             restrict: 'A',
             scope: {},
             templateUrl: "modules/header/Header.html",
-            controller: function($scope, versionNumber) {
-                $scope.versionNumber = versionNumber;
-            }
+            controller: ['$scope', 'versionNumber', HeaderDirectiveCtrl]
         }
-    });
+    }
+    angular
+        .module('ToDoList.HeaderModule')
+        .directive('header', Header);
+})();
