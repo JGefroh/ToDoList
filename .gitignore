@@ -1,1 +1,3 @@
 .idea
+app/modules/**/*.min.js
+app/app.min.js

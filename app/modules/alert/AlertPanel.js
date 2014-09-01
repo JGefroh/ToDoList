@@ -1,14 +1,19 @@
 /**
  * Created by Joseph on 8/25/2014.
  */
-angular.module('ToDoList.AlertModule')
-    .directive('alertPanel', function(AlertService) {
+(function() {
+    function AlertDirective(AlertService) {
+        function AlertDirectiveCtrl($scope) {
+            $scope.alert = AlertService.getAlert();
+        }
         return {
             restrict: 'A',
             scope: {},
             templateUrl: "modules/alert/AlertPanel.html",
-            controller: function($scope) {
-                $scope.alert = AlertService.getAlert();
-            }
+            controller: ['$scope', AlertDirectiveCtrl]
         }
-    });
+    }
+    angular
+        .module('ToDoList.AlertModule')
+        .directive('alertPanel', ['AlertService', AlertDirective]);
+})();

@@ -1,10 +1,14 @@
 /**
  * Created by Joseph on 8/25/2014.
  */
-var DateFilter = angular.module('ToDoList.Filters')
-    .filter('MilHourTime', function() {
+(function() {
+    function MilHourTimeFilter() {
         return function(dateToConvert) {
-            var formatted = dateToConvert.getHours() + ":" + (dateToConvert.getMinutes() < 10 ? "0" + dateToConvert.getMinutes(): dateToConvert.getMinutes());
-            return formatted;
-        };
-    });
+            return dateToConvert.getHours() + ":" + (dateToConvert.getMinutes() < 10 ? "0" + dateToConvert.getMinutes(): dateToConvert.getMinutes());
+        }
+    }
+
+    angular
+        .module('ToDoList.Filters')
+        .filter('MilHourTime', MilHourTimeFilter);
+})();
