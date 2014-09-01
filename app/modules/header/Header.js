@@ -3,13 +3,14 @@
  */
 (function() {
     function Header() {
+        function HeaderDirectiveCtrl($scope, versionNumber) {
+            $scope.versionNumber = versionNumber;
+        }
         return {
             restrict: 'A',
             scope: {},
             templateUrl: "modules/header/Header.html",
-            controller: function ($scope, versionNumber) {
-                $scope.versionNumber = versionNumber;
-            }
+            controller: ['$scope', 'versionNumber', HeaderDirectiveCtrl]
         }
     }
     angular
