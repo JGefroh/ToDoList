@@ -13,6 +13,8 @@ angular
     .module('ToDoList.HeaderModule', []);
 angular
     .module('ToDoList.NavigationModule', []);
+angular
+    .module('ToDoList.ViewStateModule', []);
 
 angular
     .module('ToDoList',
@@ -22,7 +24,8 @@ angular
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
         'ToDoList.NavigationModule',
-        'ToDoList.HeaderModule'
+        'ToDoList.HeaderModule',
+        'ToDoList.ViewStateModule'
     ]);
 angular
     .module('ToDoList')
