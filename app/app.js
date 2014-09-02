@@ -29,4 +29,4 @@ angular
     ]);
 angular
     .module('ToDoList')
-    .constant('versionNumber', 'v0.5.0');
+    .constant('versionNumber', 'v0.6.0');
