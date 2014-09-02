@@ -2,8 +2,13 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function TaskCreation(TaskService) {
+    function TaskCreation(ViewState, TaskService) {
         function TaskCreationCtrl($scope) {
+            initializeViewState();
+            function initializeViewState() {
+                $scope.viewState = ViewState.taskCreationViewState;
+            }
+
             $scope.addTask = function(taskFields) {
                 if (taskFields) {
                     TaskService.createTask(taskFields);
@@ -12,8 +17,8 @@
             };
 
             function resetInputFields(taskFields) {
-                taskFields.name = "";
-                taskFields.group = "";
+                taskFields.name = null;
+                taskFields.group = null;
             }
         }
 
@@ -26,5 +31,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .directive('taskCreation', ['TaskService', TaskCreation]);
+        .directive('taskCreation', ['ViewState', 'TaskService', TaskCreation]);
 })();

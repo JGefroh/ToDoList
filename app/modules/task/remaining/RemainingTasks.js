@@ -2,8 +2,14 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function RemainingTasks(TaskService, AlertService, truncateLimit) {
+    function RemainingTasks(ViewState, TaskService, AlertService, truncateLimit) {
         function RemainingTasksCtrl($scope, $filter) {
+            initializeViewState();
+
+            function initializeViewState() {
+                $scope.viewState = ViewState.remainingTaskViewState;
+            }
+
             $scope.dateFilter = function () {
                 return $filter('24HourTime');
             };
@@ -56,5 +62,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .directive('remainingTasks', ['TaskService', 'AlertService', 'truncateLimit', RemainingTasks]);
+        .directive('remainingTasks', ['ViewState', 'TaskService', 'AlertService', 'truncateLimit', RemainingTasks]);
 })();
