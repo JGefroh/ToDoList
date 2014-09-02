@@ -18,6 +18,12 @@
                 isAscending: null,
                 sortField: null,
                 isShowingMinutes: null
+            },
+            taskCreationViewState: {
+                input: {
+                    name: null,
+                    group: null
+                }
             }
         }
     }
