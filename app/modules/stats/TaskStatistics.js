@@ -2,8 +2,14 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function TaskStatisticsDirective(StatsService) {
+    function TaskStatisticsDirective(ViewState, StatsService) {
         function TaskStatisticsDirectiveCtrl($scope) {
+            initializeViewState();
+
+            function initializeViewState() {
+                $scope.viewState = ViewState.statisticsViewState;
+            }
+
             $scope.getGroupStats = function () {
                 return StatsService.getGroupStats();
             }
@@ -18,5 +24,5 @@
     }
     angular
         .module('ToDoList.StatsModule')
-        .directive('taskStatistics', ['StatsService', TaskStatisticsDirective]);
+        .directive('taskStatistics', ['ViewState', 'StatsService', TaskStatisticsDirective]);
 })();

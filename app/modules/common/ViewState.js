@@ -13,6 +13,11 @@
                 isAscending: null,
                 sortField: null,
                 isShowingMinutes: null
+            },
+            statisticsViewState: {
+                isAscending: null,
+                sortField: null,
+                isShowingMinutes: null
             }
         }
     }
