@@ -2,8 +2,14 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function CompletedTasksDirective(TaskService, AlertService, truncateLimit) {
+    function CompletedTasksDirective(ViewState, TaskService, AlertService, truncateLimit) {
         function CompletedTasksDirectiveCtrl($scope) {
+            initializeViewState();
+
+            function initializeViewState() {
+                $scope.viewState = ViewState.completedTaskViewState;
+            }
+
             $scope.getTasks = function() {
                 return TaskService.getTasks();
             };
@@ -32,5 +38,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .directive('completedTasks', ['TaskService', 'AlertService', 'truncateLimit', CompletedTasksDirective]);
+        .directive('completedTasks', ['ViewState', 'TaskService', 'AlertService', 'truncateLimit', CompletedTasksDirective]);
 })();

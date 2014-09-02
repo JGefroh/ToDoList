@@ -8,6 +8,11 @@
                 isAscending: null,
                 sortField: null,
                 isShowingMinutes: null
+            },
+            completedTaskViewState: {
+                isAscending: null,
+                sortField: null,
+                isShowingMinutes: null
             }
         }
     }
