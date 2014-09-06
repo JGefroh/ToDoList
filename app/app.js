@@ -6,8 +6,6 @@ angular
 angular
     .module('ToDoList.AlertModule', []);
 angular
-    .module('ToDoList.TaskModule', []);
-angular
     .module('ToDoList.StatsModule', []);
 angular
     .module('ToDoList.HeaderModule', []);

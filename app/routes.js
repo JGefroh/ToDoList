@@ -17,8 +17,7 @@
                 controllerAs: 'statsCtrl'
             })
             .otherwise({
-                templateUrl: 'modules/task/completed/CompletedTasks.html',
-                controller: 'CompletedTasksCtrl'
+                template: '404'
             });
     }
     angular

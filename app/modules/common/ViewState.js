@@ -29,5 +29,5 @@
     }
     angular
         .module('ToDoList.ViewStateModule')
-        .factory('ViewState', ViewState)
+        .service('ViewState', ViewState)
 })();

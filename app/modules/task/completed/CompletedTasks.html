@@ -16,47 +16,47 @@ author: Joseph Gefroh
                 <th class="col-xs-1 text-center">
                     Action
                 </th>
-                <th class="col-xs-7" data-ng-click="viewState.sortField = 'name'; viewState.isAscending = !viewState.isAscending">
+                <th class="col-xs-7" data-ng-click="completedCtrl.viewState.sortField = 'name'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
                     Task
-                            <span ng-show="viewState.sortField === 'name'">
-                                <span ng-show="viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                                <span ng-show="!viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            <span ng-show="completedCtrl.viewState.sortField === 'name'">
+                                <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
-                <th class="col-xs-1 text-center" data-ng-click="viewState.sortField = 'group'; viewState.isAscending = !viewState.isAscending">
+                <th class="col-xs-1 text-center" data-ng-click="completedCtrl.viewState.sortField = 'group'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
                     Group
-                            <span ng-show="viewState.sortField === 'group'">
-                                <span ng-show="viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                                <span ng-show="!viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            <span ng-show="completedCtrl.viewState.sortField === 'group'">
+                                <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
-                <th class="col-xs-1 text-center" data-ng-click="viewState.sortField = 'dateAdded'; viewState.isAscending = !viewState.isAscending">
+                <th class="col-xs-1 text-center" data-ng-click="completedCtrl.viewState.sortField = 'dateAdded'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
                     Time Added
-                            <span ng-show="viewState.sortField === 'dateAdded'">
-                                <span ng-show="viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                                <span ng-show="!viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            <span ng-show="completedCtrl.viewState.sortField === 'dateAdded'">
+                                <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
-                <th class="col-xs-1 text-center" data-ng-click="viewState.sortField = 'dateCompleted'; viewState.isAscending = !viewState.isAscending">
+                <th class="col-xs-1 text-center" data-ng-click="completedCtrl.viewState.sortField = 'dateCompleted'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
                     Time Completed
-                            <span ng-show="viewState.sortField === 'dateCompleted'">
-                                <span ng-show="viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                                <span ng-show="!viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            <span ng-show="completedCtrl.viewState.sortField === 'dateCompleted'">
+                                <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
                 <th class="col-xs-1 text-center">
-                    <button class="btn btn-xs btn-default table-button" data-ng-click="viewState.isShowingMinutes = !viewState.isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ viewState.isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
-                    <div data-ng-click="viewState.sortField = 'totalTimeTracked'; viewState.isAscending = !viewState.isAscending">
-                        {{ viewState.isShowingMinutes ? "Minutes" : "Hours"}} Tracked
-                            <span ng-show="viewState.sortField === 'totalTimeTracked'">
-                                <span ng-show="viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                                <span ng-show="!viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                    <button class="btn btn-xs btn-default table-button" data-ng-click="completedCtrl.viewState.isShowingMinutes = !completedCtrl.viewState.isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ completedCtrl.viewState.isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
+                    <div data-ng-click="completedCtrl.viewState.sortField = 'totalTimeTracked'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
+                        {{ completedCtrl.viewState.isShowingMinutes ? "Minutes" : "Hours"}} Tracked
+                            <span ng-show="completedCtrl.viewState.sortField === 'totalTimeTracked'">
+                                <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                     </div>
                 </th>
             </thead>
             <tbody>
-            <tr ng-repeat="task in completedCtrl.getTasks() | filter: { isCompleted: 'true'}  | orderBy:viewState.sortField:viewState.isAscending">
+            <tr ng-repeat="task in completedCtrl.getTasks() | filter: { isCompleted: 'true'}  | orderBy:completedCtrl.viewState.sortField:completedCtrl.viewState.isAscending">
                 <td class="text-center">
                     <button class="btn btn-default btn-xs " data-ng-click="completedCtrl.markIncomplete(task)" title="Mark this task as incomplete.">
                         <span class="glyphicon glyphicon-repeat"></span> Mark Incomplete
@@ -67,7 +67,7 @@ author: Joseph Gefroh
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | MilHourTime  }}</td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateCompleted | MilHourTime  }}</td>
                 <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
-                    {{ viewState.isShowingMinutes
+                    {{ completedCtrl.viewState.isShowingMinutes
                         ? (task.totalTimeTracked | msToMinutes)
                         : (task.totalTimeTracked | msToHours:2)
                     }}
