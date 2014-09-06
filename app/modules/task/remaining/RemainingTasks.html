@@ -67,7 +67,7 @@
                     </td>
                     <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
                     <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
-                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | MilHourTime }}</td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | date:'HH:mm' }}</td>
                     <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
                         {{ remainingCtrl.viewState.isShowingMinutes
                             ? (task.totalTimeTracked | msToMinutes)

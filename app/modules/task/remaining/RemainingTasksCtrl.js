@@ -6,7 +6,7 @@
         var vm = this;
         initializeViewState();
         TaskService.requestUpdateTimeTrackedForAllTasks();
-        
+
         function initializeViewState() {
             vm.viewState = ViewState.remainingTaskViewState;
         }
