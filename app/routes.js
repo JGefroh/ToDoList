@@ -1,6 +1,9 @@
 (function() {
     function Routes($routeProvider) {
         $routeProvider
+            .when("/", {
+                redirectTo: '/remaining'
+            })
             .when("/remaining", {
                 templateUrl: 'modules/task/remaining/RemainingTasks.html',
                 controller: 'RemainingTasksCtrl',

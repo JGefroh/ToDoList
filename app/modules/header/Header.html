@@ -2,5 +2,12 @@
 author: Joseph Gefroh
 -->
 <div class="row">
-    <h1 class="page-header">{{ applicationName }} <span class="small">{{ versionNumber }}, by <a href="http://www.jgefroh.com">Joseph Gefroh</a></span></h1>
+    <div class="col-xs-12">
+        <div class="h1 pull-left">
+            {{ applicationName }} <span class="small">{{ versionNumber }}, by <a href="http://www.jgefroh.com">Joseph Gefroh</a></span>
+         </div>
+        <div data-ng-controller="NavigationCtrl as navigation" class="navButtons pull-right">
+            <div data-ng-include src="'modules/navigation/NavigationView.html'"></div>
+        </div>
+    </div>
 </div>

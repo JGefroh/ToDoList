@@ -1,3 +1,3 @@
 angular
     .module('jgefroh.AlertModule', [])
-    .constant('truncateLimit', 30);
+    .constant('truncateLimit', 80);

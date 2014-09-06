@@ -4,8 +4,8 @@
 (function() {
     function AlertService($timeout) {
         var alert = {
-            subject: null,
-            message: null,
+            subject: "DEFAULT_TEXT_TO_AVOID_COLLAPSING",
+            message: "DEFAULT_TEXT_TO_AVOID_COLLAPSING",
             type: null,
             isShowing: false
         };

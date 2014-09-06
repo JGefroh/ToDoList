@@ -15,6 +15,6 @@
         }
     }
     angular
-        .module('jgefroh.HeaderModule', [])
+        .module('ToDoList.HeaderModule', ['ToDoList.NavigationModule'])
         .directive('header', Header);
 })();

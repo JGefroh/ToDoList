@@ -6,11 +6,11 @@ angular
     [
         'ngRoute',
         'jgefroh.AlertModule',
-        'jgefroh.HeaderModule',
         'jgefroh.FiltersModule',
         'ToDoList.Routes',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
+        'ToDoList.HeaderModule',
         'ToDoList.NavigationModule',
         'ToDoList.ViewStateModule'
     ]);

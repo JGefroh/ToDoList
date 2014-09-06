@@ -22,12 +22,7 @@
         vm.markComplete = function (task) {
             TaskService.markComplete(task);
             if (task.name != null) {
-                if (task.name.length > truncateLimit) {
-                    AlertService.setAlert('alert-success', 'Task Complete!', task.name.substr(0, truncateLimit) + '... has been marked as complete.', 2000);
-                }
-                else if (task.name.length <= truncateLimit) {
-                    AlertService.setAlert('alert-success', 'Task Complete!', task.name + ' has been marked as complete.', 2000);
-                }
+                AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as complete.', 2000);
             }
             else {
                 AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as complete.', 2000);
