@@ -9,6 +9,6 @@
     }
 
     angular
-        .module('ToDoList.Filters')
+        .module('jgefroh.FiltersModule')
         .filter('MilHourTime', MilHourTimeFilter);
 })();

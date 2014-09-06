@@ -28,6 +28,6 @@
         }
     }
     angular
-        .module('ToDoList.ViewStateModule')
+        .module('ToDoList.ViewStateModule', [])
         .service('ViewState', ViewState)
 })();

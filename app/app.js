@@ -2,22 +2,13 @@
  * Defines and configures all modules.
  */
 angular
-    .module('ToDoList.Filters', []);
-angular
-    .module('ToDoList.StatsModule', []);
-angular
-    .module('ToDoList.NavigationModule', []);
-angular
-    .module('ToDoList.ViewStateModule', []);
-
-angular
     .module('ToDoList',
     [
         'ngRoute',
         'jgefroh.AlertModule',
         'jgefroh.HeaderModule',
+        'jgefroh.FiltersModule',
         'ToDoList.Routes',
-        'ToDoList.Filters',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
         'ToDoList.NavigationModule',

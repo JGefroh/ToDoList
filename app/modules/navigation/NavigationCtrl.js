@@ -18,7 +18,7 @@
     }
 
     angular
-        .module('ToDoList.NavigationModule')
+        .module('ToDoList.NavigationModule', [])
         .controller('NavigationCtrl', ['TaskService', 'StatsService', '$location', NavigationCtrl]);
 
 })();

@@ -13,7 +13,7 @@
         };
     }
     angular
-        .module('ToDoList.Filters')
+        .module('jgefroh.FiltersModule')
         .filter('msToHours', MSToHoursFilter)
         .filter('msToMinutes', MSToMinutesFilter)
 })();
