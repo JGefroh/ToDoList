@@ -19,6 +19,8 @@ angular
 angular
     .module('ToDoList',
     [
+        'ngRoute',
+        'ToDoList.Routes',
         'ToDoList.Filters',
         'ToDoList.AlertModule',
         'ToDoList.TaskModule',

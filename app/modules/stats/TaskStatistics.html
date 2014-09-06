@@ -56,7 +56,7 @@ author: Joseph Gefroh
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="groupStat in getGroupStats() | orderBy:viewState.sortField:viewState.isAscending">
+                <tr ng-repeat="groupStat in statsCtrl.getGroupStats() | orderBy:viewState.sortField:viewState.isAscending">
                     <td> {{ groupStat.group }}</td>
                     <td class="text-center"> {{ groupStat.taskCount }}</td>
                     <td class="text-center"> {{ groupStat.remainingCount }}</td>

@@ -12,13 +12,18 @@
 
         <script src="resources/js/jquery-1.11.1.min.js"></script>
         <script src="resources/js/bootstrap.min.js"></script>
-        <script src="resources/js/angular-1.2.23/angular.min.js"></script>
         <!--[if lt IE 9]>
         <script src="resources/js/html5shiv-3.7.2.min.js"></script>
         <script src="resources/js/respond-1.4.2.min.js"></script>
         <![endif]-->
 
+        <!--AngularJS-->
+        <script src="resources/js/angular-1.2.23/angular.min.js"></script>
+        <script src="resources/js/angular-1.2.23/angular-route.min.js"></script>
+
+        <!--App Script Files-->
         <script src="app.min.js"></script>
+        <script src="routes.min.js"></script>
         <script src="modules/common/models/Task.min.js"></script>
         <script src="modules/common/models/GroupStat.min.js"></script>
         <script src="modules/common/filters/DateFilter.min.js"></script>
@@ -30,8 +35,8 @@
         <script src="modules/task/TaskService.min.js"></script>
         <script src="modules/stats/StatsService.min.js"></script>
         <script src="modules/task/creation/TaskCreation.min.js"></script>
-        <script src="modules/task/remaining/RemainingTasks.min.js"></script>
-        <script src="modules/task/completed/CompletedTasks.min.js"></script>
+        <script src="modules/task/remaining/RemainingTasksCtrl.min.js"></script>
+        <script src="modules/task/completed/CompletedTasksCtrl.min.js"></script>
         <script src="modules/stats/TaskStatistics.min.js"></script>
         <script src="modules/navigation/NavigationCtrl.min.js"></script>
         <script>
@@ -43,16 +48,12 @@
     <body>
         <div class="container">
             <div data-header></div>
-            <div data-alert-panel class="alertPanel"></div>
+            <br/> <div data-alert-panel class="alertPanel"></div>
             <br/>
             <div data-ng-controller="NavigationCtrl as navigation">
                 <div data-ng-include src="'modules/navigation/NavigationView.html'"></div>
-                <div data-ng-switch on="navigation.currentView">
-                    <div data-remaining-tasks data-ng-switch-when="REMAINING_VIEW"></div>
-                    <div data-completed-tasks data-ng-switch-when="COMPLETED_VIEW"></div>
-                    <div data-task-statistics data-ng-switch-when="STATS_VIEW"></div>
-                </div>
             </div>
+            <div ng-view></div>
         </div>
     </body>
 </html>

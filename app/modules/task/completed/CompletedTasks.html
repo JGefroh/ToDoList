@@ -56,9 +56,9 @@ author: Joseph Gefroh
                 </th>
             </thead>
             <tbody>
-            <tr ng-repeat="task in getTasks() | filter: { isCompleted: 'true'}  | orderBy:viewState.sortField:viewState.isAscending">
+            <tr ng-repeat="task in completedCtrl.getTasks() | filter: { isCompleted: 'true'}  | orderBy:viewState.sortField:viewState.isAscending">
                 <td class="text-center">
-                    <button class="btn btn-default btn-xs " data-ng-click="markIncomplete(task)" title="Mark this task as incomplete.">
+                    <button class="btn btn-default btn-xs " data-ng-click="completedCtrl.markIncomplete(task)" title="Mark this task as incomplete.">
                         <span class="glyphicon glyphicon-repeat"></span> Mark Incomplete
                     </button>
                 </td>
