@@ -17,7 +17,7 @@
                 controllerAs: 'statsCtrl'
             })
             .otherwise({
-                template: '404'
+                templateUrl: 'app404.html'
             });
     }
     angular
