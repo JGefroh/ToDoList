@@ -5,6 +5,8 @@
     function RemainingTasksCtrl(ViewState, TaskService, AlertService, truncateLimit, $filter) {
         var vm = this;
         initializeViewState();
+        TaskService.requestUpdateTimeTrackedForAllTasks();
+        
         function initializeViewState() {
             vm.viewState = ViewState.remainingTaskViewState;
         }
