@@ -4,11 +4,7 @@
 angular
     .module('ToDoList.Filters', []);
 angular
-    .module('ToDoList.AlertModule', []);
-angular
     .module('ToDoList.StatsModule', []);
-angular
-    .module('ToDoList.HeaderModule', []);
 angular
     .module('ToDoList.NavigationModule', []);
 angular
@@ -18,15 +14,16 @@ angular
     .module('ToDoList',
     [
         'ngRoute',
+        'jgefroh.AlertModule',
+        'jgefroh.HeaderModule',
         'ToDoList.Routes',
         'ToDoList.Filters',
-        'ToDoList.AlertModule',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
         'ToDoList.NavigationModule',
-        'ToDoList.HeaderModule',
         'ToDoList.ViewStateModule'
     ]);
 angular
     .module('ToDoList')
-    .constant('versionNumber', 'v0.6.0');
+    .constant('applicationName', 'ToDoList')
+    .constant('versionNumber', 'v0.7.0');

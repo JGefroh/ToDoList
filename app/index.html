@@ -29,12 +29,17 @@
         <script src="modules/common/filters/DateFilter.min.js"></script>
         <script src="modules/common/filters/TimeFilter.min.js"></script>
         <script src="modules/common/ViewState.min.js"></script>
-        <script src="modules/alert/AlertService.min.js"></script>
-        <script src="modules/alert/AlertPanel.min.js"></script>
-        <script src="modules/header/Header.min.js"></script>
         <script src="modules/stats/TaskStatistics.min.js"></script>
         <script src="modules/navigation/NavigationCtrl.min.js"></script>
         <script src="modules/stats/StatsService.min.js"></script>
+
+        <!--Header Module-->
+        <script src="modules/header/Header.min.js"></script>
+
+        <!--Alert Module-->
+        <script src="modules/alert/AlertModule.min.js"></script>
+        <script src="modules/alert/AlertService.min.js"></script>
+        <script src="modules/alert/AlertPanel.min.js"></script>
 
         <!--Task Module-->
         <script src="modules/task/TaskModule.min.js"></script>
@@ -52,7 +57,7 @@
     <body>
         <div class="container">
             <div data-header></div>
-            <br/> <div data-alert-panel class="alertPanel"></div>
+            <div data-alert-panel class="alertPanel"></div>
             <br/>
             <div data-ng-controller="NavigationCtrl as navigation">
                 <div data-ng-include src="'modules/navigation/NavigationView.html'"></div>

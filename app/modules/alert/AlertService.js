@@ -31,7 +31,6 @@
         }
     }
     angular
-        .module('ToDoList.AlertModule')
+        .module('jgefroh.AlertModule')
         .service('AlertService', ['$timeout', AlertService])
-        .constant('truncateLimit', 30);
 })();
