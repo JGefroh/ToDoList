@@ -3,17 +3,18 @@
  */
 (function() {
     function Header() {
-        function HeaderDirectiveCtrl($scope, versionNumber) {
+        function HeaderDirectiveCtrl($scope, versionNumber, applicationName) {
             $scope.versionNumber = versionNumber;
+            $scope.applicationName = applicationName;
         }
         return {
             restrict: 'A',
             scope: {},
             templateUrl: "modules/header/Header.html",
-            controller: ['$scope', 'versionNumber', HeaderDirectiveCtrl]
+            controller: ['$scope', 'versionNumber', 'applicationName', HeaderDirectiveCtrl]
         }
     }
     angular
-        .module('ToDoList.HeaderModule')
+        .module('ToDoList.HeaderModule', ['ToDoList.NavigationModule'])
         .directive('header', Header);
 })();

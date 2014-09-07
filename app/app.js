@@ -2,31 +2,19 @@
  * Defines and configures all modules.
  */
 angular
-    .module('ToDoList.Filters', []);
-angular
-    .module('ToDoList.AlertModule', []);
-angular
-    .module('ToDoList.TaskModule', []);
-angular
-    .module('ToDoList.StatsModule', []);
-angular
-    .module('ToDoList.HeaderModule', []);
-angular
-    .module('ToDoList.NavigationModule', []);
-angular
-    .module('ToDoList.ViewStateModule', []);
-
-angular
     .module('ToDoList',
     [
-        'ToDoList.Filters',
-        'ToDoList.AlertModule',
+        'ngRoute',
+        'jgefroh.AlertModule',
+        'jgefroh.FiltersModule',
+        'ToDoList.Routes',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
-        'ToDoList.NavigationModule',
         'ToDoList.HeaderModule',
+        'ToDoList.NavigationModule',
         'ToDoList.ViewStateModule'
     ]);
 angular
     .module('ToDoList')
-    .constant('versionNumber', 'v0.6.0');
+    .constant('applicationName', 'ToDoList')
+    .constant('versionNumber', 'v0.7.0');
