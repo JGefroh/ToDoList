@@ -16,4 +16,4 @@ angular
 angular
     .module('ToDoList')
     .constant('applicationName', 'ToDoList')
-    .constant('versionNumber', 'v0.7.0');
+    .constant('versionNumber', 'v0.8.0');
