@@ -21,6 +21,9 @@ author: Joseph Gefroh
                 <li data-ng-class="{active:navigation.isActive('/completed')}"><a href="#/completed"><span class="glyphicon glyphicon-check"></span> Completed <span class="badge">{{ (navigation.getTasks()|filter:{isCompleted:true}).length }}</span></a></li>
                 <li data-ng-class="{active:navigation.isActive('/statistics')}"><a href="#/statistics"><span class="glyphicon glyphicon-stats"></span> Stats</a></li>
             </ul>
+            <p class="navbar-text pull-right">
+                Created by <a href="http://www.jgefroh.com" class="navbar-link">Joseph Gefroh</a>
+            </p>
         </div>
     </div>
 </nav>
