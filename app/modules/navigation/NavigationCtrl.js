@@ -6,7 +6,7 @@
         var vm = this;
         vm.applicationName = applicationName;
         vm.versionNumber = versionNumber;
-        
+
         vm.getTasks = function () {
             return TaskService.getTasks();
         };
