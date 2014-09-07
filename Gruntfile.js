@@ -8,7 +8,27 @@ module.exports = function(grunt) {
                     'src/app/app.js',
                     'src/app/routes.js'
                 ],
-                dest: 'grunt_temp/ToDoList_UNCAT.js'
+                dest: 'grunt_temp/ToDoList_UNCAT.js',
+                options: {
+                    process: function(src, filePath) {
+                        if (filePath.indexOf("routes.js") > -1) {
+                            return src;
+                        }
+                        var folderPath = filePath.substring(0, filePath.lastIndexOf('/')) + "/";
+                        var appFolderPath = new RegExp("src/app/");
+                        folderPath = folderPath.replace(appFolderPath, "");
+                        var patternWithSingleQuotes = "templateUrl:[\\s]*'";
+                        var patternWithDoubleQuotes = 'templateUrl:[\\s]*"';
+                        var templateUrlRegExpWithSingleQuotes = new RegExp(patternWithSingleQuotes);
+                        var templateUrlRegExpWithDoubleQuotes = new RegExp(patternWithDoubleQuotes);
+                        if (src.match(templateUrlRegExpWithDoubleQuotes) || src.match(templateUrlRegExpWithSingleQuotes)) {
+                            console.info("Replacing templateUrl in file " + filePath + "...");
+                        }
+                        var srcWithPath = src.replace(templateUrlRegExpWithSingleQuotes, "templateUrl: '" + folderPath);
+                        srcWithPath = srcWithPath.replace(templateUrlRegExpWithDoubleQuotes, 'templateUrl: "' + folderPath);
+                        return srcWithPath;
+                    }
+                }
             }
         },
         uglify: {
