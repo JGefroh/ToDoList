@@ -1,3 +1,6 @@
 .idea
-app/modules/**/*.min.js
-app/app.min.js
+prod_dist
+src/app/modules/**/*.min.js
+src/app/app.min.js
+node_modules
+grunt_temp

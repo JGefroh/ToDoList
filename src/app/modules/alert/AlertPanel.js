@@ -9,7 +9,7 @@
         return {
             restrict: 'A',
             scope: {},
-            templateUrl: "modules/alert/AlertPanel.html",
+            templateUrl: "AlertPanel.html",
             controller: ['$scope', AlertDirectiveCtrl]
         }
     }
