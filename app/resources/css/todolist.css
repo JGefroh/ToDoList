@@ -21,7 +21,16 @@ td {
     word-break: break-all;
 }
 
-.alertPanel {
-    position: absolute;
-    z-index: 999999999;
+.alert {
+    margin-bottom: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+}
+
+.navButtons {
+    margin-top: 24px;
 }

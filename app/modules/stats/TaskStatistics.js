@@ -2,27 +2,20 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function TaskStatisticsDirective(ViewState, StatsService) {
-        function TaskStatisticsDirectiveCtrl($scope) {
-            initializeViewState();
+    function TaskStatisticsCtrl(ViewState, StatsService) {
+        var vm = this;
+        initializeViewState();
+        StatsService.requestStatUpdate();
 
-            function initializeViewState() {
-                $scope.viewState = ViewState.statisticsViewState;
-            }
-
-            $scope.getGroupStats = function () {
-                return StatsService.getGroupStats();
-            }
+        function initializeViewState() {
+            vm.viewState = ViewState.statisticsViewState;
         }
 
-        return {
-            restrict: 'A',
-            scope: {},
-            templateUrl: "modules/stats/TaskStatistics.html",
-            controller: ['$scope', TaskStatisticsDirectiveCtrl]
+        vm.getGroupStats = function () {
+            return StatsService.getGroupStats();
         }
     }
     angular
         .module('ToDoList.StatsModule')
-        .directive('taskStatistics', ['ViewState', 'StatsService', TaskStatisticsDirective]);
+        .controller('TaskStatisticsCtrl', ['ViewState', 'StatsService', TaskStatisticsCtrl]);
 })();

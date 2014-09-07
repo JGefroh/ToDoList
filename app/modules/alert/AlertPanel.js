@@ -14,6 +14,6 @@
         }
     }
     angular
-        .module('ToDoList.AlertModule')
+        .module('jgefroh.AlertModule')
         .directive('alertPanel', ['AlertService', AlertDirective]);
 })();
