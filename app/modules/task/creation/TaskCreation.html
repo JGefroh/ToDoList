@@ -11,7 +11,7 @@ author: Joseph Gefroh
     <div class="col-xs-3">
         <div class="form-group">
             <label>Group</label>
-            <input data-ng-model="viewState.input.group" class="form-control" placeholder="Enter a group name for this task..."/>
+            <input data-ng-model="viewState.input.group" class="form-control" placeholder="Enter a group name for this task..." data-ng-keypress="addTaskOnEnterKeyPressed(viewState.input, $event)"/>
         </div>
     </div>
     <div class="col-xs-1">
