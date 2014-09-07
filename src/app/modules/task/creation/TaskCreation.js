@@ -32,7 +32,7 @@
         return {
             restrict: "A",
             scope: {},
-            templateUrl: "modules/task/creation/TaskCreation.html",
+            templateUrl: "TaskCreation.html",
             controller: ["$scope", TaskCreationCtrl]
         }
     }
