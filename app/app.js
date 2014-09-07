@@ -10,7 +10,6 @@ angular
         'ToDoList.Routes',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
-        'ToDoList.HeaderModule',
         'ToDoList.NavigationModule',
         'ToDoList.ViewStateModule'
     ]);
