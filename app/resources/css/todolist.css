@@ -31,6 +31,6 @@ td {
     visibility: hidden;
 }
 
-.navButtons {
-    margin-top: 24px;
+.active {
+    border-bottom: 1px solid red;
 }

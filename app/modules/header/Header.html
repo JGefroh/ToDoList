@@ -1,13 +1,6 @@
 <!--
 author: Joseph Gefroh
 -->
-<div class="row">
-    <div class="col-xs-12">
-        <div class="h1 pull-left">
-            {{ applicationName }} <span class="small">{{ versionNumber }}, by <a href="http://www.jgefroh.com">Joseph Gefroh</a></span>
-         </div>
-        <div data-ng-controller="NavigationCtrl as navigation" class="navButtons pull-right">
-            <div data-ng-include src="'modules/navigation/NavigationView.html'"></div>
-        </div>
-    </div>
+<div data-ng-controller="NavigationCtrl as navigation">
+    <div data-ng-include src="'modules/navigation/NavigationView.html'"></div>
 </div>

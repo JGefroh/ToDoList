@@ -15,6 +15,10 @@
         vm.requestStatUpdate = function () {
             StatsService.requestStatUpdate();
         };
+
+        vm.isActive = function(route) {
+            return $location.path() === route;
+        }
     }
 
     angular
