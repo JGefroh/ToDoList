@@ -2,6 +2,10 @@ html {
     overflow-y: scroll;
 }
 
+body {
+    padding-top: 70px;
+}
+
 .task-highlighted {
     color: red;
     font-weight: bold;
@@ -31,6 +35,10 @@ td {
     visibility: hidden;
 }
 
-.navButtons {
-    margin-top: 24px;
+.active {
+    border-bottom: 1px solid red;
+}
+
+.navbar-link {
+    text-decoration: underline;
 }

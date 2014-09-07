@@ -10,11 +10,10 @@ angular
         'ToDoList.Routes',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
-        'ToDoList.HeaderModule',
         'ToDoList.NavigationModule',
         'ToDoList.ViewStateModule'
     ]);
 angular
     .module('ToDoList')
     .constant('applicationName', 'ToDoList')
-    .constant('versionNumber', 'v0.7.0');
+    .constant('versionNumber', 'v0.8.0');

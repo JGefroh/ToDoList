@@ -4,6 +4,7 @@
 (function() {
     function TaskCreation(ViewState, TaskService) {
         function TaskCreationCtrl($scope) {
+            var ENTER_KEY_ID = 13;
             initializeViewState();
             function initializeViewState() {
                 $scope.viewState = ViewState.taskCreationViewState;
@@ -13,6 +14,12 @@
                 if (taskFields) {
                     TaskService.createTask(taskFields);
                     resetInputFields(taskFields);
+                }
+            };
+
+            $scope.addTaskOnEnterKeyPressed = function(taskFields, key) {
+                if (key.which === ENTER_KEY_ID) {
+                    $scope.addTask(taskFields);
                 }
             };
 
