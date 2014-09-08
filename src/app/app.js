@@ -12,9 +12,9 @@ angular
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
         'ToDoList.NavigationModule',
-        'ToDoList.ViewStateModule',
+        'ToDoList.ViewStateModule'
     ]);
 angular
     .module('ToDoList')
     .constant('applicationName', 'ToDoList')
-    .constant('versionNumber', 'v0.9.0');
+    .constant('versionNumber', 'v1.0.0');
