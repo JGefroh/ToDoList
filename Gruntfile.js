@@ -47,11 +47,6 @@ module.exports = function(grunt) {
                     {expand: true, cwd: 'src/', src: ['app/**/*.html'], dest: 'prod_dist/'},
                     {expand: true, cwd: 'src/', src: ['app/resources/**/*'], dest: 'prod_dist/'}
                 ]
-            },
-            dev: {
-                files: [
-                    {src: ['prod_dist/app/ToDoList.min.js'], dest: 'src/app/ToDoList.min.js', filter:'isFile'}
-                ]
             }
         }
     });
@@ -60,5 +55,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.registerTask('default', 'dev');
     grunt.registerTask('prod', ['concat', 'uglify:prod', 'copy:prod']);
-    grunt.registerTask('dev', ['concat', 'uglify:dev', 'copy:dev']);
+    grunt.registerTask('dev', ['concat', 'uglify:dev']);
 };
