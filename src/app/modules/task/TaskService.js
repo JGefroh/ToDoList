@@ -52,11 +52,11 @@
                 var newTask = new Task();
                 newTask.group = value.group;
                 newTask.name = value.name;
-                newTask.dateAdded = value.dateAdded;
-                newTask.dateCompleted = value.dateCompleted;
+                newTask.dateAdded = new Date(value.dateAdded);
+                newTask.dateCompleted = new Date(value.dateCompleted);
                 newTask.isCompleted = value.isCompleted;
                 newTask.isTracking = value.isTracking;
-                newTask.timeTrackingStarted = value.timeTrackingStarted;
+                newTask.timeTrackingStarted = new Date(value.timeTrackingStarted);
                 newTask.totalTimeTracked = value.totalTimeTracked;
                 taskList.unshift(newTask);
             });
