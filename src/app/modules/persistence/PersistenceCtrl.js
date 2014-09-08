@@ -15,14 +15,23 @@
 
         vm.load = function(tasksToLoad) {
             try {
-                TaskService.setTasks(angular.fromJson(tasksToLoad.json));
-                getTasksAsJSON();
-                AlertService.setAlert("alert-info", "Load successful!", TaskService.getTasks().length + " tasks have been loaded.", 2000);
-                tasksToLoad.json = null;
+                if (tasksToLoad.json) {
+                    TaskService.setTasks(angular.fromJson(tasksToLoad.json));
+                    getTasksAsJSON();
+                    AlertService.setAlert("alert-info", "Load successful!", TaskService.getTasks().length + " tasks have been loaded.", 2000);
+                    tasksToLoad.json = null;
+                }
+                else {
+                    showLoadError();
+                }
             }
             catch(error) {
-                AlertService.setAlert("alert-danger", "Load failed!", "We couldn't read your saved tasks properly. Please ensure there are no typos and try again.", 5000);
+                showLoadError();
             }
+        };
+
+        function showLoadError() {
+            AlertService.setAlert("alert-danger", "Load failed!", "We couldn't read your saved tasks properly. Please ensure there are no typos and try again.", 5000);
         }
     }
     angular
