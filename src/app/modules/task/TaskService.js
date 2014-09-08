@@ -56,7 +56,7 @@
                 newTask.dateCompleted = new Date(value.dateCompleted);
                 newTask.isCompleted = value.isCompleted;
                 newTask.isTracking = value.isTracking;
-                newTask.timeTrackingStarted = new Date(value.timeTrackingStarted);
+                newTask.timeTrackingStarted = new Date();
                 newTask.totalTimeTracked = value.totalTimeTracked;
                 taskList.unshift(newTask);
             });

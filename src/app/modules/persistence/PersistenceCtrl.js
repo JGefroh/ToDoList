@@ -10,7 +10,8 @@
 
 
         function getTasksAsJSON() {
-           vm.export.json = angular.toJson(TaskService.getTasks());
+            TaskService.requestUpdateTimeTrackedForAllTasks();
+            vm.export.json = angular.toJson(TaskService.getTasks());
         }
 
         vm.load = function(tasksToLoad) {
