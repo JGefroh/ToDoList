@@ -2,13 +2,24 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function RemainingTasksCtrl(ViewState, TaskService, AlertService, truncateLimit, $filter) {
+    var $jQuery = jQuery.noConflict();
+    function RemainingTasksCtrl(ViewState, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
         var vm = this;
         initializeViewState();
+        initializeModalWatcher();
         TaskService.requestUpdateTimeTrackedForAllTasks();
 
         function initializeViewState() {
             vm.viewState = ViewState.remainingTaskViewState;
+        }
+
+        function initializeModalWatcher() {
+            $rootScope.$on('$locationChangeStart', function(next, current) {
+                var modalBackdrop = $jQuery('.modal-backdrop');
+                if (modalBackdrop) {
+                    modalBackdrop.remove();
+                }
+            });
         }
 
         vm.dateFilter = function () {
@@ -51,5 +62,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('RemainingTasksCtrl', ['ViewState', 'TaskService', 'AlertService', 'truncateLimit', '$filter', RemainingTasksCtrl]);
+        .controller('RemainingTasksCtrl', ['ViewState', 'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope', RemainingTasksCtrl]);
 })();

@@ -7,6 +7,7 @@ angular
         'ngRoute',
         'jgefroh.AlertModule',
         'jgefroh.FiltersModule',
+        'ToDoList.PersistenceModule',
         'ToDoList.Routes',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
@@ -16,4 +17,4 @@ angular
 angular
     .module('ToDoList')
     .constant('applicationName', 'ToDoList')
-    .constant('versionNumber', 'v0.9.0');
+    .constant('versionNumber', 'v1.0.0');
