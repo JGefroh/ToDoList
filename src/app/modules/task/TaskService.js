@@ -46,6 +46,22 @@
             return taskList;
         };
 
+        this.setTasks = function(tasks) {
+            taskList.length = 0;
+            angular.forEach(tasks, function(value, key) {
+                var newTask = new Task();
+                newTask.group = value.group;
+                newTask.name = value.name;
+                newTask.dateAdded = value.dateAdded;
+                newTask.dateCompleted = value.dateCompleted;
+                newTask.isCompleted = value.isCompleted;
+                newTask.isTracking = value.isTracking;
+                newTask.timeTrackingStarted = value.timeTrackingStarted;
+                newTask.totalTimeTracked = value.totalTimeTracked;
+                taskList.unshift(newTask);
+            });
+        };
+
 
         this.markComplete = function (task) {
             task.markComplete();

@@ -7,11 +7,12 @@ angular
         'ngRoute',
         'jgefroh.AlertModule',
         'jgefroh.FiltersModule',
+        'ToDoList.PersistenceModule',
         'ToDoList.Routes',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
         'ToDoList.NavigationModule',
-        'ToDoList.ViewStateModule'
+        'ToDoList.ViewStateModule',
     ]);
 angular
     .module('ToDoList')

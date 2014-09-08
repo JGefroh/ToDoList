@@ -19,6 +19,11 @@
                 controller: 'TaskStatisticsCtrl',
                 controllerAs: 'statsCtrl'
             })
+            .when("/persistence", {
+                templateUrl: 'modules/persistence/Persistence.html',
+                controller: 'PersistenceCtrl',
+                controllerAs: 'persistenceCtrl'
+            })
             .otherwise({
                 templateUrl: 'app404.html'
             });

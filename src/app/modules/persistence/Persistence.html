@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Persistence<span class="small"> - save or load tasks here.</span></h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h4>Export <span class="small"> - Copy this text and save it on your computer to save your tasks.</span></h4>
+    </div>
+</div>
+<pre data-ng-bind="persistenceCtrl.export.json"></pre>
+
+<hr/>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h4>Import <span class="small"> - Paste previously saved text into this area to load it.</span></h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <textarea class="form-control" rows="3" data-ng-model="persistenceCtrl.import.json"></textarea>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-danger" style="margin-top: 4px;" data-ng-click="persistenceCtrl.load(persistenceCtrl.import)">
+            <span class="glyphicon glyphicon-import"></span> Load
+        </button>
+    </div>
+</div>
