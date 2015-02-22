@@ -1,0 +1,103 @@
+<div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Remaining Tasks<span class="small"> - tasks that you have not yet completed.</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="form-group">
+                <label>Task</label>
+                <input data-ng-model="remainingCtrl.viewState.input.name" class="form-control" placeholder="Enter your task name or description..."/>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group">
+                <label>Group</label>
+                <input data-ng-model="remainingCtrl.viewState.input.group" class="form-control" placeholder="Enter a group name for this task..." data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(viewState.input, $event)"/>
+            </div>
+        </div>
+        <div class="col-xs-1">
+            <button class="btn btn-success inline-button" data-ng-click="remainingCtrl.addTask(viewState.input)"
+                    title="Add a new task to the To Do List."
+                    style="margin-top: 24px;">
+                <span class="glyphicon glyphicon-plus"></span> Add Task
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="col-xs-1 text-center">Action</th>
+                    <th class="col-xs-8" data-ng-click="remainingCtrl.viewState.sortField = 'name'; remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending">
+                        Task
+                        <span ng-show="remainingCtrl.viewState.sortField === 'name'">
+                            <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                            <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                        </span>
+                    </th>
+                    <th class="col-xs-1 text-center" data-ng-click="remainingCtrl.viewState.sortField = 'group'; remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending">
+                        Group
+                        <span ng-show="remainingCtrl.viewState.sortField === 'group'">
+                            <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                            <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                        </span>
+                    </th>
+                    <th class="col-xs-1 text-center" data-ng-click="remainingCtrl.viewState.sortField = 'dateAdded'; remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending">
+                        Time Added
+                        <span ng-show="remainingCtrl.viewState.sortField === 'dateAdded'">
+                            <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                            <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                        </span>
+                    </th>
+                    <th class="col-xs-1 text-center">
+                        <button class="btn btn-xs btn-default table-button" data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ remainingCtrl.viewState.isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
+                        <div data-ng-click="remainingCtrl.viewState.sortField = 'totalTimeTracked'; remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending">
+                            {{ remainingCtrl.viewState.isShowingMinutes ? "Minutes" : "Hours"}} Tracked
+                            <span ng-show="remainingCtrl.viewState.sortField === 'totalTimeTracked'">
+                                <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="task in remainingCtrl.tasks | filter: { isCompleted: 'false'}  | orderBy:remainingCtrl.viewState.sortField:remainingCtrl.viewState.isAscending">
+                    <td class="text-center">
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.markComplete(task)" title="Mark this task as completed.">
+                            <span class="glyphicon glyphicon-ok"></span> Complete
+                        </button>
+                        <br />
+
+                        <hr class="table-button-separator">
+
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.prepareEditTask(task)" title="Edit the details of this task." data-toggle="modal" data-target="#editTaskView">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>
+                        <br />
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.startTrackingTask(task)" title="Start a timer for this task." ng-show="!task.isTracking"  >
+                            <span class="glyphicon glyphicon-time"></span> Track
+                        </button>
+                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.stopTrackingTask(task)"  title="Stop the timer for this task." ng-show="task.isTracking" >
+                            <span class="glyphicon glyphicon-time"></span> Untrack
+                        </button>
+                    </td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | date:'HH:mm' }}</td>
+                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
+                        {{ remainingCtrl.viewState.isShowingMinutes
+                            ? (task.totalTimeTracked | msToMinutes)
+                            : (task.totalTimeTracked | msToHours:2)
+                        }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div data-ng-include="" src="'modules/task/remaining/TaskModification.html'"></div>
+</div>
