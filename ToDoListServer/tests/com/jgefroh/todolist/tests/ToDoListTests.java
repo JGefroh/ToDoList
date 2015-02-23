@@ -46,8 +46,8 @@ public class ToDoListTests {
         List<Task> tasks = list.getTasks();
         
         assertEquals(1, tasks.size());
-        assertEquals(createdTask.getTaskName(), tasks.get(0).getTaskName());
-        assertEquals(createdTask.getTaskGroup(), tasks.get(0).getTaskGroup());
+        assertEquals(createdTask.getName(), tasks.get(0).getName());
+        assertEquals(createdTask.getGroup(), tasks.get(0).getGroup());
     }
     
     @Test

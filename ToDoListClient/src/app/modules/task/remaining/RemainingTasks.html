@@ -8,20 +8,29 @@
         <div class="col-xs-5">
             <div class="form-group">
                 <label>Task</label>
-                <input data-ng-model="remainingCtrl.viewState.input.name" class="form-control" placeholder="Enter your task name or description..."/>
+                <input data-ng-model="remainingCtrl.viewState.input.name"
+                       data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
+                       class="form-control" placeholder="Enter your task name or description..."/>
             </div>
         </div>
         <div class="col-xs-3">
             <div class="form-group">
                 <label>Group</label>
-                <input data-ng-model="remainingCtrl.viewState.input.group" class="form-control" placeholder="Enter a group name for this task..." data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(viewState.input, $event)"/>
+                <input data-ng-model="remainingCtrl.viewState.input.group"
+                       data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
+                       data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(viewState.input, $event)"
+                       class="form-control" placeholder="Enter a group name for this task..."/>
             </div>
         </div>
         <div class="col-xs-1">
-            <button class="btn btn-success inline-button" data-ng-click="remainingCtrl.addTask(viewState.input)"
+            <button class="btn btn-success inline-button"
+                    data-ng-click="remainingCtrl.addTask(remainingCtrl.viewState.input)"
+                    data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
                     title="Add a new task to the To Do List."
                     style="margin-top: 24px;">
-                <span class="glyphicon glyphicon-plus"></span> Add Task
+                <span data-ng-if="!remainingCtrl.operations.addTask.status" class="glyphicon glyphicon-plus"></span>
+                <span data-ng-if="remainingCtrl.operations.addTask.status === 'LOADING'" class="fa fa-spin fa-spinner"></span>
+                Add Task
             </button>
         </div>
     </div>
@@ -65,30 +74,45 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="task in remainingCtrl.tasks | filter: { isCompleted: 'false'}  | orderBy:remainingCtrl.viewState.sortField:remainingCtrl.viewState.isAscending">
+                <tr ng-repeat="task in remainingCtrl.tasks | filter: { complete: 'false'}  | orderBy:remainingCtrl.viewState.sortField:remainingCtrl.viewState.isAscending">
                     <td class="text-center">
-                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.markComplete(task)" title="Mark this task as completed.">
+                        <button class="btn btn-default btn-xs table-button"
+                                data-ng-click="remainingCtrl.markComplete(task)"
+                                data-ng-disabled="task.isReadOnly"
+                                title="Mark this task as completed.">
                             <span class="glyphicon glyphicon-ok"></span> Complete
                         </button>
                         <br />
 
                         <hr class="table-button-separator">
 
-                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.prepareEditTask(task)" title="Edit the details of this task." data-toggle="modal" data-target="#editTaskView">
+                        <button class="btn btn-default btn-xs table-button"
+                                data-ng-click="remainingCtrl.prepareEditTask(task)"
+                                data-ng-disabled="task.isReadOnly"
+                                title="Edit the details of this task."
+                                data-toggle="modal" data-target="#editTaskView">
                             <span class="glyphicon glyphicon-pencil"></span> Edit
                         </button>
                         <br />
-                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.startTrackingTask(task)" title="Start a timer for this task." ng-show="!task.isTracking"  >
+                        <button class="btn btn-default btn-xs table-button"
+                                data-ng-click="remainingCtrl.startTrackingTask(task)"
+                                data-ng-disabled="task.isReadOnly"
+                                title="Start a timer for this task."
+                                data-ng-show="!task.tracking"  >
                             <span class="glyphicon glyphicon-time"></span> Track
                         </button>
-                        <button class="btn btn-default btn-xs table-button" data-ng-click="remainingCtrl.stopTrackingTask(task)"  title="Stop the timer for this task." ng-show="task.isTracking" >
+                        <button class="btn btn-default btn-xs table-button"
+                                data-ng-click="remainingCtrl.stopTrackingTask(task)"
+                                data-ng-disabled="task.isReadOnly"
+                                title="Stop the timer for this task."
+                                data-ng-show="task.tracking">
                             <span class="glyphicon glyphicon-time"></span> Untrack
                         </button>
                     </td>
-                    <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
-                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
-                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | date:'HH:mm' }}</td>
-                    <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
+                    <td data-ng-class="{'task-highlighted': task.tracking}"> {{ task.name }} </td>
+                    <td data-ng-class="{'task-highlighted': task.tracking, 'text-center':true}"> {{ task.group }}</td>
+                    <td data-ng-class="{'task-highlighted': task.tracking, 'text-center':true}"> {{task.dateAdded | date:'HH:mm' }}</td>
+                    <td data-ng-class="{'task-highlighted': task.tracking, 'text-right':true}">
                         {{ remainingCtrl.viewState.isShowingMinutes
                             ? (task.totalTimeTracked | msToMinutes)
                             : (task.totalTimeTracked | msToHours:2)
@@ -97,6 +121,10 @@
                 </tr>
                 </tbody>
             </table>
+            <h3 data-ng-if="remainingCtrl.operations.getTasks.status === 'LOADING'"
+                class="text-center">
+                <span class="fa fa-spin fa-spinner"></span> Loading tasks...
+            </h3>
         </div>
     </div>
     <div data-ng-include="" src="'modules/task/remaining/TaskModification.html'"></div>

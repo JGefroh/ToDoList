@@ -12,27 +12,30 @@ public class ToDoListManager {
     @Inject private TaskDAO taskDAO;
 
     
-    public Task createTask(final String name, final String group) {
-        Task task = Task.create(name, group);
+    public Task createTask(final String ownerId, final String name, final String group) {
+        Task task = Task.create(ownerId, name, group);
         task = taskDAO.update(task);
+        ToDoList list = getList(ownerId);
+        list.addTask(task);
+        listDAO.update(list);
         return task;
     }
     
-    public Task saveTask(final int taskId, final String name, final String group) {
-        Task task = getTask(taskId);
-        task.editTask(name, group);
+    public Task updateTask(final String ownerId, final int taskId, final String name, final String group) {
+        Task task = getTask(ownerId, taskId);
+        task.updateTask(name, group);
         return taskDAO.update(task);
     }
     
     
-    public Task markComplete(final int taskId) {
-        Task task = getTask(taskId);
+    public Task markComplete(final String ownerId, final int taskId) {
+        Task task = getTask(ownerId, taskId);
         task.markComplete();
         return task;
     }
     
-    public Task markIncomplete(final int taskId) {
-        Task task = getTask(taskId);
+    public Task markIncomplete(final String ownerId, final int taskId) {
+        Task task = getTask(ownerId, taskId);
         task.markIncomplete();
         return task;
     }
@@ -57,17 +60,33 @@ public class ToDoListManager {
     private ToDoList getList(final String ownerId) {
         ToDoList list = listDAO.getForOwner(ownerId);
         if (list == null) {
-            throw new IllegalArgumentException("This list does not exist.");
+            list = ToDoList.create(ownerId);
+            list = listDAO.update(list);
         }
         return list;
     }
     
-    private Task getTask(final int taskId) {
+    private Task getTask(final String ownerId, final int taskId) {
         Task task = taskDAO.get(Task.class, taskId);
         if (task == null) {
             throw new IllegalArgumentException("This task does not exist.");
         }
+        if (!task.getOwnerId().equals(ownerId)) {
+            throw new IllegalArgumentException("You don't have permission to operate on this task.");
+        }
         return task;
+    }
+
+    public Task trackTask(String ownerId, int taskId) {
+        Task task = getTask(ownerId, taskId);
+        task.track();
+        return taskDAO.update(task);
+    }
+    
+    public Task untrackTask(String ownerId, int taskId) {
+        Task task = getTask(ownerId, taskId);
+        task.untrack();
+        return taskDAO.update(task);
     }
     
     

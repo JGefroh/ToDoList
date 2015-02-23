@@ -15,17 +15,11 @@ function Task() {
     this.totalTimeTracked = 0;
 
     this.startTracking = function() {
-        this.timeTrackingStarted = new Date();
         this.isTracking = true;
     };
 
     this.stopTracking = function() {
-        if (this.timeTrackingStarted) {
-            var timeTracked =  Math.abs(this.timeTrackingStarted.getTime() - new Date().getTime());
-            this.totalTimeTracked += timeTracked;
-            this.timeTrackingStarted = null;
-            this.isTracking = false;
-        }
+        this.isTracking = false;
     };
 
     this.bankTimeTracked = function() {

@@ -2,50 +2,49 @@
  * Created by Joseph on 8/16/2014.
  */
 (function() {
-    function TaskService($http, $timeout, $stateParams, UserService) {
+    function TaskService($http, $q, $timeout, $stateParams, UserService) {
         var taskList = [];
 
         var endpoints = {
-            getTasks: function(ownerID) {
-                return '../rest/tasks?ownerID={ownerID}'.replace('{ownerID}', ownerID);
+            getTasks: function(ownerId) {
+                return '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
+            },
+            saveTask: function(ownerId) {
+                return '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
+            },
+            markComplete: function(ownerId, taskId) {
+                return '../rest/tasks/{taskId}/{ownerId}/markComplete'
+                    .replace('{taskId}', taskId)
+                    .replace('{ownerId}', ownerId);
+            },
+            trackTask: function(ownerId, taskId) {
+                return '../rest/tasks/{taskId}/{ownerId}/track'
+                    .replace('{taskId}', taskId)
+                    .replace('{ownerId}', ownerId);
+            },
+            untrackTask: function(ownerId, taskId) {
+                return '../rest/tasks/{taskId}/{ownerId}/untrack'
+                    .replace('{taskId}', taskId)
+                    .replace('{ownerId}', ownerId);
             }
         };
-        var TRACKING_UPDATE_INTERVAL_IN_MS = 30000;
-        startTrackingUpdateRepeatingTimer();
 
-        function startTrackingUpdateRepeatingTimer() {
-            var trackingUpdateTimer = $timeout(function () {
-                updateTimeTrackedForAllTasks();
-                startTrackingUpdateRepeatingTimer();
-            }, TRACKING_UPDATE_INTERVAL_IN_MS);
-        }
-
-        function updateTimeTrackedForAllTasks() {
-            for (var objectIndex = 0; objectIndex < taskList.length; objectIndex++) {
-                var task = taskList[objectIndex];
-                task.bankTimeTracked();
+        this.saveTask = function (ownerId, task) {
+            var deferred = $q.defer();
+            if (task && isValidInput(task.name, task.group)) {
+                return $http.put(endpoints.saveTask(ownerId), task).then(function(response) {
+                    return response.data;
+                });
             }
-        }
-
-
-        this.createTask = function (task) {
-            if (isValidInput(task.name, task.group)) {
-                var createdTask = createTask(task.name, task.group);
-                taskList.unshift(createdTask);
+            else {
+                deferred.reject();
             }
+            return deferred.promise;
         };
 
         function isValidInput(taskName, taskGroup) {
             return taskName || taskGroup;
         }
-
-        function createTask(taskName, taskGroup) {
-            var taskToCreate = new Task();
-            taskToCreate.name = taskName;
-            taskToCreate.group = taskGroup;
-            return taskToCreate;
-        }
-
 
         this.getTasksFor = function (ownerID) {
             return $http.get(endpoints.getTasks(ownerID)).then(function(response) {
@@ -53,45 +52,31 @@
             })
         };
 
-        this.setTasks = function(tasks) {
-            taskList.length = 0;
-            angular.forEach(tasks, function(value, key) {
-                var newTask = new Task();
-                newTask.group = value.group;
-                newTask.name = value.name;
-                newTask.dateAdded = new Date(value.dateAdded);
-                newTask.dateCompleted = new Date(value.dateCompleted);
-                newTask.isCompleted = value.isCompleted;
-                newTask.isTracking = value.isTracking;
-                newTask.timeTrackingStarted = new Date();
-                newTask.totalTimeTracked = value.totalTimeTracked;
-                taskList.unshift(newTask);
+        this.markComplete = function (ownerId, taskId) {
+            return $http.put(endpoints.markComplete(ownerId, taskId)).then(function(response) {
+                return response.data;
             });
         };
 
-
-        this.markComplete = function (task) {
-            task.markComplete();
+        this.markTaskIncomplete = function (ownerId, taskId) {
+            return $http.put(endpoints.markIncomplete(ownerId, taskId)).then(function(response) {
+                return response.data;
+            });
         };
 
-        this.markTaskIncomplete = function (task) {
-            task.markIncomplete();
+        this.trackTask = function (ownerId, taskId) {
+            return $http.put(endpoints.trackTask(ownerId, taskId)).then(function(response) {
+                return response.data;
+            })
         };
 
-
-        this.requestUpdateTimeTrackedForAllTasks = function () {
-            updateTimeTrackedForAllTasks();
-        };
-
-        this.startTrackingTask = function (task) {
-            task.startTracking();
-        };
-
-        this.stopTrackingTask = function (task) {
-            task.stopTracking();
+        this.untrackTask = function (ownerId, taskId) {
+            return $http.put(endpoints.untrackTask(ownerId, taskId)).then(function(response) {
+                return response.data;
+            })
         };
     }
     angular
         .module('ToDoList.TaskModule')
-        .service('TaskService', ['$http', '$timeout', '$stateParams', 'UserService', TaskService]);
+        .service('TaskService', ['$http', '$q', '$timeout', '$stateParams', 'UserService', TaskService]);
 })();

@@ -1,27 +1,41 @@
 package com.jgefroh.todolist.server.todolists;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 
 @Entity
 public class Task {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String taskName;
-    private String taskGroup;
+    private String ownerId;
+    private String name;
+    private String group;
     private boolean isComplete;
+    private boolean isTracking;
+    private long totalTimeTracked;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeTrackingStarted;
+    
+    @Transient
+    private boolean isReadOnly;
     
     
-    
-    public static Task create(final String name, final String group) {
+    public static Task create(final String ownerId, final String name, final String group) {
         Task task = new Task();
-        task.setTaskGroup(group);
-        task.setTaskName(name);
+        task.setOwnerId(ownerId);
+        task.setGroup(group);
+        task.setName(name);
         
         return task;
     }
@@ -34,9 +48,20 @@ public class Task {
         setComplete(false);
     }
     
-    public void editTask(final String name, final String group) {
-        setTaskGroup(group);
-        setTaskName(name);
+    public void track() {
+        setTracking(true);
+        setTimeTrackingStarted(new Date());
+    }
+    
+    public void untrack() {
+        setTracking(false);
+        setTotalTimeTracked(getTotalTimeTracked() + (new Date().getTime() - getTimeTrackingStarted().getTime()));
+        setTimeTrackingStarted(null);
+    }
+    
+    public void updateTask(final String name, final String group) {
+        setGroup(group);
+        setName(name);
     }
     
 
@@ -49,12 +74,32 @@ public class Task {
         return id;
     }
     
-    public String getTaskGroup() {
-        return taskGroup;
+    public String getGroup() {
+        return group;
     }
     
-    public String getTaskName() {
-        return taskName;
+    public String getName() {
+        return name;
+    }
+    
+    public String getOwnerId() {
+        return ownerId;
+    }
+    
+    public Date getTimeTrackingStarted() {
+        return timeTrackingStarted;
+    }
+    
+    public long getTotalTimeTracked() {
+        return totalTimeTracked;
+    }
+    
+    public boolean isTracking() {
+        return isTracking;
+    }
+    
+    public boolean isReadOnly() {
+        return isReadOnly;
     }
 
     
@@ -67,11 +112,31 @@ public class Task {
         this.id = id;
     }
     
-    private void setTaskGroup(String taskGroup) {
-        this.taskGroup = taskGroup;
+    private void setGroup(String group) {
+        this.group = group;
     }
     
-    private void setTaskName(String taskName) {
-        this.taskName = taskName;
+    private void setName(String name) {
+        this.name = name;
+    }
+    
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+    
+    private void setTimeTrackingStarted(Date timeTrackingStarted) {
+        this.timeTrackingStarted = timeTrackingStarted;
+    }
+    
+    private void setTotalTimeTracked(long totalTimeTracked) {
+        this.totalTimeTracked = totalTimeTracked;
+    }
+    
+    private void setTracking(boolean isTracking) {
+        this.isTracking = isTracking;
+    }
+    
+    public void setReadOnly(boolean isReadOnly) {
+        this.isReadOnly = isReadOnly;
     }
 }

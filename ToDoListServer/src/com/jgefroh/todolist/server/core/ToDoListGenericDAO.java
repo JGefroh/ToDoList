@@ -9,7 +9,7 @@ import com.jgefroh.server.core.AbstractGenericDAO;
  * @author Joseph Gefroh
  */
 public class ToDoListGenericDAO extends AbstractGenericDAO {
-    @PersistenceContext private EntityManager entityManager;
+    @PersistenceContext(unitName = "ToDoListDS") private EntityManager entityManager;
     
     @Override
     public EntityManager getEntityManager() {

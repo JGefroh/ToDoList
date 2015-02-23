@@ -1,30 +1,51 @@
 package com.jgefroh.todolist.server.todolists;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 
 @Entity
+@NamedQuery(name = "todolist.getForOwner",
+            query = "select T from ToDoList T where T.ownerId = :ownerId")
 public class ToDoList {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
-    @OneToMany
-    private List<Task> tasks = new ArrayList<Task>();
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Task> tasks;
+    
+    private String ownerId;
+    
+    
+    public static ToDoList create(final String ownerId) {
+        ToDoList list = new ToDoList();
+        list.setOwnerId(ownerId);
+        return list;
+    }
+    
     
     public void addTask(final Task task) {
+        if (tasks == null) {
+            tasks = new ArrayList<Task>();
+        }
         this.tasks.add(task);
     }
     
     public void removeTask(final Task task) {
+        if (tasks == null) {
+            tasks = new ArrayList<Task>();
+        }
         this.tasks.remove(task);
     }
     
@@ -39,7 +60,7 @@ public class ToDoList {
     
     public List<Task> getCompleteTasks() {
         List<Task> results = new ArrayList<Task>();
-        for (Task task : tasks) {
+        for (Task task : tasks == null ? Collections.<Task>emptyList() : tasks) {
             if (task.isComplete()) {
                 results.add(task);
             }
@@ -50,7 +71,7 @@ public class ToDoList {
     
     public List<Task> getIncompleteTasks() {
         List<Task> results = new ArrayList<Task>();
-        for (Task task : tasks) {
+        for (Task task : tasks == null ? Collections.<Task>emptyList() : tasks) {
             if (!task.isComplete()) {
                 results.add(task);
             }
@@ -60,6 +81,26 @@ public class ToDoList {
     }
 
     public List<Task> getTasks() {
-        return tasks;
+        if (tasks == null) {
+            tasks = new ArrayList<Task>();
+        }
+        return new ArrayList<Task>(tasks);
     }
+    
+
+    
+    public Integer getId() {
+        return id;
+    }
+    
+    public String getOwnerId() {
+        return ownerId;
+    }
+    
+    
+    
+    private void setOwnerId(final String ownerId) {
+        this.ownerId = ownerId;
+    }
+    
 }
