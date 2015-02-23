@@ -56,17 +56,20 @@ author: Joseph Gefroh
                 </th>
             </thead>
             <tbody>
-            <tr ng-repeat="task in completedCtrl.getTasks() | filter: { isCompleted: 'true'}  | orderBy:completedCtrl.viewState.sortField:completedCtrl.viewState.isAscending">
+            <tr ng-repeat="task in completedCtrl.tasks | filter: { complete: 'true'}  | orderBy:completedCtrl.viewState.sortField:completedCtrl.viewState.isAscending">
                 <td class="text-center">
-                    <button class="btn btn-default btn-xs " data-ng-click="completedCtrl.markIncomplete(task)" title="Mark this task as incomplete.">
+                    <button class="btn btn-default btn-xs "
+                            data-ng-click="completedCtrl.markIncomplete(task)"
+                            data-ng-disabled="task.readOnly"
+                            title="Mark this task as incomplete.">
                         <span class="glyphicon glyphicon-repeat"></span> Mark Incomplete
                     </button>
                 </td>
-                <td data-ng-class="{'task-highlighted': task.isTracking}"> {{ task.name }} </td>
-                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{ task.group }}</td>
-                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateAdded | date:'HH:mm' }}</td>
-                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-center':true}"> {{task.dateCompleted | date:'HH:mm' }}</td>
-                <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
+                <td data-ng-class="{'task-highlighted': task.tracking}"> {{ task.name }} </td>
+                <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{ task.group }}</td>
+                <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.dateAdded | date:'HH:mm' }}</td>
+                <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.dateCompleted | date:'HH:mm' }}</td>
+                <td class="text-right" data-ng-class="{'task-highlighted': task.tracking}">
                     {{ completedCtrl.viewState.isShowingMinutes
                         ? (task.totalTimeTracked | msToMinutes)
                         : (task.totalTimeTracked | msToHours:2)
@@ -75,5 +78,9 @@ author: Joseph Gefroh
             </tr>
             </tbody>
         </table>
+        <h3 data-ng-if="completedCtrl.operations.getTasks.status === 'LOADING'"
+            class="text-center">
+            <span class="fa fa-spin fa-spinner"></span> Loading tasks...
+        </h3>
     </div>
 </div>

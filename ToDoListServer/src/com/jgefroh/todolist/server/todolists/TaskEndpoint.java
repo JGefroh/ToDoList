@@ -55,7 +55,7 @@ public class TaskEndpoint {
     }
     
     @PUT
-    @Path("{ownerId}/task/{taskId}/markIncomplete")
+    @Path("{taskId}/{ownerId}/markIncomplete")
     public Task markIncomplete(@PathParam("ownerId") final String ownerId,
                                @PathParam("taskId") final int taskId) {
         return listManager.markIncomplete(ownerId, taskId);

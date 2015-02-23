@@ -41,6 +41,7 @@ public class Task {
     }
     
     public void markComplete() {
+        untrack();
         setComplete(true);
     }
     
@@ -54,9 +55,11 @@ public class Task {
     }
     
     public void untrack() {
-        setTracking(false);
-        setTotalTimeTracked(getTotalTimeTracked() + (new Date().getTime() - getTimeTrackingStarted().getTime()));
-        setTimeTrackingStarted(null);
+        if (isTracking()) {
+            setTracking(false);
+            setTotalTimeTracked(getTotalTimeTracked() + (new Date().getTime() - getTimeTrackingStarted().getTime()));
+            setTimeTrackingStarted(null);
+        }
     }
     
     public void updateTask(final String name, final String group) {

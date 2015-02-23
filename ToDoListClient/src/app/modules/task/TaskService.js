@@ -6,14 +6,25 @@
         var taskList = [];
 
         var endpoints = {
-            getTasks: function(ownerId) {
-                return '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
+            getTasks: function(ownerId, completed) {
+                var url = '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
+                if (completed === true || completed === false) {
+                    return url + '&completed={completed}'.replace('{completed}', completed);
+                }
+                else {
+                    return url + '&completed={completed}'.replace('{completed}', completed);
+                }
             },
             saveTask: function(ownerId) {
                 return '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
             },
             markComplete: function(ownerId, taskId) {
                 return '../rest/tasks/{taskId}/{ownerId}/markComplete'
+                    .replace('{taskId}', taskId)
+                    .replace('{ownerId}', ownerId);
+            },
+            markIncomplete: function(ownerId, taskId) {
+                return '../rest/tasks/{taskId}/{ownerId}/markIncomplete'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
@@ -46,8 +57,8 @@
             return taskName || taskGroup;
         }
 
-        this.getTasksFor = function (ownerID) {
-            return $http.get(endpoints.getTasks(ownerID)).then(function(response) {
+        this.getTasks = function (ownerId, completed) {
+            return $http.get(endpoints.getTasks(ownerId, completed)).then(function(response) {
                 return response.data;
             })
         };
@@ -58,7 +69,7 @@
             });
         };
 
-        this.markTaskIncomplete = function (ownerId, taskId) {
+        this.markIncomplete = function (ownerId, taskId) {
             return $http.put(endpoints.markIncomplete(ownerId, taskId)).then(function(response) {
                 return response.data;
             });
@@ -67,13 +78,13 @@
         this.trackTask = function (ownerId, taskId) {
             return $http.put(endpoints.trackTask(ownerId, taskId)).then(function(response) {
                 return response.data;
-            })
+            });
         };
 
         this.untrackTask = function (ownerId, taskId) {
             return $http.put(endpoints.untrackTask(ownerId, taskId)).then(function(response) {
                 return response.data;
-            })
+            });
         };
     }
     angular

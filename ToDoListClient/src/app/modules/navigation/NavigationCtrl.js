@@ -9,7 +9,7 @@
         vm.versionNumber = versionNumber;
 
         vm.getTasks = function () {
-            TaskService.getTasksFor(UserService.user.id).then(function(tasks) {
+            TaskService.getTasks(UserService.user.id).then(function(tasks) {
                 vm.tasks = tasks;
             });
         };

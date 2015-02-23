@@ -23,7 +23,7 @@
 
         vm.getTasks = function () {
             vm.operations.getTasks.status = 'LOADING';
-            TaskService.getTasksFor(UserService.user.id).then(function(tasks) {
+            TaskService.getTasks(UserService.user.id, false).then(function(tasks) {
                 vm.operations.getTasks.status = null;
                 vm.tasks = tasks;
             })
