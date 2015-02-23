@@ -15,6 +15,9 @@
             },
             editTask: {
                 status: null
+            },
+            markComplete: {
+                status: null
             }
         };
 
@@ -44,7 +47,10 @@
         };
 
         vm.markComplete = function (task) {
+            task.readOnly = true;
+            vm.operations.markComplete.status = 'LOADING';
             TaskService.markComplete(UserService.user.id, task.id).then(function(completedTask) {
+                vm.operations.markComplete.status = null;
                 angular.copy(completedTask, task);
                 if (task.name != null) {
                     AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as complete.', 2000);
@@ -54,7 +60,11 @@
                 }
             })
             .catch(function() {
+                vm.operations.markComplete.status = 'ERROR';
                 console.error("An error occurred while completing task.");
+            })
+            .finally(function() {
+                task.readOnly = false;
             });
         };
 
@@ -79,22 +89,22 @@
         };
 
         vm.startTrackingTask = function (task) {
-            task.isReadOnly = true;
+            task.readOnly = true;
             TaskService.trackTask(UserService.user.id, task.id).then(function(trackedTask) {
                 angular.copy(trackedTask, task);
             })
             .finally(function() {
-                task.isReadOnly = false;
+                task.readOnly = false;
             });
         };
 
         vm.stopTrackingTask = function (task) {
-            task.isReadOnly = true;
+            task.readOnly = true;
             TaskService.untrackTask(UserService.user.id, task.id).then(function(untrackedTask) {
                 angular.copy(untrackedTask, task);
             })
             .finally(function() {
-                task.isReadOnly = false;
+                task.readOnly = false;
             });
         };
 

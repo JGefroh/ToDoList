@@ -78,7 +78,7 @@
                     <td class="text-center">
                         <button class="btn btn-default btn-xs table-button"
                                 data-ng-click="remainingCtrl.markComplete(task)"
-                                data-ng-disabled="task.isReadOnly"
+                                data-ng-disabled="task.readOnly"
                                 title="Mark this task as completed.">
                             <span class="glyphicon glyphicon-ok"></span> Complete
                         </button>
@@ -88,7 +88,7 @@
 
                         <button class="btn btn-default btn-xs table-button"
                                 data-ng-click="remainingCtrl.prepareEditTask(task)"
-                                data-ng-disabled="task.isReadOnly"
+                                data-ng-disabled="task.readOnly"
                                 title="Edit the details of this task."
                                 data-toggle="modal" data-target="#editTaskView">
                             <span class="glyphicon glyphicon-pencil"></span> Edit
@@ -96,23 +96,23 @@
                         <br />
                         <button class="btn btn-default btn-xs table-button"
                                 data-ng-click="remainingCtrl.startTrackingTask(task)"
-                                data-ng-disabled="task.isReadOnly"
+                                data-ng-disabled="task.readOnly"
                                 title="Start a timer for this task."
                                 data-ng-show="!task.tracking"  >
                             <span class="glyphicon glyphicon-time"></span> Track
                         </button>
                         <button class="btn btn-default btn-xs table-button"
                                 data-ng-click="remainingCtrl.stopTrackingTask(task)"
-                                data-ng-disabled="task.isReadOnly"
+                                data-ng-disabled="task.readOnly"
                                 title="Stop the timer for this task."
                                 data-ng-show="task.tracking">
                             <span class="glyphicon glyphicon-time"></span> Untrack
                         </button>
                     </td>
                     <td data-ng-class="{'task-highlighted': task.tracking}"> {{ task.name }} </td>
-                    <td data-ng-class="{'task-highlighted': task.tracking, 'text-center':true}"> {{ task.group }}</td>
-                    <td data-ng-class="{'task-highlighted': task.tracking, 'text-center':true}"> {{task.dateAdded | date:'HH:mm' }}</td>
-                    <td data-ng-class="{'task-highlighted': task.tracking, 'text-right':true}">
+                    <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{ task.group }}</td>
+                    <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.dateAdded | date:'HH:mm' }}</td>
+                    <td class="text-right"  data-ng-class="{'task-highlighted': task.tracking}">
                         {{ remainingCtrl.viewState.isShowingMinutes
                             ? (task.totalTimeTracked | msToMinutes)
                             : (task.totalTimeTracked | msToHours:2)
