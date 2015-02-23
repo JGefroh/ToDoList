@@ -57,7 +57,7 @@ public class ToDoListManager {
     }
 
     
-    private ToDoList getList(final String ownerId) {
+    public ToDoList getList(final String ownerId) {
         ToDoList list = listDAO.getForOwner(ownerId);
         if (list == null) {
             list = ToDoList.create(ownerId);

@@ -76,6 +76,15 @@ public class Task {
         setName(name);
     }
     
+    public long simulateUntrack() {
+        if (isTracking()) {
+            return getTotalTimeTracked() + (new Date().getTime() - getTimestampTrackingStarted().getTime());
+        }
+        else {
+            return getTotalTimeTracked();
+        }
+    }
+    
 
     
     public boolean isComplete() {
