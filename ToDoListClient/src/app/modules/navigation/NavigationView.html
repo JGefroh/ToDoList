@@ -17,8 +17,8 @@ author: Joseph Gefroh
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li data-ng-class="{active:navigation.isActive('/remaining/' + navigation.user.id)}"><a data-ng-href="#/remaining/{{navigation.user.id}}"><span class="glyphicon glyphicon-tasks"></span> Remaining <span class="badge">{{ (navigation.tasks |filter:{isCompleted:false}).length }}</span></a></li>
-                <li data-ng-class="{active:navigation.isActive('/completed/' + navigation.user.id)}"><a data-ng-href="#/completed/{{navigation.user.id}}"><span class="glyphicon glyphicon-check"></span> Completed <span class="badge">{{ (navigation.tasks |filter:{isCompleted:true}).length }}</span></a></li>
+                <li data-ng-class="{active:navigation.isActive('/remaining/' + navigation.user.id)}"><a data-ng-href="#/remaining/{{navigation.user.id}}"><span class="glyphicon glyphicon-tasks"></span> Remaining </a></li>
+                <li data-ng-class="{active:navigation.isActive('/completed/' + navigation.user.id)}"><a data-ng-href="#/completed/{{navigation.user.id}}"><span class="glyphicon glyphicon-check"></span> Completed </a></li>
                 <li data-ng-class="{active:navigation.isActive('/statistics/' + navigation.user.id)}"><a data-ng-href="#/statistics/{{navigation.user.id}}"><span class="glyphicon glyphicon-stats"></span> Stats</a></li>
             </ul>
             <p class="navbar-text pull-right">

@@ -30,16 +30,16 @@ author: Joseph Gefroh
                                 <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
-                <th class="col-xs-1 text-center" data-ng-click="completedCtrl.viewState.sortField = 'dateAdded'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
+                <th class="col-xs-1 text-center" data-ng-click="completedCtrl.viewState.sortField = 'timestampCreated'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
                     Time Added
-                            <span ng-show="completedCtrl.viewState.sortField === 'dateAdded'">
+                            <span ng-show="completedCtrl.viewState.sortField === 'timestampCreated'">
                                 <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
                 </th>
-                <th class="col-xs-1 text-center" data-ng-click="completedCtrl.viewState.sortField = 'dateCompleted'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
+                <th class="col-xs-1 text-center" data-ng-click="completedCtrl.viewState.sortField = 'timestampCompleted'; completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending">
                     Time Completed
-                            <span ng-show="completedCtrl.viewState.sortField === 'dateCompleted'">
+                            <span ng-show="completedCtrl.viewState.sortField === 'timestampCompleted'">
                                 <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
@@ -67,8 +67,8 @@ author: Joseph Gefroh
                 </td>
                 <td data-ng-class="{'task-highlighted': task.tracking}"> {{ task.name }} </td>
                 <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{ task.group }}</td>
-                <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.dateAdded | date:'HH:mm' }}</td>
-                <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.dateCompleted | date:'HH:mm' }}</td>
+                <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.timestampCreated | date:'HH:mm' }}</td>
+                <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.timestampCompleted | date:'HH:mm' }}</td>
                 <td class="text-right" data-ng-class="{'task-highlighted': task.tracking}">
                     {{ completedCtrl.viewState.isShowingMinutes
                         ? (task.totalTimeTracked | msToMinutes)

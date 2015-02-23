@@ -54,9 +54,9 @@
                             <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                         </span>
                     </th>
-                    <th class="col-xs-1 text-center" data-ng-click="remainingCtrl.viewState.sortField = 'dateAdded'; remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending">
+                    <th class="col-xs-1 text-center" data-ng-click="remainingCtrl.viewState.sortField = 'timestampCreated'; remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending">
                         Time Added
-                        <span ng-show="remainingCtrl.viewState.sortField === 'dateAdded'">
+                        <span ng-show="remainingCtrl.viewState.sortField === 'timestampCreated'">
                             <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                             <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                         </span>
@@ -111,7 +111,7 @@
                     </td>
                     <td data-ng-class="{'task-highlighted': task.tracking}"> {{ task.name }} </td>
                     <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{ task.group }}</td>
-                    <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.dateAdded | date:'HH:mm' }}</td>
+                    <td class="text-center" data-ng-class="{'task-highlighted': task.tracking}"> {{task.timestampCreated | date:'HH:mm' }}</td>
                     <td class="text-right"  data-ng-class="{'task-highlighted': task.tracking}">
                         {{ remainingCtrl.viewState.isShowingMinutes
                             ? (task.totalTimeTracked | msToMinutes)

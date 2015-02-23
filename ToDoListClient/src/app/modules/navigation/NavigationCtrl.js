@@ -24,7 +24,7 @@
 
         vm.isActive = function(route) {
             return $location.path() === route;
-        }
+        };
     }
 
     angular

@@ -12,7 +12,7 @@
                     return url + '&completed={completed}'.replace('{completed}', completed);
                 }
                 else {
-                    return url + '&completed={completed}'.replace('{completed}', completed);
+                    return url;
                 }
             },
             saveTask: function(ownerId) {

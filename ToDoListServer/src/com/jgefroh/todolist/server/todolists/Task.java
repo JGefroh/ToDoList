@@ -2,6 +2,7 @@ package com.jgefroh.todolist.server.todolists;
 
 import java.util.Date;
 
+import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,13 @@ public class Task {
     private long totalTimeTracked;
     
     @Temporal(TemporalType.TIMESTAMP)
-    private Date timeTrackingStarted;
+    private Date timestampTrackingStarted;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestampCreated;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestampCompleted;
     
     @Transient
     private boolean isReadOnly;
@@ -36,29 +43,31 @@ public class Task {
         task.setOwnerId(ownerId);
         task.setGroup(group);
         task.setName(name);
-        
+        task.setTimestampCreated(new Date());
         return task;
     }
     
     public void markComplete() {
         untrack();
+        setTimestampCompleted(new Date());
         setComplete(true);
     }
     
     public void markIncomplete() {
+        setTimestampCompleted(null);
         setComplete(false);
     }
     
     public void track() {
         setTracking(true);
-        setTimeTrackingStarted(new Date());
+        setTimestampTrackingStarted(new Date());
     }
     
     public void untrack() {
         if (isTracking()) {
             setTracking(false);
-            setTotalTimeTracked(getTotalTimeTracked() + (new Date().getTime() - getTimeTrackingStarted().getTime()));
-            setTimeTrackingStarted(null);
+            setTotalTimeTracked(getTotalTimeTracked() + (new Date().getTime() - getTimestampTrackingStarted().getTime()));
+            setTimestampTrackingStarted(null);
         }
     }
     
@@ -89,8 +98,8 @@ public class Task {
         return ownerId;
     }
     
-    public Date getTimeTrackingStarted() {
-        return timeTrackingStarted;
+    public Date getTimestampTrackingStarted() {
+        return timestampTrackingStarted;
     }
     
     public long getTotalTimeTracked() {
@@ -103,6 +112,14 @@ public class Task {
     
     public boolean isReadOnly() {
         return isReadOnly;
+    }
+    
+    public Date getTimestampCompleted() {
+        return timestampCompleted;
+    }
+    
+    public Date getTimestampCreated() {
+        return timestampCreated;
     }
 
     
@@ -127,8 +144,8 @@ public class Task {
         this.ownerId = ownerId;
     }
     
-    private void setTimeTrackingStarted(Date timeTrackingStarted) {
-        this.timeTrackingStarted = timeTrackingStarted;
+    private void setTimestampTrackingStarted(Date timestampTrackingStarted) {
+        this.timestampTrackingStarted = timestampTrackingStarted;
     }
     
     private void setTotalTimeTracked(long totalTimeTracked) {
@@ -141,5 +158,13 @@ public class Task {
     
     public void setReadOnly(boolean isReadOnly) {
         this.isReadOnly = isReadOnly;
+    }
+    
+    private void setTimestampCompleted(Date timestampCompleted) {
+        this.timestampCompleted = timestampCompleted;
+    }
+    
+    private void setTimestampCreated(Date timestampCreated) {
+        this.timestampCreated = timestampCreated;
     }
 }
