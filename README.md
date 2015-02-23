@@ -1,7 +1,7 @@
 ToDoList
 ===
 
-ToDoList is a basic front-end that I made while teaching myself [AngularJS](https://angularjs.org/), Javascript, and their related ecosystems.
+ToDoList is a basic web application I made while teaching myself [AngularJS](https://angularjs.org/), Javascript, and their related ecosystems.
 
 It is a standard to-do-list with time tracking functionality to help me fill out my timesheet at the end of the workday
 
