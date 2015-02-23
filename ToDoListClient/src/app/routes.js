@@ -1,6 +1,12 @@
 (function() {
     function Routes($stateProvider, $urlRouterProvider) {
         $stateProvider
+            .state('splash', {
+                url: '/splash/:userID',
+                templateUrl: 'modules/splash/Splash.html',
+                controller: 'SplashCtrl',
+                controllerAs: 'splashCtrl'
+            })
             .state('remaining', {
                 url: '/remaining/:userID',
                 templateUrl: 'modules/task/remaining/RemainingTasks.html',
@@ -20,7 +26,7 @@
                 controllerAs: 'statsCtrl'
             });
 
-        $urlRouterProvider.otherwise('/home/newuser');
+        $urlRouterProvider.otherwise('/splash/');
     }
     angular
         .module('ToDoList.Routes', [])

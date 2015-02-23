@@ -7,22 +7,15 @@ angular
         'ui.router',
         'jgefroh.AlertModule',
         'jgefroh.FiltersModule',
-        'ToDoList.PersistenceModule',
         'ToDoList.Routes',
         'ToDoList.SecurityModule',
         'ToDoList.TaskModule',
         'ToDoList.StatsModule',
         'ToDoList.NavigationModule',
-        'ToDoList.ViewStateModule'
+        'ToDoList.ViewStateModule',
+        'ToDoList.SplashModule'
     ]);
 angular
     .module('ToDoList')
     .constant('applicationName', 'ToDoList')
-    .constant('versionNumber', 'v1.0.0')
-    .constant('endpoints', {
-        tasks: {
-            getTasks: function(userID) {
-                return '../rest/tasks?userID=' + userID;
-            }
-        }
-    });
+    .constant('versionNumber', 'v2.0.0');

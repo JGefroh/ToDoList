@@ -28,5 +28,5 @@
     }
     angular
         .module('ToDoList.SecurityModule', [])
-        .service('UserService', ['$q', '$http', 'endpoints', '$stateParams', UserService]);
+        .service('UserService', ['$q', '$http', '$stateParams', UserService]);
 })();
