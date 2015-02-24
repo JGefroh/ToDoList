@@ -3,7 +3,7 @@
  */
 (function() {
     var $jQuery = jQuery.noConflict();
-    function RemainingTasksCtrl(ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
+    function RemainingTasksCtrl($scope, ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
         var vm = this;
         var ENTER_KEY_ID = 13;
         vm.operations = {
@@ -131,11 +131,14 @@
         }
 
         function initializeModalWatcher() {
-            $rootScope.$on('$locationChangeStart', function(next, current) {
+            var modalWatcherHandler = $rootScope.$on('$locationChangeStart', function(next, current) {
                 var modalBackdrop = $jQuery('.modal-backdrop');
                 if (modalBackdrop) {
                     modalBackdrop.remove();
                 }
+            });
+            $scope.$on('$destroy', function() {
+                modalWatcherHandler();  //[JG]: Deregister from root scope to avoid memory leaks.
             });
         }
 
@@ -144,5 +147,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('RemainingTasksCtrl', ['ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
+        .controller('RemainingTasksCtrl', ['$scope', 'ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
 })();
