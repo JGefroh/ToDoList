@@ -37,11 +37,6 @@
                 return '../rest/tasks/{taskId}/{ownerId}/untrack'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
-            },
-            getTotalTimeTracked: function(ownerId, taskId) {
-                return '../rest/tasks/{taskId}/{ownerId}/totalTimeTracked'
-                    .replace('{taskId}', taskId)
-                    .replace('{ownerId}', ownerId);
             }
         };
 
@@ -92,11 +87,6 @@
             });
         };
 
-        this.getTotalTimeTracked = function(ownerId, taskId) {
-            return $http.get(endpoints.getTotalTimeTracked(ownerId, taskId)).then(function(response) {
-                return response.data;
-            });
-        };
 
 
         /**
