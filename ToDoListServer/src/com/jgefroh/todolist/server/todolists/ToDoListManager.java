@@ -1,5 +1,7 @@
 package com.jgefroh.todolist.server.todolists;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -43,6 +45,9 @@ public class ToDoListManager {
     
     public List<Task> getIncompleteTasks(final String ownerId) {
         ToDoList list = getList(ownerId);
+        for (Task task : list.getIncompleteTasks() == null ? Collections.<Task>emptyList() : list.getIncompleteTasks()) {
+            task.bankTime();
+        }
         return list.getIncompleteTasks();
     }
     

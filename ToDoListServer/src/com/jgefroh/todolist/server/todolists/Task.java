@@ -58,6 +58,13 @@ public class Task {
         setComplete(false);
     }
     
+    public void bankTime() {
+        if (isTracking()) {
+            untrack();
+            track();
+        }
+    }
+    
     public void track() {
         setTracking(true);
         setTimestampTrackingStarted(new Date());
