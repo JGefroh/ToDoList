@@ -5,7 +5,7 @@ ToDoList is a basic web application I made while teaching myself [AngularJS](htt
 
 It is a standard to-do-list with time tracking functionality to help me fill out my timesheet at the end of the workday
 
-The [live version](http://todolist.jgefroh.com/index.html) can be found on my website.
+The [live version](http://todolist.jgefroh.com) can be found on my website.
 
 
 
