@@ -149,11 +149,10 @@
 
         function initializeTimeTrackedUpdater() {
             $timeout(function() {
-                angular.forEach(vm.tasks, function(task) {
-                    TaskService.approximateTotalTimeTracked(task);
-                });
-
                 if (!isDestroyed) {
+                    angular.forEach(vm.tasks, function(task) {
+                        TaskService.approximateTotalTimeTracked(task);
+                    });
                     initializeTimeTrackedUpdater();
                 }
             }, TRACKED_TIME_UPDATE_INTERVAL_IN_MS);
