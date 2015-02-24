@@ -13,24 +13,24 @@ import com.jgefroh.todolist.server.todolists.ToDoList;
 public class ToDoListTests {
     
     private Task createTask() {
-        Task task = Task.create("testName", "testGroup");
+        Task task = Task.create("ownerId", "testName", "testGroup");
         return task;
     }
     
     private Task createTaskWithId(final int id) {
-        Task task = Task.create("testName", "testGroup");
+        Task task = Task.create("ownerId", "testName", "testGroup");
         task.setId(id);
         return task;
     }
     private Task createCompleteTaskWithId(final int id) {
-        Task task = Task.create("testName", "testGroup");
+        Task task = Task.create("ownerId", "testName", "testGroup");
         task.setId(id);
         task.markComplete();
         return task;
     }
 
     private Task createIncompleteTaskWithId(final int id) {
-        Task task = Task.create("testName", "testGroup");
+        Task task = Task.create("ownerId", "testName", "testGroup");
         task.setId(id);
         task.markIncomplete();
         return task;
