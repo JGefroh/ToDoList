@@ -45,10 +45,10 @@ public class ToDoListManager {
     
     public List<Task> getIncompleteTasks(final String ownerId) {
         ToDoList list = getList(ownerId);
-        for (Task task : list.getTasks() == null ? Collections.<Task>emptyList() : list.getTasks()) {
+        for (Task task : list.getIncompleteTasks() == null ? Collections.<Task>emptyList() : list.getIncompleteTasks()) {
             task.bankTime();
         }
-        return list.getTasks();
+        return list.getIncompleteTasks();
     }
     
     public List<Task> getCompleteTasks(final String ownerId) {
