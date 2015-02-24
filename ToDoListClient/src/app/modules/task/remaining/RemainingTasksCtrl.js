@@ -3,9 +3,12 @@
  */
 (function() {
     var $jQuery = jQuery.noConflict();
-    function RemainingTasksCtrl($scope, ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
+    function RemainingTasksCtrl($scope, $timeout, ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
         var vm = this;
         var ENTER_KEY_ID = 13;
+        var TRACKED_TIME_UPDATE_INTERVAL_IN_MS = 30000;
+        var isDestroyed = false;
+
         vm.operations = {
             addTask: {
                 status: null
@@ -123,6 +126,7 @@
             UserService.reserveID($stateParams.userID);
             initializeViewState();
             initializeModalWatcher();
+            initializeTimeTrackedUpdater();
             vm.getTasks();
         }
 
@@ -138,8 +142,21 @@
                 }
             });
             $scope.$on('$destroy', function() {
+                isDestroyed = true;     //[JG]: Used to signal to the timer not to repeat.
                 modalWatcherHandler();  //[JG]: Deregister from root scope to avoid memory leaks.
             });
+        }
+
+        function initializeTimeTrackedUpdater() {
+            $timeout(function() {
+                angular.forEach(vm.tasks, function(task) {
+                    TaskService.approximateTotalTimeTracked(task);
+                });
+
+                if (!isDestroyed) {
+                    initializeTimeTrackedUpdater();
+                }
+            }, TRACKED_TIME_UPDATE_INTERVAL_IN_MS);
         }
 
         initialize();
@@ -147,5 +164,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('RemainingTasksCtrl', ['$scope', 'ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
+        .controller('RemainingTasksCtrl', ['$scope', '$timeout', 'ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
 })();

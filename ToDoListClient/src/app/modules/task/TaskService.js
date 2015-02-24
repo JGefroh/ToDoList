@@ -37,10 +37,15 @@
                 return '../rest/tasks/{taskId}/{ownerId}/untrack'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
+            },
+            getTotalTimeTracked: function(ownerId, taskId) {
+                return '../rest/tasks/{taskId}/{ownerId}/totalTimeTracked'
+                    .replace('{taskId}', taskId)
+                    .replace('{ownerId}', ownerId);
             }
         };
 
-        this.saveTask = function (ownerId, task) {
+        this.saveTask = function(ownerId, task) {
             var deferred = $q.defer();
             if (task && isValidInput(task.name, task.group)) {
                 return $http.put(endpoints.saveTask(ownerId), task).then(function(response) {
@@ -57,34 +62,52 @@
             return taskName || taskGroup;
         }
 
-        this.getTasks = function (ownerId, completed) {
+        this.getTasks = function(ownerId, completed) {
             return $http.get(endpoints.getTasks(ownerId, completed)).then(function(response) {
                 return response.data;
             })
         };
 
-        this.markComplete = function (ownerId, taskId) {
+        this.markComplete = function(ownerId, taskId) {
             return $http.put(endpoints.markComplete(ownerId, taskId)).then(function(response) {
                 return response.data;
             });
         };
 
-        this.markIncomplete = function (ownerId, taskId) {
+        this.markIncomplete = function(ownerId, taskId) {
             return $http.put(endpoints.markIncomplete(ownerId, taskId)).then(function(response) {
                 return response.data;
             });
         };
 
-        this.trackTask = function (ownerId, taskId) {
+        this.trackTask = function(ownerId, taskId) {
             return $http.put(endpoints.trackTask(ownerId, taskId)).then(function(response) {
                 return response.data;
             });
         };
 
-        this.untrackTask = function (ownerId, taskId) {
+        this.untrackTask = function(ownerId, taskId) {
             return $http.put(endpoints.untrackTask(ownerId, taskId)).then(function(response) {
                 return response.data;
             });
+        };
+
+        this.getTotalTimeTracked = function(ownerId, taskId) {
+            return $http.get(endpoints.getTotalTimeTracked(ownerId, taskId)).then(function(response) {
+                return response.data;
+            });
+        };
+
+
+        /**
+         * Updates the total time tracked on the client side only - not the source of truth for total time tracked.
+         */
+        this.approximateTotalTimeTracked = function(task) {
+            if (task.tracking) {
+                var fakeTotalTimeTracked = (new Date() - task.timestampTrackingStarted) + task.totalTimeTracked;
+                task.timestampTrackingStarted = new Date();
+                task.totalTimeTracked = fakeTotalTimeTracked;
+            }
         };
     }
     angular
