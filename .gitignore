@@ -1,6 +1,1 @@
-.idea
-prod_dist
-src/app/modules/**/*.min.js
-src/app/app.min.js
-node_modules
-grunt_temp
+ToDoListBuilds
