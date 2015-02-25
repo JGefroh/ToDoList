@@ -14,8 +14,6 @@ import javax.persistence.OneToMany;
 
 
 @Entity
-@NamedQuery(name = "todolist.getForOwner",
-            query = "select T from ToDoList T where T.ownerId = :ownerId")
 public class ToDoList {
     
     @Id

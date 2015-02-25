@@ -74,5 +74,9 @@ author: Joseph Gefroh
             class="text-center">
             <span class="fa fa-spin fa-spinner"></span> Loading stats...
         </h3>
+        <h3 data-ng-if="statsCtrl.operations.getTasks.status === 'ERROR'"
+            class="text-center">
+            A server error occurred while loading stats.
+        </h3>
     </div>
 </div>

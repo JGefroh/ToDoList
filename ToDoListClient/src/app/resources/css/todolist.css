@@ -42,3 +42,7 @@ td {
 .navbar-link {
     text-decoration: underline;
 }
+
+.application-description {
+    font-size: 1.2em;
+}
