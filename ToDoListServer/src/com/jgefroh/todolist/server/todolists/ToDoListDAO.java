@@ -13,7 +13,7 @@ import com.jgefroh.todolist.server.core.ToDoListGenericDAO;
 @Stateless
 public class ToDoListDAO extends ToDoListGenericDAO {
     public ToDoList getForOwner(final String ownerId) {
-        Query query = getEntityManager().createNamedQuery("todolist.getForOwner", ToDoList.class);
+        Query query = getEntityManager().createQuery("select T from ToDoList T where T.ownerId = :ownerId", ToDoList.class);
         query.setParameter("ownerId", ownerId);
         
         List<ToDoList> results = query.getResultList();

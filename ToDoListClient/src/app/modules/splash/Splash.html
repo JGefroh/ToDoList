@@ -1,11 +1,47 @@
 <div class="container">
-    <h1>ToDoList <span class="small">by Joseph Gefroh</span></h1>
-    <p>Welcome to ToDoList! This is a simple to do list application designed to help me fill out timesheets.</p>
-    <p>You can save your to do list by bookmarking the unique URL that is generated for you.</p>
-    <p>This is a hobby project, so please do not put any sensitive information into ToDoList. Security is not guaranteed.</p>
-
-    <a data-ng-href="#/remaining/{{splashCtrl.user.id}}"
-       class="btn btn-lg btn-success">
-       Get Started
-    </a>
+    <div class="row">
+        <div class="col-xs-12 application-description">
+            <h1>Welcome to ToDoList!</h1>
+            <p>ToDoList is a personal task and time tracking system initially designed to help fill out project-based timesheets.</p>
+            <p>It can be used to track time expenditures on individual tasks/groups of tasks, or as a general to-do list.</p>
+            <p><label>Note: </label> Please don't enter sensitive information into this system - uptime and security are not guaranteed.</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12 col-md-3">
+            <a data-ng-href="#/remaining/{{splashCtrl.user.id}}">
+                <h3 class="text-center">
+                    <span class="fa fa-list-ol fa-5x"></span>
+                    <br/><br/>
+                    Add Tasks To Your List
+                </h3>
+            </a>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <a data-ng-href="#/completed/{{splashCtrl.user.id}}">
+                <h3 class="text-center">
+                    <span class="fa fa-check fa-5x"></span>
+                    <br/><br/>
+                    See Completed Tasks
+                </h3>
+            </a>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <a data-ng-href="#/statistics/{{splashCtrl.user.id}}">
+                <h3 class="text-center">
+                    <span class="fa fa-bar-chart fa-5x"></span>
+                    <br/><br/>
+                    Review Your Stats
+                </h3>
+            </a>
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <h3 class="text-center">
+                <span class="fa fa-bookmark fa-5x"></span>
+                <br/><br/>
+                Bookmark To Save
+            </h3>
+        </div>
+    </div>
 </div>
