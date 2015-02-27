@@ -11,8 +11,21 @@ body {
     font-weight: bold;
 }
 
-.table-button {
-    width: 7em;
+.icon-button {
+    padding: 0;
+}
+
+.complete-button {
+    color: green;
+}
+
+.hr-small {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.task-name {
+    font-size: 1.2em;
 }
 
 .table-button-separator {

@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-xs-2">
+        <div data-ng-include data-src="'modules/task/remaining/RemainingTasksActions.html'"></div>
+    </div>
+    <div class="col-xs-8">
+        <div class="row">
+            <div class="col-xs-9">
+                        <span data-ng-bind="task.group"
+                              class="small"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                    <span data-ng-bind="task.name"
+                          class="task-name"
+                          data-ng-class="{'task-highlighted':task.tracking}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-2 text-right">
+        <span data-ng-bind="task.timestampCreated | date:'MMMM dd \'at\' h:mma'"></span>
+        <br/><br/>
+
+        Tracked for
+        <a data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
+           style="cursor: pointer">
+                    <span data-ng-if="remainingCtrl.viewState.isShowingMinutes"
+                          data-ng-bind="(task.totalTimeTracked | msToMinutes) + ' minutes'"></span>
+                    <span data-ng-if="!remainingCtrl.viewState.isShowingMinutes"
+                          data-ng-bind="(task.totalTimeTracked | msToHours:2) + ' hours'"></span>
+        </a>
+    </div>
+</div>
