@@ -3,10 +3,13 @@
         data-ng-click="remainingCtrl.markComplete(task)"
         data-ng-disabled="task.readOnly"
         title="Mark this task as completed.">
-                            <span class="fa-stack fa-lg">
-                                <span class="fa fa-circle fa-stack-2x"></span>
-                                <span class="fa fa-check fa-stack-1x fa-inverse"></span>
-                            </span>
+        <span class="fa-stack fa-lg">
+            <span class="fa fa-circle fa-stack-2x"></span>
+            <span data-ng-if="remainingCtrl.operations.markComplete.tasks[task.id].status !== 'LOADING'"
+                  class="fa fa-check fa-stack-1x fa-inverse"></span>
+            <span data-ng-if="remainingCtrl.operations.markComplete.tasks[task.id].status === 'LOADING'"
+                  class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+        </span>
     </button>
 
     <button class="btn btn-link btn-lg icon-button"
@@ -14,29 +17,35 @@
             data-ng-disabled="task.readOnly"
             title="Edit the details of this task."
             data-toggle="modal" data-target="#editTaskView">
-                                <span class="fa-stack">
-                                    <span class="fa fa-circle fa-stack-2x"></span>
-                                    <span class="fa fa-pencil fa-stack-1x fa-inverse"></span>
-                                </span>
+            <span class="fa-stack">
+                <span class="fa fa-circle fa-stack-2x"></span>
+                <span class="fa fa-pencil fa-stack-1x fa-inverse"></span>
+            </span>
     </button>
     <button class="btn btn-link btn-lg icon-button"
             data-ng-click="remainingCtrl.startTrackingTask(task)"
             data-ng-disabled="task.readOnly"
             title="Start a timer for this task."
             data-ng-show="!task.tracking"  >
-                                <span class="fa-stack">
-                                    <span class="fa fa-circle fa-stack-2x"></span>
-                                    <span class="fa fa-clock-o fa-stack-1x fa-inverse"></span>
-                                </span>
+            <span class="fa-stack">
+                <span class="fa fa-circle fa-stack-2x"></span>
+                <span data-ng-if="remainingCtrl.operations.trackingUntracking.tasks[task.id].status !== 'LOADING'"
+                      class="fa fa-clock-o fa-stack-1x fa-inverse"></span>
+                <span data-ng-if="remainingCtrl.operations.trackingUntracking.tasks[task.id].status === 'LOADING'"
+                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+            </span>
     </button>
     <button class="btn btn-link btn-lg icon-button"
             data-ng-click="remainingCtrl.stopTrackingTask(task)"
             data-ng-disabled="task.readOnly"
             title="Stop the timer for this task."
             data-ng-show="task.tracking">
-                                <span class="fa-stack">
-                                    <span class="fa fa-circle fa-stack-2x"></span>
-                                    <span class="fa fa-clock-o fa-stack-1x fa-inverse"></span>
-                                </span>
+            <span class="fa-stack">
+                <span class="fa fa-circle fa-stack-2x"></span>
+                <span data-ng-if="remainingCtrl.operations.trackingUntracking.tasks[task.id].status !== 'LOADING'"
+                      class="fa fa-clock-o fa-stack-1x fa-inverse"></span>
+                <span data-ng-if="remainingCtrl.operations.trackingUntracking.tasks[task.id].status === 'LOADING'"
+                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+            </span>
     </button>
 </div>

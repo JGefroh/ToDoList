@@ -20,6 +20,11 @@
                 status: null
             },
             markComplete: {
+                tasks: {},
+                status: null
+            },
+            trackingUntracking: {
+                tasks: {},
                 status: null
             }
         };
@@ -51,9 +56,11 @@
 
         vm.markComplete = function (task) {
             task.readOnly = true;
-            vm.operations.markComplete.status = 'LOADING';
+            vm.operations.markComplete.tasks[task.id] = {
+                status: 'LOADING'
+            };
             TaskService.markComplete(UserService.user.id, task.id).then(function(completedTask) {
-                vm.operations.markComplete.status = null;
+                delete vm.operations.markComplete.tasks[task.id];
                 angular.copy(completedTask, task);
                 if (task.name != null) {
                     AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as complete.', 2000);
@@ -63,7 +70,7 @@
                 }
             })
             .catch(function() {
-                vm.operations.markComplete.status = 'ERROR';
+                vm.operations.markComplete.tasks[task.id].status = 'ERROR';
                 console.error("An error occurred while completing task.");
             })
             .finally(function() {
@@ -93,8 +100,15 @@
 
         vm.startTrackingTask = function (task) {
             task.readOnly = true;
+            vm.operations.trackingUntracking.tasks[task.id] = {
+                status: 'LOADING'
+            };
             TaskService.trackTask(UserService.user.id, task.id).then(function(trackedTask) {
+                delete vm.operations.trackingUntracking.tasks[task.id];
                 angular.copy(trackedTask, task);
+            })
+            .catch(function(error) {
+                vm.operations.trackingUntracking.tasks[task.id].status = 'ERROR';
             })
             .finally(function() {
                 task.readOnly = false;
@@ -103,8 +117,15 @@
 
         vm.stopTrackingTask = function (task) {
             task.readOnly = true;
+            vm.operations.trackingUntracking.tasks[task.id] = {
+                status: 'LOADING'
+            };
             TaskService.untrackTask(UserService.user.id, task.id).then(function(untrackedTask) {
+                delete vm.operations.trackingUntracking.tasks[task.id];
                 angular.copy(untrackedTask, task);
+            })
+            .catch(function(error) {
+                vm.operations.trackingUntracking.tasks[task.id].status = 'ERROR';
             })
             .finally(function() {
                 task.readOnly = false;
@@ -132,8 +153,9 @@
 
         function initializeViewState() {
             vm.viewState = ViewState.remainingTaskViewState;
-            vm.viewState.isAscending = false;
-            vm.viewState.sortField = {value:'timestampCreated', label:'Date Added'};
+            if (!vm.viewState.sortField) {
+                vm.viewState.sortField = {value:'timestampCreated', label:'Date Added'};
+            }
         }
 
         function initializeModalWatcher() {
