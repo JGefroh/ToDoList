@@ -36,23 +36,25 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <div class="btn-group">
-                <button data-ng-click="remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ remainingCtrl.viewState.sortField.label }}</button>
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button data-ng-click="remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ remainingCtrl.viewState.sortField.label }}</button>
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
+                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'group', label:'Group'}">Group</a></li>
+                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
+                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
+                    </ul>
+                </div>
+                <button data-ng-click="remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending"
+                        class="btn btn-default">
+                    <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                    <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
-                    <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'group', label:'Group'}">Group</a></li>
-                    <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
-                    <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
-                </ul>
             </div>
-            <button data-ng-click="remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending"
-                    class="btn btn-default">
-                <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
-            </button>
         </div>
     </div>
     <br/>
