@@ -5,6 +5,7 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -45,6 +46,12 @@ public class TaskEndpoint {
         else {
             return listManager.updateTask(ownerId, task.getId(), task.getName(), task.getGroup());
         }
+    }
+    
+    @DELETE
+    @Path("/{taskId}/{ownerId}")
+    public void deleteTask(@PathParam("ownerId") final String ownerId, @PathParam("taskId") final Integer taskId) {
+        listManager.deleteTask(taskId);
     }
     
     @PUT

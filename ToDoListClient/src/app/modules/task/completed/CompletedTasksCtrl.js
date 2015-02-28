@@ -11,6 +11,10 @@
             markIncomplete: {
                 tasks: {},
                 status: null
+            },
+            deleteTask: {
+                tasks: {},
+                status: null
             }
         };
 
@@ -23,6 +27,31 @@
             .catch(function(error) {
                 vm.operations.getTasks.status = 'ERROR';
                 console.error("An error occured while loading tasks.");
+            });
+        };
+
+        vm.deleteTask = function(task) {
+            task.readOnly = true;
+            vm.operations.deleteTask.tasks[task.id] = {
+                status: 'LOADING'
+            };
+            TaskService.deleteTask(UserService.user.id, task.id).then(function() {
+                delete vm.operations.deleteTask.tasks[task.id];
+                if (task.name != null) {
+                    AlertService.setAlert('alert-danger', 'Task Deleted!', $filter('limitTo')(task.name, truncateLimit) + ' has been deleted.', 2000);
+                }
+                else {
+                    AlertService.setAlert('alert-danger', 'Task Deleted!', 'A task has been marked deleted.', 2000);
+                }
+                var index = vm.tasks.indexOf(task);
+                vm.tasks.splice(index, 1);
+            })
+            .catch(function() {
+                vm.operations.deleteTask.tasks[task.id].status = 'ERROR';
+                console.error("An error occurred while deleting this task.");
+            })
+            .finally(function() {
+                task.readOnly = false;
             });
         };
 

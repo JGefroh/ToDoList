@@ -16,7 +16,17 @@ body {
 }
 
 .complete-button {
-    color: green;
+    color: #5CB85C;
+}
+.complete-button:hover {
+    color: #449D44;
+}
+
+.delete-button {
+    color: #D9534F;
+}
+.delete-button:hover {
+    color: #C9302C;
 }
 
 .hr-small {

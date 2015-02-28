@@ -18,6 +18,11 @@
             saveTask: function(ownerId) {
                 return '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
             },
+            deleteTask: function(ownerId, taskId) {
+                return '../rest/tasks/{taskId}/{ownerId}'
+                    .replace('{taskId}', taskId)
+                    .replace('{ownerId}', ownerId);
+            },
             markComplete: function(ownerId, taskId) {
                 return '../rest/tasks/{taskId}/{ownerId}/markComplete'
                     .replace('{taskId}', taskId)
@@ -56,6 +61,15 @@
         function isValidInput(taskName, taskGroup) {
             return taskName || taskGroup;
         }
+
+        this.deleteTask = function(ownerId, taskId) {
+            return $http({
+                method: 'DELETE',
+                url: endpoints.deleteTask(ownerId, taskId)
+            }).then(function(response) {
+                return response.data;
+            })
+        };
 
         this.getTasks = function(ownerId, completed) {
             return $http.get(endpoints.getTasks(ownerId, completed)).then(function(response) {
