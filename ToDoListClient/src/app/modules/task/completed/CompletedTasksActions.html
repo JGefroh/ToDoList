@@ -11,4 +11,17 @@
                   class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
         </span>
     </button>
+    <button class="btn btn-link btn-lg icon-button"
+            data-ng-click="completedCtrl.deleteTask(task)"
+            data-ng-disabled="task.readOnly"
+            title="Delete this task.">
+            <span class="fa-stack">
+                <span class="fa fa-circle fa-stack-2x"></span>
+                <span data-ng-if="completedCtrl.operations.deleteTask.tasks[task.id].status !== 'LOADING'"
+                      class="fa fa-trash fa-stack-1x fa-inverse"></span>
+                <span data-ng-if="completedCtrl.operations.deleteTask.tasks[task.id].status === 'LOADING'"
+                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+            </span>
+    </button>
+
 </div>
