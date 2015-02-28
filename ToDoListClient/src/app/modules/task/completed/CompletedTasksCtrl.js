@@ -9,6 +9,7 @@
                 status: null
             },
             markIncomplete: {
+                tasks: {},
                 status: null
             }
         };
@@ -27,9 +28,11 @@
 
         vm.markIncomplete = function(task) {
             task.readOnly = true;
-            vm.operations.markIncomplete.status = 'LOADING';
+            vm.operations.markIncomplete.tasks[task.id] = {
+                status: 'LOADING'
+            };
             TaskService.markIncomplete(UserService.user.id, task.id).then(function(incompleteTask) {
-                vm.operations.markIncomplete.status = null;
+                delete vm.operations.markIncomplete.tasks[task.id];
                 angular.copy(incompleteTask, task);
                 if (task.name != null) {
                     AlertService.setAlert('alert-warning', 'Task Incomplete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as incomplete.', 2000);
@@ -39,7 +42,7 @@
                 }
             })
             .catch(function() {
-                vm.operations.markIncomplete.status = 'ERROR';
+                vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
                 console.error("An error occurred while marking task as incomplete.");
             })
             .finally(function() {
@@ -55,6 +58,9 @@
 
         function initializeViewState() {
             vm.viewState = ViewState.completedTaskViewState;
+            if (!vm.viewState.sortField) {
+                vm.viewState.sortField = {value:'timestampCompleted', label:'Date Completed'};
+            }
         }
 
         initialize();
