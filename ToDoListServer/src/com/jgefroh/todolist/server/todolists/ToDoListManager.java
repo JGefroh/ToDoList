@@ -72,10 +72,22 @@ public class ToDoListManager {
         }
         ToDoList list = listDAO.getForOwner(ownerId);
         if (list == null) {
-            list = ToDoList.create(ownerId);
-            list = listDAO.update(list);
+            list = createList(ownerId);
+            addFirstTask(list);
         }
         return list;
+    }
+    
+    private ToDoList createList(final String ownerId) {
+        ToDoList list = ToDoList.create(ownerId);
+        list = listDAO.update(list);
+        return list;
+    }
+    
+    private void addFirstTask(final ToDoList list) {
+        Task firstTask = taskDAO.update(Task.create(list.getOwnerId(), "Welcome to ToDoList! You can mark this task as 'Complete', edit its details, or track time on it!", "Tutorial"));
+        list.addTask(firstTask);
+        listDAO.update(list);
     }
     
     private Task getTask(final String ownerId, final int taskId) {
