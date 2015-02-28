@@ -73,7 +73,7 @@ public class ToDoListManager {
         ToDoList list = listDAO.getForOwner(ownerId);
         if (list == null) {
             list = createList(ownerId);
-            addFirstTask(list);
+            addTutorialTasks(list);
         }
         return list;
     }
@@ -84,9 +84,15 @@ public class ToDoListManager {
         return list;
     }
     
-    private void addFirstTask(final ToDoList list) {
+    private void addTutorialTasks(final ToDoList list) {
         Task firstTask = taskDAO.update(Task.create(list.getOwnerId(), "Welcome to ToDoList! You can mark this task as 'Complete', edit its details, or track time on it!", "Tutorial"));
         list.addTask(firstTask);
+        
+        Task firstCompletedTask = Task.create(list.getOwnerId(), "You can mark this completed task as 'Incomplete', or delete it forever!", "Tutorial");
+        firstCompletedTask.markComplete();
+        firstCompletedTask = taskDAO.update(firstCompletedTask);
+        list.addTask(firstCompletedTask);
+        
         listDAO.update(list);
     }
     
