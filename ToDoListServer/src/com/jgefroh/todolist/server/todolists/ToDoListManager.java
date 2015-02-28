@@ -28,6 +28,10 @@ public class ToDoListManager {
         task.updateTask(name, group);
         return taskDAO.update(task);
     }
+
+    public void deleteTask(final int taskId) {
+        taskDAO.delete(Task.class, taskId);
+    }
     
     
     public Task markComplete(final String ownerId, final int taskId) {
