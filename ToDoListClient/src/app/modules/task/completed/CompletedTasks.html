@@ -31,7 +31,7 @@ author: Joseph Gefroh
     </div>
 </div>
 <br/>
-<div ng-repeat="task in completedCtrl.tasks | filter: { complete: true}  | orderBy:completedCtrl.viewState.sortField.value:completedCtrl.viewState.isAscending">
+<div ng-repeat="task in completedCtrl.tasks | filter: { complete: true}  | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
     <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
     <hr class="hr-small">
 </div>

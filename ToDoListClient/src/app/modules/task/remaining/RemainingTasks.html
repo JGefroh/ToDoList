@@ -58,7 +58,7 @@
         </div>
     </div>
     <br/>
-    <div ng-repeat="task in remainingCtrl.tasks | filter: { complete: false}  | orderBy:remainingCtrl.viewState.sortField.value:remainingCtrl.viewState.isAscending">
+    <div ng-repeat="task in remainingCtrl.tasks | filter: { complete: false}  | orderBy:remainingCtrl.viewState.sortField.value:!remainingCtrl.viewState.isAscending">
         <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
         <hr class="hr-small">
     </div>
