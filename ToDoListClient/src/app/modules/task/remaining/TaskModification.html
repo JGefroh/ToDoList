@@ -10,13 +10,17 @@
                     <label>Task</label>
                     <input data-ng-model="remainingCtrl.inputCopy.name"
                            data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
-                           placeholder="Enter your task name or description..." class="form-control"/>
+                           placeholder="Enter your task name or description..."
+                           class="form-control"
+                           maxlength="500"/>
                 </div>
                 <div class="form-group">
                     <label>Group</label>
                     <input data-ng-model="remainingCtrl.inputCopy.group"
                            data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
-                           placeholder="Enter a group name for this task..." class="form-control"/>
+                           placeholder="Enter a group name for this task..."
+                           class="form-control"
+                           maxlength="500"/>
                 </div>
             </div>
             <div class="modal-footer">

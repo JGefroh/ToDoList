@@ -1,21 +1,26 @@
 package com.jgefroh.todolist.server.todolists;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import com.jgefroh.server.core.validation.IValidationLayer;
+
 @Stateless
 public class ToDoListManager {
     
+    @Inject private IValidationLayer validationLayer;
+    @Inject private Logger logger;
     @Inject private ToDoListDAO listDAO;
     @Inject private TaskDAO taskDAO;
 
     
     public Task createTask(final String ownerId, final String name, final String group) {
         Task task = Task.create(ownerId, name, group);
+        validationLayer.validateThrowIfError(task);
         task = taskDAO.update(task);
         ToDoList list = getList(ownerId);
         list.addTask(task);
@@ -26,6 +31,7 @@ public class ToDoListManager {
     public Task updateTask(final String ownerId, final int taskId, final String name, final String group) {
         Task task = getTask(ownerId, taskId);
         task.updateTask(name, group);
+        validationLayer.validateThrowIfError(task);
         return taskDAO.update(task);
     }
 
