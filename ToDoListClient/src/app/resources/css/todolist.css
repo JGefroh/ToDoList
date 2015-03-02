@@ -6,22 +6,22 @@ body {
     padding-top: 70px;
 }
 
+
 .task-highlighted {
     color: red;
     font-weight: bold;
 }
 
+
 .icon-button {
     padding: 0;
 }
-
 .complete-button {
     color: #5CB85C;
 }
 .complete-button:hover {
     color: #449D44;
 }
-
 .delete-button {
     color: #D9534F;
 }
@@ -29,16 +29,18 @@ body {
     color: #C9302C;
 }
 
-.hr-small {
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
-
 .task-name {
     font-size: 1.2em;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.task-group {
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
-.table-button-separator {
+
+.hr-small {
     margin-top: 8px;
     margin-bottom: 8px;
 }

@@ -20,15 +20,17 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
+                <button type="button" class="btn btn-link pull-left"
                         data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
                         data-dismiss="modal">Cancel</button>
                 <button data-ng-click="remainingCtrl.editTask(remainingCtrl.inputCopy)"
                         data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
                         type="button"
-                        class="btn btn-primary">
+                        class="btn btn-success">
                     <span data-ng-if="remainingCtrl.operations.editTask.status === 'LOADING'"
                           class="fa fa-spin fa-spinner"></span>
+                    <span data-ng-if="remainingCtrl.operations.editTask.status !== 'LOADING'"
+                          class="fa fa-save"></span>
                     Save changes
                 </button>
             </div>
