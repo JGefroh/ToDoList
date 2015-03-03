@@ -2,7 +2,7 @@ package com.jgefroh.todolist.server.todolists;
 
 import java.util.Date;
 
-import javax.annotation.Generated;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -19,8 +20,15 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String ownerId;
+    
+    @Column(length = 1000)
+    @Size(max = 1000, message = "A task name can only be 1000 characters long.")
     private String name;
+    
+    @Column(length = 1000)
+    @Size(max = 1000, message = "A task group name can only be 1000 characters long.")
     private String group;
+    
     private boolean isComplete;
     private boolean isTracking;
     private long totalTimeTracked;

@@ -12,7 +12,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import com.jgefroh.server.core.validation.ValidationException;
+import com.jgefroh.todolist.server.core.ToDoListException;
 
 
 @RequestScoped
@@ -39,12 +44,17 @@ public class TaskEndpoint {
     
     @PUT
     @Consumes("application/json")
-    public Task saveTask(@QueryParam("ownerId") final String ownerId, final Task task) {
-        if (task.getId() == null) {
-            return listManager.createTask(ownerId, task.getName(), task.getGroup());
+    public Task saveTask(@QueryParam("ownerId") final String ownerId, final Task task) throws ToDoListException {
+        try {
+            if (task.getId() == null) {
+                return listManager.createTask(ownerId, task.getName(), task.getGroup());
+            }
+            else {
+                return listManager.updateTask(ownerId, task.getId(), task.getName(), task.getGroup());
+            }   
         }
-        else {
-            return listManager.updateTask(ownerId, task.getId(), task.getName(), task.getGroup());
+        catch (ValidationException e) {
+            throw new ToDoListException(e.getResult());
         }
     }
     

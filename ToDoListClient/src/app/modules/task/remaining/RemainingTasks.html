@@ -10,7 +10,9 @@
                 <label>Task</label>
                 <input data-ng-model="remainingCtrl.viewState.input.name"
                        data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
-                       class="form-control" placeholder="Enter your task name or description..."/>
+                       class="form-control"
+                       placeholder="Enter your task name or description..."
+                       maxlength="500"/>
             </div>
         </div>
         <div class="col-xs-3">
@@ -19,7 +21,9 @@
                 <input data-ng-model="remainingCtrl.viewState.input.group"
                        data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
                        data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(viewState.input, $event)"
-                       class="form-control" placeholder="Enter a group name for this task..."/>
+                       class="form-control"
+                       placeholder="Enter a group name for this task..."
+                       maxlength="500"/>
             </div>
         </div>
         <div class="col-xs-1">
@@ -28,7 +32,7 @@
                     data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
                     title="Add a new task to the To Do List."
                     style="margin-top: 24px;">
-                <span data-ng-if="remainingCtrl.operations.addTask.status !== 'LOADING'" class="glyphicon glyphicon-plus"></span>
+                <span data-ng-if="remainingCtrl.operations.addTask.status !== 'LOADING'" class="fa fa-plus"></span>
                 <span data-ng-if="remainingCtrl.operations.addTask.status === 'LOADING'" class="fa fa-spin fa-spinner"></span>
                 Add Task
             </button>

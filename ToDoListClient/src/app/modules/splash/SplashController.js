@@ -2,21 +2,28 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function SplashCtrl($window, $stateParams, $location, UserService) {
+    function SplashCtrl($state, UserService) {
         var vm = this;
         vm.user = UserService.user;
+        vm.params = $state.params;
 
-        vm.goTo = function(route) {
-            $location.path(route);
+        vm.goToRemaining = function() {
+            $state.go('remaining', {userID: vm.params.userID});
+        };
+
+        vm.useId = function(userID) {
+            UserService.reserveID(userID);
         };
 
         function initialize() {
-            UserService.reserveID($stateParams.userID);
+            UserService.reserveID($state.params.userID).then(function(id) {
+                vm.params.userID = id;
+            });
         }
 
         initialize();
     }
     angular
         .module('ToDoList.StatsModule')
-        .controller('SplashCtrl', ['$window', '$stateParams', '$location', 'UserService', SplashCtrl]);
+        .controller('SplashCtrl', ['$state', 'UserService', SplashCtrl]);
 })();

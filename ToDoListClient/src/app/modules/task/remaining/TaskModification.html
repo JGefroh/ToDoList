@@ -10,25 +10,31 @@
                     <label>Task</label>
                     <input data-ng-model="remainingCtrl.inputCopy.name"
                            data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
-                           placeholder="Enter your task name or description..." class="form-control"/>
+                           placeholder="Enter your task name or description..."
+                           class="form-control"
+                           maxlength="500"/>
                 </div>
                 <div class="form-group">
                     <label>Group</label>
                     <input data-ng-model="remainingCtrl.inputCopy.group"
                            data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
-                           placeholder="Enter a group name for this task..." class="form-control"/>
+                           placeholder="Enter a group name for this task..."
+                           class="form-control"
+                           maxlength="500"/>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
+                <button type="button" class="btn btn-link pull-left"
                         data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
                         data-dismiss="modal">Cancel</button>
                 <button data-ng-click="remainingCtrl.editTask(remainingCtrl.inputCopy)"
                         data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
                         type="button"
-                        class="btn btn-primary">
+                        class="btn btn-success">
                     <span data-ng-if="remainingCtrl.operations.editTask.status === 'LOADING'"
                           class="fa fa-spin fa-spinner"></span>
+                    <span data-ng-if="remainingCtrl.operations.editTask.status !== 'LOADING'"
+                          class="fa fa-save"></span>
                     Save changes
                 </button>
             </div>
