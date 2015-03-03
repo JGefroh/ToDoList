@@ -1,27 +1,23 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 application-description">
-            <h1>Welcome to ToDoList!</h1>
-            <p>ToDoList is a personal task and time tracking system initially designed to help fill out project-based timesheets.</p>
-            <p>It can be used to track time expenditures on individual tasks/groups of tasks, or as a general to-do list.</p>
-            <p><label>Note: </label> Please don't enter sensitive information into this system - uptime and security are not guaranteed.</p>
-
+            <h1 class="text-center">Time and Task Tracking at your Fingertips</h1>
+            <h3 class="text-center">Enter a hard-to-guess ID to get started.</h3>
+            <br/>
             <div class="row">
-                <div class="col-xs-6">
-                    <div class="form-group">
-                        <label>List ID</label>
+                <div class="col-xs-12 col-md-offset-4 col-md-4">
+                    <div class="input-group-lg">
                         <input data-ng-model="splashCtrl.input.id"
-                               placeholder="Enter your desired list ID (please make it secure)..."
                                class="form-control">
-                        <span class="help-block">Use the random default or make your own. It should be hard to guess.</span>
                     </div>
                 </div>
             </div>
+            <br/>
             <div class="row">
-                <div class=" col-xs-8">
+                <div class="col-xs-12 text-center">
                     <button class="btn btn-success btn-lg inline-button"
                             data-ng-click="splashCtrl.useId(splashCtrl.input.id);"
-                            title="Load a list with the ID.">
+                            title="Get started using the ID above.">
                         Get Started
                     </button>
                 </div>
