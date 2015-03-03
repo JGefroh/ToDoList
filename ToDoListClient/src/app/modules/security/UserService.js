@@ -18,7 +18,6 @@
                 });
             }
             else {
-                console.info("Using old ID: " + userID);
                 $stateParams.userID = userID;
                 self.user.id = userID;
                 deferred.resolve(self.user.id);

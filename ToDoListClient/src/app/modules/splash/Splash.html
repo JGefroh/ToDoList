@@ -5,12 +5,33 @@
             <p>ToDoList is a personal task and time tracking system initially designed to help fill out project-based timesheets.</p>
             <p>It can be used to track time expenditures on individual tasks/groups of tasks, or as a general to-do list.</p>
             <p><label>Note: </label> Please don't enter sensitive information into this system - uptime and security are not guaranteed.</p>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <label>List ID</label>
+                        <input data-ng-model="splashCtrl.input.id"
+                               placeholder="Enter your desired list ID (please make it secure)..."
+                               class="form-control">
+                        <span class="help-block">Use the random default or make your own. It should be hard to guess.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-xs-8">
+                    <button class="btn btn-success btn-lg inline-button"
+                            data-ng-click="splashCtrl.useId(splashCtrl.input.id);"
+                            title="Load a list with the ID.">
+                        Get Started
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-xs-12 col-md-3">
-            <a data-ng-href="#/remaining/{{splashCtrl.user.id}}">
+            <a data-ng-href="#/remaining/{{splashCtrl.input.id}}">
                 <h3 class="text-center">
                     <span class="fa fa-list-ol fa-5x"></span>
                     <br/><br/>
@@ -19,7 +40,7 @@
             </a>
         </div>
         <div class="col-xs-12 col-md-3">
-            <a data-ng-href="#/completed/{{splashCtrl.user.id}}">
+            <a data-ng-href="#/completed/{{splashCtrl.input.id}}">
                 <h3 class="text-center">
                     <span class="fa fa-check fa-5x"></span>
                     <br/><br/>
@@ -28,7 +49,7 @@
             </a>
         </div>
         <div class="col-xs-12 col-md-3">
-            <a data-ng-href="#/statistics/{{splashCtrl.user.id}}">
+            <a data-ng-href="#/statistics/{{splashCtrl.input.id}}">
                 <h3 class="text-center">
                     <span class="fa fa-bar-chart fa-5x"></span>
                     <br/><br/>
