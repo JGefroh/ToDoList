@@ -16,7 +16,9 @@
         };
 
         function initialize() {
-            UserService.reserveID($state.params.userID);
+            UserService.reserveID($state.params.userID).then(function(id) {
+                vm.params.userID = id;
+            });
         }
 
         initialize();
