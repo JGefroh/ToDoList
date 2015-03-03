@@ -1,13 +1,15 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 application-description">
-            <h1 class="text-center">Time and Task Tracking at your Fingertips</h1>
+            <h1 class="text-center">Time and task tracking at your fingertips.</h1>
             <h3 class="text-center">Enter a hard-to-guess ID to get started.</h3>
             <br/>
             <div class="row">
                 <div class="col-xs-12 col-md-offset-4 col-md-4">
                     <div class="input-group-lg">
-                        <input data-ng-model="splashCtrl.input.id"
+                        <input data-ng-model="splashCtrl.params.userID"
+                               data-ng-keyup="splashCtrl.useId(splashCtrl.params.userID)"
+                               data-ng-blur="splashCtrl.useId(splashCtrl.params.userID)"
                                class="form-control">
                     </div>
                 </div>
@@ -16,7 +18,7 @@
             <div class="row">
                 <div class="col-xs-12 text-center">
                     <button class="btn btn-success btn-lg inline-button"
-                            data-ng-click="splashCtrl.useId(splashCtrl.input.id);"
+                            data-ng-click="splashCtrl.goToRemaining();"
                             title="Get started using the ID above.">
                         Get Started
                     </button>
@@ -27,7 +29,7 @@
     <hr>
     <div class="row">
         <div class="col-xs-12 col-md-3">
-            <a data-ng-href="#/remaining/{{splashCtrl.input.id}}">
+            <a data-ng-href="#/remaining/{{splashCtrl.params.userID}}">
                 <h3 class="text-center">
                     <span class="fa fa-list-ol fa-5x"></span>
                     <br/><br/>
@@ -36,7 +38,7 @@
             </a>
         </div>
         <div class="col-xs-12 col-md-3">
-            <a data-ng-href="#/completed/{{splashCtrl.input.id}}">
+            <a data-ng-href="#/completed/{{splashCtrl.params.userID}}">
                 <h3 class="text-center">
                     <span class="fa fa-check fa-5x"></span>
                     <br/><br/>
@@ -45,7 +47,7 @@
             </a>
         </div>
         <div class="col-xs-12 col-md-3">
-            <a data-ng-href="#/statistics/{{splashCtrl.input.id}}">
+            <a data-ng-href="#/statistics/{{splashCtrl.params.userID}}">
                 <h3 class="text-center">
                     <span class="fa fa-bar-chart fa-5x"></span>
                     <br/><br/>

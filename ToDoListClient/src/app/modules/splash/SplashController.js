@@ -7,22 +7,16 @@
         vm.user = UserService.user;
         vm.params = $state.params;
 
-        vm.goTo = function(route, data) {
-            $state.go(route, data);
+        vm.goToRemaining = function() {
+            $state.go('remaining', {userID: vm.params.userID});
         };
 
         vm.useId = function(userID) {
-            UserService.reserveID(userID).then(function(id) {
-                vm.goTo('remaining', {userID: id});
-            });
+            UserService.reserveID(userID);
         };
 
         function initialize() {
-            UserService.reserveID($state.params.userID).then(function(id) {
-                vm.input = {
-                    id: id
-                };
-            });
+            UserService.reserveID($state.params.userID);
         }
 
         initialize();
