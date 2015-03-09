@@ -1,3 +1,6 @@
 ToDoListBuilds
 /build
 /bin
+GradleBuild
+/.gradle
+gradle.properties

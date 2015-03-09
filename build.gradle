@@ -1,0 +1,62 @@
+// Requires the following properties to be declared in gradle.properties:
+// applicationName: The name of the application, assuming directory structure of AppNameServer and AppNameClient
+// applicationServerLibrariesPath: The path to the application server's .jar files required for compilation.
+//
+// WAR Plugin Configuration
+//
+apply plugin: 'war'
+webAppDirName = '${applicationName}Server/src'
+buildDir = 'GradleBuild'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [applicationName + 'Server/src']
+        }
+        resources {
+            srcDirs = [applicationName + 'Server/src']
+        }
+    }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+    providedCompile fileTree(dir: applicationServerLibrariesPath, include: '**/*.jar')
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.7'
+}
+
+
+//
+// Tasks
+//
+
+war {
+    from(applicationName + 'Server/WebContent/') {
+        include 'app/**/*.*'
+    }
+    from(applicationName + 'Server/WebContent/WEB-INF') {
+        include '*.xml'
+            into 'WEB-INF'
+    }
+}
+task gruntProd(type:Exec) {
+    description 'Wrapper to call \'grunt prod\' on the client.'
+    workingDir applicationName + 'Client'
+    doFirst {
+        println '\nRunning task gruntProd...'
+        commandLine 'cmd', '/c', 'grunt prod'
+    }
+    doLast {
+        println '\n...gruntProd finished.'
+    }
+}
+task prod(dependsOn: ['assemble', 'gruntProd']) {
+    description 'Builds a .WAR archive for production.'
+    assemble.mustRunAfter 'gruntProd'
+    doLast {
+        println '\n...buildProd finished.'
+    }
+}
