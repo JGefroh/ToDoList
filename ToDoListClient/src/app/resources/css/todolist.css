@@ -29,6 +29,20 @@ body {
     color: #C9302C;
 }
 
+.task-tag {
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+}
+
+.task-tag button {
+    color: white;
+}
+.task-tag-inactive {
+}
+.task-tag-active {
+    background-color: red;
+}
+
 .task-name {
     font-size: 1.2em;
     word-wrap: break-word;

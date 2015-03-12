@@ -22,6 +22,36 @@
                            class="form-control"
                            maxlength="500"/>
                 </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <label>Tags</label>
+                            <input data-ng-model="remainingCtrl.form.tag"
+                                   data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
+                                   data-ng-keypress="remainingCtrl.addTagOnEnterKeyPressed(remainingCtrl.form.tag, $event)"
+                                   placeholder="Enter a tag..."
+                                   class="form-control"
+                                   maxlength="30">
+                        </div>
+                        <div class="col-xs-2">
+                            <label>&nbsp;</label>
+                            <button data-ng-click="remainingCtrl.addTag(remainingCtrl.form.tag);"
+                                    data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
+                                    class="btn btn-link">
+                                <span class="fa fa-plus"></span> Add Tag
+                            </button>
+                        </div>
+                    </div>
+                    <span data-ng-repeat="tag in remainingCtrl.inputCopy.tags"
+                          class="badge task-tag">
+                        <button data-ng-click="remainingCtrl.removeTag(tag)"
+                                data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
+                                class="btn btn-xs btn-link">
+                            <span class="fa fa-times"></span>
+                        </button>
+                        <span data-ng-bind="tag"></span>
+                    </span>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-link pull-left"

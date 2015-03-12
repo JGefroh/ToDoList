@@ -1,9 +1,13 @@
 package com.jgefroh.todolist.server.todolists;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +32,11 @@ public class Task {
     @Column(length = 1000)
     @Size(max = 1000, message = "A task group name can only be 1000 characters long.")
     private String group;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(length = 100)
+    @Size(max = 100, message = "A task tag can only be 100 characters long.")
+    private List<String> tags;
     
     private boolean isComplete;
     private boolean isTracking;
@@ -86,9 +95,24 @@ public class Task {
         }
     }
     
-    public void updateTask(final String name, final String group) {
+    public void updateTask(final String name, final String group, final List<String> tags) {
         setGroup(group);
         setName(name);
+        setTags(tags);
+    }
+    
+    public void tag(final String tag) {
+        if (tags == null) {
+            tags = new ArrayList<String>();
+        }
+        
+        if (!tags.contains(tag)) {
+            tags.add(tag);
+        }
+    }
+    
+    public void untag(final String tag) {
+        tags.remove(tag);
     }
     
     public long simulateUntrack() {
@@ -145,6 +169,10 @@ public class Task {
     public Date getTimestampCreated() {
         return timestampCreated;
     }
+    
+    public List<String> getTags() {
+        return tags;
+    }
 
     
 
@@ -190,5 +218,9 @@ public class Task {
     
     private void setTimestampCreated(Date timestampCreated) {
         this.timestampCreated = timestampCreated;
+    }
+    
+    private void setTags(final List<String> tags) {
+        this.tags = tags;
     }
 }

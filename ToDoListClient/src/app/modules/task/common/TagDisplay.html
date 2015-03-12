@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-xs-12">
+                <span data-ng-repeat="tag in task.tags"
+                      data-ng-bind="tag"
+                      data-ng-class="{'task-tag-inactive':tagsToFilterBy.indexOf(tag) === -1,
+                                    'task-tag-active':tagsToFilterBy.indexOf(tag) !== -1}"
+                      class="badge task-tag"></span>
+    </div>
+</div>
