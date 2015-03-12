@@ -2,7 +2,25 @@
     <div class="col-xs-2">
         <div data-ng-include data-src="'modules/task/completed/CompletedTasksActions.html'"></div>
     </div>
-    <div class="col-xs-7">
+    <div class="col-xs-10">
+        <div class="row">
+            <div class="col-xs-4">
+                Created <span data-ng-bind="task.timestampCreated | date:'MMMM dd \'at\' h:mma'"></span>
+            </div>
+            <div class="col-xs-4">
+                Completed <span data-ng-bind="task.timestampCompleted| date:'MMMM dd \'at\' h:mma'"></span>
+            </div>
+            <div class="col-xs-4 text-right">
+                Tracked for
+                <a data-ng-click="completedCtrl.viewState.isShowingMinutes = !completedCtrl.viewState.isShowingMinutes"
+                   style="cursor: pointer">
+                    <span data-ng-if="completedCtrl.viewState.isShowingMinutes"
+                          data-ng-bind="(task.totalTimeTracked | msToMinutes) + ' minutes'"></span>
+                    <span data-ng-if="!completedCtrl.viewState.isShowingMinutes"
+                          data-ng-bind="(task.totalTimeTracked | msToHours:2) + ' hours'"></span>
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-9">
                         <span data-ng-bind="task.group"
@@ -16,20 +34,6 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
-    </div>
-    <div class="col-xs-3 text-right">
-        Created <span data-ng-bind="task.timestampCreated | date:'MMMM dd \'at\' h:mma'"></span>
-        <br/>
-
-        Completed <span data-ng-bind="task.timestampCompleted| date:'MMMM dd \'at\' h:mma'"></span>
-        <br/><br/>
-        Tracked for
-        <a data-ng-click="completedCtrl.viewState.isShowingMinutes = !completedCtrl.viewState.isShowingMinutes"
-           style="cursor: pointer">
-                    <span data-ng-if="completedCtrl.viewState.isShowingMinutes"
-                          data-ng-bind="(task.totalTimeTracked | msToMinutes) + ' minutes'"></span>
-                    <span data-ng-if="!completedCtrl.viewState.isShowingMinutes"
-                          data-ng-bind="(task.totalTimeTracked | msToHours:2) + ' hours'"></span>
-        </a>
+        <div data-ng-include data-src="'modules/task/common/TagDisplay.html'"></div>
     </div>
 </div>
