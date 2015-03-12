@@ -34,6 +34,7 @@
             TaskService.getTasks(UserService.user.id, false).then(function(tasks) {
                 vm.operations.getTasks.status = null;
                 vm.tasks = tasks;
+                updateTags();
             })
             .catch(function(error) {
                 vm.operations.getTasks.status = 'ERROR';
@@ -68,6 +69,7 @@
                 else {
                     AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as complete.', 2000);
                 }
+                updateTags();
             })
             .catch(function() {
                 vm.operations.markComplete.tasks[task.id].status = 'ERROR';
@@ -80,8 +82,59 @@
 
         vm.prepareEditTask = function (task) {
             currentlyEditedTask = task;
+            vm.form = {};
             vm.inputCopy = angular.copy(currentlyEditedTask);
         };
+
+        vm.addTagOnEnterKeyPressed = function(tag, key) {
+            if (key.which === ENTER_KEY_ID) {
+                vm.addTag(tag);
+            }
+        };
+
+        vm.addTag = function(tag) {
+            if (!vm.inputCopy.tags) {
+                vm.inputCopy.tags = [];
+            }
+
+            if (tag && vm.inputCopy.tags.indexOf(tag) === -1) {
+                vm.inputCopy.tags.push(tag);
+            }
+
+            vm.form.tag = null;
+        };
+
+        vm.removeTag = function(tag) {
+            vm.inputCopy.tags.splice(vm.inputCopy.tags.indexOf(tag), 1);
+        };
+
+        vm.toggleTagFilter = function(tag) {
+            if (vm.viewState.tagsToFilterBy.indexOf(tag) === -1) {
+                vm.viewState.tagsToFilterBy.push(tag);
+            }
+            else {
+                vm.viewState.tagsToFilterBy.splice(vm.viewState.tagsToFilterBy.indexOf(tag), 1);
+            }
+        };
+
+        function updateTags() {
+            updateUsedTags();
+            updateFilterTags();
+        }
+
+        function updateUsedTags() {
+            vm.usedTags = TaskService.getUsedTags($filter('filter')(vm.tasks, {complete: false}));
+        }
+
+        function updateFilterTags() {
+            var tagsToKeep = [];
+            angular.forEach(vm.viewState.tagsToFilterBy, function(filterTag, index) {
+                if (vm.usedTags.indexOf(filterTag) !== -1) {
+                    tagsToKeep.push(filterTag);
+                }
+            });
+            vm.viewState.tagsToFilterBy = tagsToKeep;
+        }
 
         vm.editTask = function (taskFields) {
             vm.operations.editTask.status = 'LOADING';
@@ -91,6 +144,7 @@
                 vm.inputCopy = null;
                 currentlyEditedTask = null;
                 $jQuery("#editTaskView").modal("hide");
+                updateTags();
             })
             .catch(function(error) {
                 vm.operations.editTask.status = 'ERROR';

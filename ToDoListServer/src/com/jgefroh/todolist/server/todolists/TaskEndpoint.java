@@ -50,7 +50,7 @@ public class TaskEndpoint {
                 return listManager.createTask(ownerId, task.getName(), task.getGroup());
             }
             else {
-                return listManager.updateTask(ownerId, task.getId(), task.getName(), task.getGroup());
+                return listManager.updateTask(ownerId, task.getId(), task);
             }   
         }
         catch (ValidationException e) {
