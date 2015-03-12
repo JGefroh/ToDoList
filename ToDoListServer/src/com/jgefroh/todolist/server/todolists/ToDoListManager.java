@@ -28,9 +28,9 @@ public class ToDoListManager {
         return task;
     }
     
-    public Task updateTask(final String ownerId, final int taskId, final String name, final String group) {
+    public Task updateTask(final String ownerId, final int taskId, final Task dto) {
         Task task = getTask(ownerId, taskId);
-        task.updateTask(name, group);
+        task.updateTask(dto.getName(), dto.getGroup(), dto.getTags());
         validationLayer.validateThrowIfError(task);
         return taskDAO.update(task);
     }

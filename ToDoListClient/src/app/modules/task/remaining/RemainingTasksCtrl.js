@@ -83,6 +83,20 @@
             vm.inputCopy = angular.copy(currentlyEditedTask);
         };
 
+        vm.addTag = function(tag) {
+            if (!vm.inputCopy.tags) {
+                vm.inputCopy.tags = [];
+            }
+
+            if (tag && vm.inputCopy.tags.indexOf(tag) === -1) {
+                vm.inputCopy.tags.push(tag);
+            }
+        };
+
+        vm.removeTag = function(tag) {
+            vm.inputCopy.tags.splice(vm.inputCopy.tags.indexOf(tag), 1);
+        };
+
         vm.editTask = function (taskFields) {
             vm.operations.editTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(savedTask) {

@@ -32,5 +32,12 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span data-ng-repeat="tag in task.tags"
+                      data-ng-bind="tag"
+                      class="badge task-tag"></span>
+            </div>
+        </div>
     </div>
 </div>
