@@ -8,6 +8,7 @@
                 isAscending: null,
                 sortField: null,
                 isShowingMinutes: null,
+                tagsToFilterBy: [],
                 input: {
                     name: null,
                     group: null

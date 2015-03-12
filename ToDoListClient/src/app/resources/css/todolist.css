@@ -37,6 +37,11 @@ body {
 .task-tag button {
     color: white;
 }
+.task-tag-inactive {
+}
+.task-tag-active {
+    background-color: red;
+}
 
 .task-name {
     font-size: 1.2em;

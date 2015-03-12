@@ -113,6 +113,21 @@
                 task.totalTimeTracked = fakeTotalTimeTracked;
             }
         };
+
+        /**
+         * Gets a set of tags that are used by the tasks.
+         */
+        this.getUsedTags = function(tasks) {
+            var usedTags = [];
+            angular.forEach(tasks, function(task, index) {
+                angular.forEach(task.tags, function(tag, index) {
+                    if (usedTags.indexOf(tag) === -1) {
+                        usedTags.push(tag);
+                    }
+                });
+            });
+            return usedTags;
+        }
     }
     angular
         .module('ToDoList.TaskModule')
