@@ -28,13 +28,14 @@
                             <label>Tags</label>
                             <input data-ng-model="remainingCtrl.form.tag"
                                    data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
+                                   data-ng-keypress="remainingCtrl.addTagOnEnterKeyPressed(remainingCtrl.form.tag, $event)"
                                    placeholder="Enter a tag..."
                                    class="form-control"
                                    maxlength="30">
                         </div>
                         <div class="col-xs-2">
                             <label>&nbsp;</label>
-                            <button data-ng-click="remainingCtrl.addTag(remainingCtrl.form.tag); remainingCtrl.form.tag = null"
+                            <button data-ng-click="remainingCtrl.addTag(remainingCtrl.form.tag);"
                                     data-ng-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"
                                     class="btn btn-link">
                                 <span class="fa fa-plus"></span> Add Tag

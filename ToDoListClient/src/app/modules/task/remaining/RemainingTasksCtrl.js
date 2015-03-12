@@ -83,6 +83,12 @@
             vm.inputCopy = angular.copy(currentlyEditedTask);
         };
 
+        vm.addTagOnEnterKeyPressed = function(tag, key) {
+            if (key.which === ENTER_KEY_ID) {
+                vm.addTag(tag);
+            }
+        };
+
         vm.addTag = function(tag) {
             if (!vm.inputCopy.tags) {
                 vm.inputCopy.tags = [];
@@ -91,6 +97,8 @@
             if (tag && vm.inputCopy.tags.indexOf(tag) === -1) {
                 vm.inputCopy.tags.push(tag);
             }
+            
+            vm.form.tag = null;
         };
 
         vm.removeTag = function(tag) {
