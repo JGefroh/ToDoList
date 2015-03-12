@@ -7,7 +7,7 @@
             if (!tasks || !tagsToFilterBy) {
                 return tasks;
             }
-            
+
             if (tagsToFilterBy.length === 0) {
                 return tasks;
             }

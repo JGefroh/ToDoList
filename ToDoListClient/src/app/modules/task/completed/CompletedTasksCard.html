@@ -34,6 +34,8 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
-        <div data-ng-include data-src="'modules/task/common/TagDisplay.html'"></div>
+        <div data-tag-display
+             data-task="task"
+             data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
     </div>
 </div>
