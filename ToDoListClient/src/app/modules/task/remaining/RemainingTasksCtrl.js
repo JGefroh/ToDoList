@@ -34,7 +34,7 @@
             TaskService.getTasks(UserService.user.id, false).then(function(tasks) {
                 vm.operations.getTasks.status = null;
                 vm.tasks = tasks;
-                updateUsedTags();
+                updateTags();
             })
             .catch(function(error) {
                 vm.operations.getTasks.status = 'ERROR';
@@ -69,7 +69,7 @@
                 else {
                     AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as complete.', 2000);
                 }
-                updateUsedTags();
+                updateTags();
             })
             .catch(function() {
                 vm.operations.markComplete.tasks[task.id].status = 'ERROR';
@@ -117,26 +117,24 @@
             }
         };
 
-        vm.tagFilter = function(task) {
-            if (vm.viewState.tagsToFilterBy.length === 0) {
-                return true;
-            }
-
-            var isIncluded = false;
-            angular.forEach(task.tags, function(taskTag, index) {
-                angular.forEach(vm.viewState.tagsToFilterBy, function(filterTag, index) {
-                    if (filterTag === taskTag) {
-                        isIncluded = true;
-                    }
-                });
-            });
-            return isIncluded;
-        };
+        function updateTags() {
+            updateUsedTags();
+            updateFilterTags();
+        }
 
         function updateUsedTags() {
             vm.usedTags = TaskService.getUsedTags($filter('filter')(vm.tasks, {complete: false}));
         }
 
+        function updateFilterTags() {
+            var tagsToKeep = [];
+            angular.forEach(vm.viewState.tagsToFilterBy, function(filterTag, index) {
+                if (vm.usedTags.indexOf(filterTag) !== -1) {
+                    tagsToKeep.push(filterTag);
+                }
+            });
+            vm.viewState.tagsToFilterBy = tagsToKeep;
+        }
 
         vm.editTask = function (taskFields) {
             vm.operations.editTask.status = 'LOADING';
@@ -146,7 +144,7 @@
                 vm.inputCopy = null;
                 currentlyEditedTask = null;
                 $jQuery("#editTaskView").modal("hide");
-                updateUsedTags();
+                updateTags();
             })
             .catch(function(error) {
                 vm.operations.editTask.status = 'ERROR';

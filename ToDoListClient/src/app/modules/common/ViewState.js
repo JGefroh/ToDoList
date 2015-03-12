@@ -17,7 +17,8 @@
             completedTaskViewState: {
                 isAscending: null,
                 sortField: null,
-                isShowingMinutes: null
+                isShowingMinutes: null,
+                tagsToFilterBy: []
             },
             statisticsViewState: {
                 isAscending: null,

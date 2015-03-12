@@ -4,6 +4,10 @@
 (function() {
     function TagFilter() {
         return function(tasks, tagsToFilterBy) {
+            if (!tasks || !tagsToFilterBy) {
+                return tasks;
+            }
+            
             if (tagsToFilterBy.length === 0) {
                 return tasks;
             }

@@ -23,6 +23,7 @@
             TaskService.getTasks(UserService.user.id, true).then(function(tasks) {
                 vm.operations.getTasks.status = null;
                 vm.tasks = tasks;
+                updateTags();
             })
             .catch(function(error) {
                 vm.operations.getTasks.status = 'ERROR';
@@ -45,6 +46,7 @@
                 }
                 var index = vm.tasks.indexOf(task);
                 vm.tasks.splice(index, 1);
+                updateTags();
             })
             .catch(function() {
                 vm.operations.deleteTask.tasks[task.id].status = 'ERROR';
@@ -69,6 +71,7 @@
                 else {
                     AlertService.setAlert('alert-warning', 'Task Incomplete!', 'A task has been marked as incomplete.', 2000);
                 }
+                updateTags();
             })
             .catch(function() {
                 vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
@@ -78,7 +81,35 @@
                 task.readOnly = false;
             });
         };
-        
+
+        vm.toggleTagFilter = function(tag) {
+            if (vm.viewState.tagsToFilterBy.indexOf(tag) === -1) {
+                vm.viewState.tagsToFilterBy.push(tag);
+            }
+            else {
+                vm.viewState.tagsToFilterBy.splice(vm.viewState.tagsToFilterBy.indexOf(tag), 1);
+            }
+        };
+
+        function updateTags() {
+            updateUsedTags();
+            updateFilterTags();
+        }
+
+        function updateUsedTags() {
+            vm.usedTags = TaskService.getUsedTags($filter('filter')(vm.tasks, {complete: true}));
+        }
+
+        function updateFilterTags() {
+            var tagsToKeep = [];
+            angular.forEach(vm.viewState.tagsToFilterBy, function(filterTag, index) {
+                if (vm.usedTags.indexOf(filterTag) !== -1) {
+                    tagsToKeep.push(filterTag);
+                }
+            });
+            vm.viewState.tagsToFilterBy = tagsToKeep;
+        }
+
         function initialize() {
             UserService.reserveID($stateParams.userID);
             initializeViewState();

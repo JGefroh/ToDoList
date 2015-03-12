@@ -8,6 +8,18 @@ author: Joseph Gefroh
 </div>
 <div class="row">
     <div class="col-xs-12">
+        <label>Tag filter</label>
+            <span data-ng-repeat="tag in completedCtrl.usedTags"
+                  data-ng-bind="tag"
+                  data-ng-click="completedCtrl.toggleTagFilter(tag)"
+                  style="cursor: pointer;"
+                  data-ng-class="{'task-tag-inactive':completedCtrl.viewState.tagsToFilterBy.indexOf(tag) === -1,
+                                    'task-tag-active':completedCtrl.viewState.tagsToFilterBy.indexOf(tag) !== -1}"
+                  class="badge task-tag"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
         <div class="pull-right">
             <div class="btn-group">
                 <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ completedCtrl.viewState.sortField.label }}</button>
@@ -31,7 +43,7 @@ author: Joseph Gefroh
     </div>
 </div>
 <br/>
-<div ng-repeat="task in completedCtrl.tasks | filter: { complete: true}  | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
+<div ng-repeat="task in completedCtrl.tasks | filter: { complete: true}  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
     <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
     <hr class="hr-small">
 </div>
