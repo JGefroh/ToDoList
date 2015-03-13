@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <div class="btn-group">
+            <button data-ng-click="previousMonth()"
+                    data-ng-disabled="viewState.selectedMonthIndex === 0"
+                    class="btn btn-default">
+                <span class="fa fa-arrow-left"></span>
+            </button>
+            <button data-ng-repeat="button in monthButtons"
+                    class="btn btn-default"
+                    data-ng-class="{'btn-primary':button.id === viewState.selectedMonthIndex}"
+                    data-ng-click="setMonth(button.id)">
+                <span data-ng-bind="button.label"></span>
+            </button>
+            <button data-ng-click="nextMonth()"
+                    data-ng-disabled="viewState.selectedMonthIndex >= 11"
+                    class="btn btn-default">
+                <span class="fa fa-arrow-right"></span>
+            </button>
+        </div>
+    </div>
+</div>

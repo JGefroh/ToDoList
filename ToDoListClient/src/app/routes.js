@@ -19,6 +19,12 @@
                 controller: 'CompletedTasksCtrl',
                 controllerAs: 'completedCtrl'
             })
+            .state('calendar', {
+                url: '/calendar/:userID',
+                templateUrl: 'modules/task/calendar/TaskCalendar.html',
+                controller: 'TaskCalendarCtrl',
+                controllerAs: 'calendarCtrl'
+            })
             .state('statistics', {
                 url: '/statistics/:userID',
                 templateUrl: 'modules/stats/TaskStatistics.html',
