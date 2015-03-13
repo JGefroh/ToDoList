@@ -12,6 +12,8 @@
             getTasks: {}
         };
 
+        vm.monthSelectorAPI = {};
+
         vm.getTasks = function () {
             vm.operations.getTasks.status = 'LOADING';
             TaskService.getTasks(UserService.user.id).then(function(tasks) {

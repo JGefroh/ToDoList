@@ -5,18 +5,18 @@
                 $scope.viewState.selectedMonthIndex = new Date().getMonth();
             }
             $scope.monthButtons = [
-                {id: 0, label: 'Jan'},
-                {id: 1, label: 'Feb'},
-                {id: 2, label: 'Mar'},
-                {id: 3, label: 'Apr'},
-                {id: 4, label: 'May'},
-                {id: 5, label: 'Jun'},
-                {id: 6, label: 'Jul'},
-                {id: 7, label: 'Aug'},
-                {id: 8, label: 'Sep'},
-                {id: 9, label: 'Oct'},
-                {id: 10, label: 'Nov'},
-                {id: 11, label: 'Dec'}
+                {id: 0, label: 'Jan', full: 'January'},
+                {id: 1, label: 'Feb', full: 'February'},
+                {id: 2, label: 'Mar', full: 'March'},
+                {id: 3, label: 'Apr', full: 'April'},
+                {id: 4, label: 'May', full: 'May'},
+                {id: 5, label: 'Jun', full: 'June'},
+                {id: 6, label: 'Jul', full: 'July'},
+                {id: 7, label: 'Aug', full: 'August'},
+                {id: 8, label: 'Sep', full: 'September'},
+                {id: 9, label: 'Oct', full: 'October'},
+                {id: 10, label: 'Nov', full: 'November'},
+                {id: 11, label: 'Dec', full: 'December'}
             ];
 
             $scope.previousMonth = function() {
@@ -33,13 +33,29 @@
 
             $scope.setMonth = function(monthIndex) {
                 $scope.viewState.selectedMonthIndex = monthIndex;
+            };
+
+            function initializeAPI() {
+                if (!$scope.api) {
+                    return;
+                }
+
+                $scope.api.getFullMonth = function(monthIndex) {
+                    if ((!monthIndex && monthIndex !== 0) || monthIndex < 0 || monthIndex > 11) {
+                        return null;
+                    }
+                    return $scope.monthButtons[monthIndex].full;
+                }
             }
+
+            initializeAPI();
         }
 
         return {
             restrict: 'A',
             scope: {
-                viewState: '='
+                viewState: '=',
+                api: '='
             },
             templateUrl: 'MonthSelector.html',
             controller: ['$scope', MonthSelectorController]

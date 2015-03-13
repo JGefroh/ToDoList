@@ -5,12 +5,12 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
+        <h2 data-ng-bind="calendarCtrl.monthSelectorAPI.getFullMonth(calendarCtrl.viewState.selectedMonthIndex)"
+            class="text-center"></h2>
         <div data-month-selector
-             data-view-state="calendarCtrl.viewState"></div>
+             data-view-state="calendarCtrl.viewState"
+             data-api="calendarCtrl.monthSelectorAPI"></div>
         <table class="table table-condensed">
-            <tr>
-                <th colspan="2">Feburary 2015</th>
-            </tr>
             <tr>
                 <th>Date</th>
                 <th>Task</th>
