@@ -23,6 +23,13 @@
                            maxlength="500"/>
                 </div>
                 <div class="form-group">
+                    <label>Due Date</label>
+                    <div data-date-input-field
+                         data-model="remainingCtrl.inputCopy.timestampDue"
+                         data-config="remainingCtrl.datePickerConfig"
+                         data-is-disabled="remainingCtrl.operations.editTask.status === 'LOADING'"></div>
+                </div>
+                <div class="form-group">
                     <div class="row">
                         <div class="col-xs-7">
                             <label>Tags</label>

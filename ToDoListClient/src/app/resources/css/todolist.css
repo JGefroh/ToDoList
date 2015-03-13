@@ -74,7 +74,7 @@ td {
     visibility: hidden;
 }
 
-.active {
+.navigation-active {
     border-bottom: 1px solid red;
 }
 
@@ -85,3 +85,7 @@ td {
 .application-description {
     font-size: 1.2em;
 }
+
+/**
+ * Calendar
+ */
