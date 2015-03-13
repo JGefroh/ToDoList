@@ -54,6 +54,12 @@
                 vm.operations.addTask.status = null;
                 vm.tasks.push(task);
                 resetInputFields(taskFields);
+                if (task.name != null) {
+                    AlertService.setAlert('alert-info', 'Task Added!', $filter('limitTo')(task.name, truncateLimit) + ' has been added.', 2000);
+                }
+                else {
+                    AlertService.setAlert('alert-info', 'Task Added!', 'A task has been added to your list.', 2000);
+                }
             })
             .catch(function(error) {
                 vm.operations.addTask.status = 'ERROR';
