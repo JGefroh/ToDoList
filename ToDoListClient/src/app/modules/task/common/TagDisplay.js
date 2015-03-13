@@ -9,7 +9,8 @@
             restrict: 'A',
             scope: {
                 task: '=',
-                tagsToFilterBy: '='
+                tagsToFilterBy: '=',
+                toggleTagFilter: '&'
             },
             templateUrl: 'TagDisplay.html',
             controller: [TagDisplayDirectiveCtrl]
