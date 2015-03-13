@@ -137,6 +137,7 @@
         }
 
         vm.editTask = function (taskFields) {
+            vm.addTag(vm.form.tag);
             vm.operations.editTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(savedTask) {
                 vm.operations.editTask.status = null;
