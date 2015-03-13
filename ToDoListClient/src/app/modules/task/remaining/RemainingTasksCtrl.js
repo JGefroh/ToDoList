@@ -42,6 +42,12 @@
             });
         };
 
+        vm.addTaskOnEnterKeyPressed = function(taskFields, key) {
+            if (key.which === ENTER_KEY_ID) {
+                vm.addTask(taskFields);
+            }
+        };
+
         vm.addTask = function(taskFields) {
             vm.operations.addTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(task) {
@@ -185,12 +191,6 @@
             .finally(function() {
                 task.readOnly = false;
             });
-        };
-
-        vm.addTaskOnEnterKeyPressed = function(taskFields, key) {
-            if (key.which === ENTER_KEY_ID) {
-                vm.addTask(taskFields);
-            }
         };
 
         function resetInputFields(taskFields) {

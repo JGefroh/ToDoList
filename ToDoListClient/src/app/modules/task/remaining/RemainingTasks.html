@@ -10,6 +10,7 @@
                 <label>Task</label>
                 <input data-ng-model="remainingCtrl.viewState.input.name"
                        data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
+                       data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
                        class="form-control"
                        placeholder="Enter your task name or description..."
                        maxlength="500"/>
@@ -20,7 +21,7 @@
                 <label>Group</label>
                 <input data-ng-model="remainingCtrl.viewState.input.group"
                        data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
-                       data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(viewState.input, $event)"
+                       data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
                        class="form-control"
                        placeholder="Enter a group name for this task..."
                        maxlength="500"/>
