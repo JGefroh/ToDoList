@@ -5,6 +5,7 @@ angular
     .module('ToDoList',
     [
         'ui.router',
+        'ui.bootstrap',
         'jgefroh.AlertModule',
         'jgefroh.FiltersModule',
         'ToDoList.Routes',

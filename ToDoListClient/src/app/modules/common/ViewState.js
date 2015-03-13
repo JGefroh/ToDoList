@@ -28,7 +28,7 @@
             taskCreationViewState: {
             },
             calendarViewState: {
-
+                selectedDate: new Date()
             }
         }
     }

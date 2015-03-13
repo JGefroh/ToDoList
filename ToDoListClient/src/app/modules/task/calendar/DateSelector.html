@@ -2,7 +2,6 @@
     <div class="col-xs-12 text-center">
         <div class="btn-group">
             <button data-ng-click="previousMonth()"
-                    data-ng-disabled="viewState.selectedMonthIndex === 0"
                     class="btn btn-default">
                 <span class="fa fa-arrow-left"></span>
             </button>
@@ -13,7 +12,6 @@
                 <span data-ng-bind="button.label"></span>
             </button>
             <button data-ng-click="nextMonth()"
-                    data-ng-disabled="viewState.selectedMonthIndex >= 11"
                     class="btn btn-default">
                 <span class="fa fa-arrow-right"></span>
             </button>

@@ -8,11 +8,6 @@
         var SATURDAY = 6;
         var SUNDAY = 0;
 
-        vm.operations = {
-            getTasks: {}
-        };
-
-        vm.monthSelectorAPI = {};
 
         vm.getTasks = function () {
             vm.operations.getTasks.status = 'LOADING';
@@ -34,12 +29,17 @@
             return vm.herp;
         };
 
-        vm.loadDatesOfMonth = function(month, year) {
+        vm.loadDatesOfMonth = function(date) {
+            if (!date) {
+                return;
+            }
+            var year = date.getUTCFullYear();
+            var month = date.getUTCMonth();
             if (!vm.datesOfMonth) {
                 vm.datesOfMonth = [];
             }
             vm.datesOfMonth.length = 0;
-            var numDaysInMonth = new Date(year, month, 0).getDate();
+            var numDaysInMonth = new Date(year, month + 1, 0).getDate();
             for (var day = 0; day < numDaysInMonth; day++) {
                 vm.datesOfMonth.push(new Date(year, month, day + 1));
             }
@@ -52,12 +52,22 @@
         function initialize() {
             UserService.reserveID($stateParams.userID);
             initializeViewState();
-            vm.loadDatesOfMonth(2, 2);//temp;
+            initializeVariables();
+            vm.loadDatesOfMonth(new Date());
             vm.getTasks();
         }
 
         function initializeViewState() {
             vm.viewState = ViewState.calendarViewState;
+        }
+
+        function initializeVariables() {
+            vm.operations = {
+                getTasks: {}
+            };
+
+            vm.monthSelectorAPI = {
+            };
         }
 
         initialize();

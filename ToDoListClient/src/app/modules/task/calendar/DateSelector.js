@@ -3,6 +3,7 @@
         function MonthSelectorController($scope) {
             if (!$scope.viewState.selectedMonthIndex) {
                 $scope.viewState.selectedMonthIndex = new Date().getMonth();
+                $scope.viewState.selectedYear = new Date().getUTCFullYear();
             }
             $scope.monthButtons = [
                 {id: 0, label: 'Jan', full: 'January'},
@@ -20,19 +21,37 @@
             ];
 
             $scope.previousMonth = function() {
-                $scope.viewState.selectedMonthIndex = $scope.viewState.selectedMonthIndex - 1;
+                if ($scope.viewState.selectedMonthIndex === 0) {
+                    $scope.viewState.selectedMonthIndex = 11;
+                    $scope.viewState.selectedYear--;
+                }
+                else {
+                    $scope.viewState.selectedMonthIndex--;
+                }
+                $scope.viewState.selectedDate = $scope.getDate($scope.viewState.selectedYear, $scope.viewState.selectedMonthIndex);
+                $scope.onChange();
             };
 
             $scope.nextMonth = function() {
-                $scope.viewState.selectedMonthIndex = $scope.viewState.selectedMonthIndex + 1;
+                if ($scope.viewState.selectedMonthIndex === 11) {
+                    $scope.viewState.selectedMonthIndex = 0;
+                    $scope.viewState.selectedYear++;
+                }
+                else {
+                    $scope.viewState.selectedMonthIndex++;
+                }
+                $scope.viewState.selectedDate = $scope.getDate($scope.viewState.selectedYear, $scope.viewState.selectedMonthIndex);
+                $scope.onChange();
             };
 
-            $scope.getDate = function(month, year) {
+            $scope.getDate = function(year, month) {
                 return new Date(year, month);
             };
 
             $scope.setMonth = function(monthIndex) {
                 $scope.viewState.selectedMonthIndex = monthIndex;
+                $scope.viewState.selectedDate = $scope.getDate($scope.viewState.selectedYear, $scope.viewState.selectedMonthIndex);
+                $scope.onChange();
             };
 
             function initializeAPI() {
@@ -45,7 +64,7 @@
                         return null;
                     }
                     return $scope.monthButtons[monthIndex].full;
-                }
+                };
             }
 
             initializeAPI();
@@ -55,13 +74,14 @@
             restrict: 'A',
             scope: {
                 viewState: '=',
+                onChange: '&',
                 api: '='
             },
-            templateUrl: 'MonthSelector.html',
+            templateUrl: 'DateSelector.html',
             controller: ['$scope', MonthSelectorController]
         };
     }
     angular
         .module('ToDoList.TaskModule')
-        .directive("monthSelector", MonthSelector);
+        .directive("dateSelector", MonthSelector);
 })();

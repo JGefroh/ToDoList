@@ -3,13 +3,15 @@
         <h3>Task Calendar<span class="small"> - view all tasks by date</span></h3>
     </div>
 </div>
-<div class="row">
+<div data-ng-if="!calendarCtrl.operations.getTasks.status"
+     class="row">
     <div class="col-xs-12">
-        <h2 data-ng-bind="calendarCtrl.monthSelectorAPI.getFullMonth(calendarCtrl.viewState.selectedMonthIndex)"
+        <h2 data-ng-bind="calendarCtrl.viewState.selectedDate | date: 'MMMM yyyy'"
             class="text-center"></h2>
-        <div data-month-selector
+        <div data-date-selector
              data-view-state="calendarCtrl.viewState"
-             data-api="calendarCtrl.monthSelectorAPI"></div>
+             data-api="calendarCtrl.dateSelectorAPI"
+             data-on-change="calendarCtrl.loadDatesOfMonth(calendarCtrl.viewState.selectedDate)"></div>
         <table class="table table-condensed">
             <tr>
                 <th>Date</th>
@@ -19,7 +21,7 @@
                 <td class="col-xs-2"
                     data-ng-class="{'active':calendarCtrl.isWeekend(date)}"
                     rowspan="{{ calendarCtrl.getTasksOnDate(date).length + 1 }}">
-                    <span data-ng-bind="date | date:'d EEE'"></span>
+                    <span data-ng-bind="date | date:'d EEEE'"></span>
                 </td>
                 <td data-ng-if="calendarCtrl.getTasksOnDate(date).length === 0"></td>
             </tr>
@@ -33,4 +35,14 @@
             <tr data-ng-repeat-end></tr>
         </table>
     </div>
+</div>
+<div class="row">
+    <h3 data-ng-if="calendarCtrl.operations.getTasks.status === 'LOADING'"
+        class="text-center">
+        <span class="fa fa-spin fa-spinner"></span> Loading calendar...
+    </h3>
+    <h3 data-ng-if="calendarCtrl.operations.getTasks.status === 'ERROR'"
+        class="text-center">
+        A server error occurred while loading the calendar.
+    </h3>
 </div>
