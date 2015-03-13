@@ -51,6 +51,9 @@ public class Task {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestampCompleted;
     
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestampDue;
+    
     @Transient
     private boolean isReadOnly;
     
@@ -61,6 +64,7 @@ public class Task {
         task.setGroup(group);
         task.setName(name);
         task.setTimestampCreated(new Date());
+        task.setTimestampDue(new Date());
         return task;
     }
     
@@ -95,10 +99,11 @@ public class Task {
         }
     }
     
-    public void updateTask(final String name, final String group, final List<String> tags) {
+    public void updateTask(final String name, final String group, final List<String> tags, final Date timestampDue) {
         setGroup(group);
         setName(name);
         setTags(tags);
+        setTimestampDue(timestampDue);
     }
     
     public void tag(final String tag) {
@@ -170,6 +175,10 @@ public class Task {
         return timestampCreated;
     }
     
+    public Date getTimestampDue() {
+        return timestampDue;
+    }
+    
     public List<String> getTags() {
         return tags;
     }
@@ -218,6 +227,10 @@ public class Task {
     
     private void setTimestampCreated(Date timestampCreated) {
         this.timestampCreated = timestampCreated;
+    }
+    
+    private void setTimestampDue(Date timestampDue) {
+        this.timestampDue = timestampDue;
     }
     
     private void setTags(final List<String> tags) {

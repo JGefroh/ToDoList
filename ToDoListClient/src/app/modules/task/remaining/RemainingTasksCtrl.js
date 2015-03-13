@@ -42,12 +42,24 @@
             });
         };
 
+        vm.addTaskOnEnterKeyPressed = function(taskFields, key) {
+            if (key.which === ENTER_KEY_ID) {
+                vm.addTask(taskFields);
+            }
+        };
+
         vm.addTask = function(taskFields) {
             vm.operations.addTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(task) {
                 vm.operations.addTask.status = null;
                 vm.tasks.push(task);
                 resetInputFields(taskFields);
+                if (task.name != null) {
+                    AlertService.setAlert('alert-info', 'Task Added!', $filter('limitTo')(task.name, truncateLimit) + ' has been added.', 2000);
+                }
+                else {
+                    AlertService.setAlert('alert-info', 'Task Added!', 'A task has been added to your list.', 2000);
+                }
             })
             .catch(function(error) {
                 vm.operations.addTask.status = 'ERROR';
@@ -137,6 +149,7 @@
         }
 
         vm.editTask = function (taskFields) {
+            vm.addTag(vm.form.tag);
             vm.operations.editTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(savedTask) {
                 vm.operations.editTask.status = null;
@@ -186,12 +199,6 @@
             });
         };
 
-        vm.addTaskOnEnterKeyPressed = function(taskFields, key) {
-            if (key.which === ENTER_KEY_ID) {
-                vm.addTask(taskFields);
-            }
-        };
-
         function resetInputFields(taskFields) {
             taskFields.name = null;
             taskFields.group = null;
@@ -199,6 +206,7 @@
 
         function initialize() {
             UserService.reserveID($stateParams.userID);
+            vm.datePickerConfig = {};
             initializeViewState();
             initializeModalWatcher();
             initializeTimeTrackedUpdater();

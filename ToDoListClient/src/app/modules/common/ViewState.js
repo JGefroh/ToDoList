@@ -26,6 +26,9 @@
                 isShowingMinutes: null
             },
             taskCreationViewState: {
+            },
+            calendarViewState: {
+                selectedDate: new Date()
             }
         }
     }
