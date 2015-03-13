@@ -7,6 +7,9 @@
             <div class="col-xs-6">
                 <span data-ng-bind="task.timestampCreated | date:'MMMM dd \'at\' h:mma'"
                       class="small"></span>
+                <br/>
+                <span data-ng-bind="task.timestampDue | date:'\'Due\' MMMM dd \'at\' h:mma'"
+                      class="small"></span>
             </div>
             <div class="col-xs-6 text-right">
                 Tracked for
@@ -35,6 +38,6 @@
         <div data-tag-display
              data-task="task"
              data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"
-             data-toggle-tag-filter="remainingCtrl.toggleTagFilter(tag)"></div>
+             data-toggle-tag-filter="remainingCtrl.toggleTagFilter"></div>
     </div>
 </div>

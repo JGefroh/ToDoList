@@ -206,6 +206,7 @@
 
         function initialize() {
             UserService.reserveID($stateParams.userID);
+            vm.datePickerConfig = {};
             initializeViewState();
             initializeModalWatcher();
             initializeTimeTrackedUpdater();

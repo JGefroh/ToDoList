@@ -1,0 +1,17 @@
+<p class="input-group">
+       <input type="text" class="form-control"
+              data-ng-disabled="isDisabled"
+              data-show-button-bar="false"
+              data-datepicker-popup="MMMM dd yyyy"
+              data-ng-model="model"
+              data-is-open="isOpen"
+              data-datepicker-options="config.datePickerOptions"/>
+       <span class="input-group-btn">
+              <button data-ng-click="open($event)"
+                      data-ng-disabled="isDisabled"
+                      type="button"
+                      class="btn btn-default">
+                     <span class="fa fa-calendar"></span>
+              </button>
+       </span>
+</p>

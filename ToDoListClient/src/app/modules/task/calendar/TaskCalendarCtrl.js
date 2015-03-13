@@ -21,12 +21,19 @@
             });
         };
 
-        vm.herp = [];
         vm.getTasksOnDate = function(date) {
-            if (date.getUTCDay() % 3 === 0) {
-                return vm.tasks;
-            }
-            return vm.herp;
+            var tasksOnDate = [];
+            angular.forEach(vm.tasks, function(task, index) {
+                if (task.timestampDue) {
+                    var taskDate = new Date(task.timestampDue);
+                    if (date.getUTCDate() === taskDate.getUTCDate()
+                        && date.getUTCFullYear() === taskDate.getUTCFullYear()
+                        && date.getUTCMonth() === taskDate.getUTCMonth()) {
+                        tasksOnDate.push(task);
+                    }
+                }
+            });
+            return tasksOnDate;
         };
 
         vm.loadDatesOfMonth = function(date) {
