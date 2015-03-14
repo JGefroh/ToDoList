@@ -2,7 +2,7 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function TaskCalendarCtrl(ViewState, UserService, $stateParams, $modal, TaskService) {
+    function TaskCalendarCtrl(ViewState, UserService, $stateParams, $modal, TaskService, AlertService, $filter, truncateLimit) {
         var vm = this;
         var SATURDAY = 6;
         var SUNDAY = 0;
@@ -106,6 +106,12 @@
                 }
             );
             modal.result.then(function(savedTask) {
+                if (savedTask.timestampDue && !task.timestampDue) {
+                    AlertService.setAlert('alert-info', 'Task Scheduled!', $filter('limitTo')(task.name || 'A task', truncateLimit) + ' has been scheduled.', 2000);
+                }
+                else if (!savedTask.timestampDue) {
+                    AlertService.setAlert('alert-info', 'Task Unscheduled!', $filter('limitTo')(task.name || 'A task', truncateLimit) + ' has been unscheduled.', 2000);
+                }
                 angular.copy(savedTask, task);
             });
         };
@@ -144,5 +150,5 @@
     }
     angular
         .module('ToDoList.PlannerModule')
-        .controller('TaskCalendarCtrl', ['ViewState', 'UserService', '$stateParams', '$modal', 'TaskService', TaskCalendarCtrl]);
+        .controller('TaskCalendarCtrl', ['ViewState', 'UserService', '$stateParams', '$modal', 'TaskService', 'AlertService', '$filter', 'truncateLimit', TaskCalendarCtrl]);
 })();

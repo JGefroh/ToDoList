@@ -130,7 +130,7 @@
         };
 
         this.isUnscheduledTask = function(task) {
-            return !task.timestampDue;
+            return !task.timestampDue && !task.complete;
         };
     }
     angular

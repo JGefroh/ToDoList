@@ -5,32 +5,6 @@
     <tr data-ng-repeat="task in calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask">
         <td data-ng-class="{'success': task.complete, 'info' : !task.complete}">
             <div class="pull-right">
-                <button class="btn btn-link btn-xs complete-button icon-button"
-                        data-ng-click="calendarCtrl.markIncomplete(task)"
-                        data-ng-disabled="task.readOnly"
-                        data-ng-if="task.complete"
-                        title="Mark this task as incompleted.">
-                            <span class="fa-stack">
-                                <span class="fa fa-circle fa-stack-2x"></span>
-                                <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status !== 'LOADING'"
-                                      class="fa fa-reply fa-stack-1x fa-inverse"></span>
-                                <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status === 'LOADING'"
-                                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
-                            </span>
-                </button>
-                <button class="btn btn-xs btn-link complete-button icon-button"
-                        data-ng-click="calendarCtrl.markComplete(task)"
-                        data-ng-disabled="task.readOnly"
-                        data-ng-if="!task.complete"
-                        title="Mark this task as completed.">
-                            <span class="fa-stack">
-                                <span class="fa fa-circle fa-stack-2x"></span>
-                                <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status !== 'LOADING'"
-                                      class="fa fa-check fa-stack-1x fa-inverse"></span>
-                                <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status === 'LOADING'"
-                                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
-                            </span>
-                </button>
                 <button class="btn btn-xs btn-link icon-button"
                         data-ng-click="calendarCtrl.showEditTask(task)"
                         data-ng-disabled="task.readOnly"
