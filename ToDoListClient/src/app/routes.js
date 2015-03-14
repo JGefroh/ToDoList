@@ -21,7 +21,19 @@
             })
             .state('calendar', {
                 url: '/calendar/:userID',
-                templateUrl: 'modules/task/calendar/TaskCalendar.html',
+                templateUrl: 'modules/task/planner/calendar/TaskCalendar.html',
+                controller: 'TaskCalendarCtrl',
+                controllerAs: 'calendarCtrl'
+            })
+            .state('planner', {
+                url: '/planner',
+                templateUrl: 'modules/task/planner/PlannerView.html',
+                controller: 'PlannerCtrl',
+                controllerAs: 'plannerCtrl'
+            })
+            .state('planner.calendar', {
+                url: '/calendar/:userID',
+                templateUrl: 'modules/task/planner/calendar/TaskCalendar.html',
                 controller: 'TaskCalendarCtrl',
                 controllerAs: 'calendarCtrl'
             })

@@ -127,7 +127,11 @@
                 });
             });
             return usedTags;
-        }
+        };
+
+        this.isUnscheduledTask = function(task) {
+            return !task.timestampDue && !task.complete;
+        };
     }
     angular
         .module('ToDoList.TaskModule')

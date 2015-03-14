@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <button class="btn btn-lg"
+                    data-ng-class="{'btn-primary':plannerCtrl.isShowing('planner.calendar'), 'btn-default':!plannerCtrl.isShowing('planner.calendar')}"
+                    data-ng-click="plannerCtrl.goTo('planner.calendar')">
+                <span class="fa fa-calendar"></span>
+                <br/>Calendar
+            </button>
+        </div>
+    </div>
+</div>
+<div data-ui-view></div>

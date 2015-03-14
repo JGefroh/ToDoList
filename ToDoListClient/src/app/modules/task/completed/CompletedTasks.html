@@ -1,14 +1,12 @@
-<!--
-author: Joseph Gefroh
--->
-<div class="row">
-    <div class="col-xs-12">
-        <h3>Completed Tasks<span class="small"> - tasks that you have completed.</span></h3>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Completed Tasks<span class="small"> - tasks that you have completed.</span></h3>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <label>Tags: </label>
+    <div class="row">
+        <div class="col-xs-12">
+            <label>Tags: </label>
             <span data-ng-repeat="tag in completedCtrl.usedTags"
                   data-ng-bind="tag"
                   data-ng-click="completedCtrl.toggleTagFilter(tag)"
@@ -16,46 +14,47 @@ author: Joseph Gefroh
                   data-ng-class="{'task-tag-inactive':completedCtrl.viewState.tagsToFilterBy.indexOf(tag) === -1,
                                     'task-tag-active':completedCtrl.viewState.tagsToFilterBy.indexOf(tag) !== -1}"
                   class="badge task-tag"></span>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="pull-right">
-            <div class="btn-group">
-                <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ completedCtrl.viewState.sortField.label }}</button>
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
-                    <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'group', label:'Group'}">Group</a></li>
-                    <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCompleted', label:'Date Completed'}">Date Completed</a></li>
-                    <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
-                    <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
-                </ul>
-            </div>
-            <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending"
-                    class="btn btn-default">
-                <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
-            </button>
         </div>
     </div>
-</div>
-<br/>
-<div ng-repeat="task in completedCtrl.tasks | filter: { complete: true}  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
-    <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
-    <hr class="hr-small">
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <h3 data-ng-if="completedCtrl.operations.getTasks.status === 'LOADING'"
-            class="text-center">
-            <span class="fa fa-spin fa-spinner"></span> Loading tasks...
-        </h3>
-        <h3 data-ng-if="completedCtrl.operations.getTasks.status === 'ERROR'"
-            class="text-center">
-            A server error occurred while loading tasks.
-        </h3>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ completedCtrl.viewState.sortField.label }}</button>
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
+                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'group', label:'Group'}">Group</a></li>
+                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCompleted', label:'Date Completed'}">Date Completed</a></li>
+                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
+                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
+                    </ul>
+                </div>
+                <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending"
+                        class="btn btn-default">
+                    <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                    <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div ng-repeat="task in completedCtrl.tasks | filter: { complete: true}  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
+        <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
+        <hr class="hr-small">
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3 data-ng-if="completedCtrl.operations.getTasks.status === 'LOADING'"
+                class="text-center">
+                <span class="fa fa-spin fa-spinner"></span> Loading tasks...
+            </h3>
+            <h3 data-ng-if="completedCtrl.operations.getTasks.status === 'ERROR'"
+                class="text-center">
+                A server error occurred while loading tasks.
+            </h3>
+        </div>
     </div>
 </div>

@@ -17,10 +17,10 @@ author: Joseph Gefroh
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li data-ng-class="{'navigation-active':navigation.isActive('/remaining/' + navigation.user.id)}"><a data-ng-href="#/remaining/{{navigation.user.id}}"><span class="fa fa-list-ol"></span> Remaining </a></li>
-                <li data-ng-class="{'navigation-active':navigation.isActive('/completed/' + navigation.user.id)}"><a data-ng-href="#/completed/{{navigation.user.id}}"><span class="fa fa-check"></span> Completed </a></li>
-                <li data-ng-class="{'navigation-active':navigation.isActive('/calendar/' + navigation.user.id)}"><a data-ng-href="#/calendar/{{navigation.user.id}}"><span class="fa fa-calendar"></span> Calendar</a></li>
-                <li data-ng-class="{'navigation-active':navigation.isActive('/statistics/' + navigation.user.id)}"><a data-ng-href="#/statistics/{{navigation.user.id}}"><span class="fa fa-bar-chart"></span> Stats</a></li>
+                <li data-ng-class="{'navigation-active':navigation.isActive('/remaining')}"><a data-ng-href="#/remaining/{{navigation.user.id}}"><span class="fa fa-list-ol"></span> Remaining </a></li>
+                <li data-ng-class="{'navigation-active':navigation.isActive('/completed')}"><a data-ng-href="#/completed/{{navigation.user.id}}"><span class="fa fa-check"></span> Completed </a></li>
+                <li data-ng-class="{'navigation-active':navigation.isActive('/planner')}"><a data-ng-href="#/planner/calendar/{{navigation.user.id}}"><span class="fa fa-calendar"></span> Planner</a></li>
+                <li data-ng-class="{'navigation-active':navigation.isActive('/statistics')}"><a data-ng-href="#/statistics/{{navigation.user.id}}"><span class="fa fa-bar-chart"></span> Stats</a></li>
             </ul>
             <p class="navbar-text pull-right">
                 Created by <a href="http://www.jgefroh.com" class="navbar-link">Joseph Gefroh</a>

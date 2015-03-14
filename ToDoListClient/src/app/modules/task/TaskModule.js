@@ -1,2 +1,4 @@
-angular
-    .module('ToDoList.TaskModule', []);
+(function() {
+    angular
+        .module('ToDoList.TaskModule', []);
+})();
