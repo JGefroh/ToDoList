@@ -2,7 +2,7 @@
     <tr>
         <th>Task</th>
     </tr>
-    <tr data-ng-repeat="task in calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask">
+    <tr data-ng-repeat="task in calendarCtrl.unscheduledTasks = (calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask)">
         <td data-ng-class="{'success': task.complete, 'info' : !task.complete}">
             <div class="pull-right">
                 <button class="btn btn-xs btn-link icon-button"
@@ -23,3 +23,5 @@
     </tr>
     <tr data-ng-repeat-end></tr>
 </table>
+<h3 data-ng-if="calendarCtrl.unscheduledTasks.length === 0"
+    class="text-center">You have no unscheduled tasks.</h3>

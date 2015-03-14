@@ -116,6 +116,14 @@
             });
         };
 
+
+        vm.isToday = function(date) {
+            var today = new Date();
+            return today.getDate() === date.getDate()
+                && today.getMonth() === date.getMonth()
+                && today.getFullYear() === date.getFullYear();
+        };
+
         function initialize() {
             UserService.reserveID($stateParams.userID);
             initializeViewState();

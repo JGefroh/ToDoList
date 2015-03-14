@@ -8,6 +8,8 @@
             data-ng-class="{'active':calendarCtrl.isWeekend(date)}"
             rowspan="{{ calendarCtrl.getTasksOnDate(date).length + 1 }}">
             <span data-ng-bind="date | date:'EEEE, M/d'"></span>
+            <span data-ng-if="calendarCtrl.isToday(date)"
+                  class="badge calendar-badge-today">Today</span>
         </td>
         <td data-ng-if="calendarCtrl.getTasksOnDate(date).length === 0"></td>
     </tr>
