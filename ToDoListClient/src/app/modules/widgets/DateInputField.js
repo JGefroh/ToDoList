@@ -21,6 +21,6 @@
         };
     }
     angular
-        .module('ToDoList.TaskModule')
+        .module('jgefroh.WidgetModule')
         .directive('dateInputField', DateInputField);
 })();

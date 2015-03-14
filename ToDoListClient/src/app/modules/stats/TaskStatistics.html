@@ -1,61 +1,59 @@
-<!--
-author: Joseph Gefroh
--->
-<div class="row">
-    <div class="col-xs-12">
-        <h3>Statistics<span class="small"> - data about your ToDoList.</span></h3>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Statistics<span class="small"> - data about your ToDoList.</span></h3>
+        </div>
     </div>
-</div>
 
-<h4>Stats by Group<span class="small"> - a breakdown of all tasks by group.</span></h4>
-<div class="row">
-    <div class="col-xs-12">
-        <table class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th class="col-xs-8" data-ng-click="statsCtrl.viewState.sortField = 'group'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
-                    Group
+    <h4>Stats by Group<span class="small"> - a breakdown of all tasks by group.</span></h4>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="col-xs-8" data-ng-click="statsCtrl.viewState.sortField = 'group'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
+                        Group
                             <span ng-show="statsCtrl.viewState.sortField === 'group'">
                                 <span ng-show="statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
-                </th>
-                <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.sortField = 'totalTaskCount'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
-                    # Tasks
+                    </th>
+                    <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.sortField = 'totalTaskCount'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
+                        # Tasks
                             <span ng-show="statsCtrl.viewState.sortField === 'totalTaskCount'">
                                 <span ng-show="statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
-                </th>
+                    </th>
 
-                <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.sortField = 'remainingTaskCount'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
-                    # Remaining
+                    <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.sortField = 'remainingTaskCount'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
+                        # Remaining
                             <span ng-show="statsCtrl.viewState.sortField === 'remainingTaskCount'">
                                 <span ng-show="statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
-                </th>
+                    </th>
 
-                <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.sortField = 'completedTaskCount'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
-                    # Completed
+                    <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.sortField = 'completedTaskCount'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
+                        # Completed
                             <span ng-show="statsCtrl.viewState.sortField === 'completedTaskCount'">
                                 <span ng-show="statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
-                </th>
-                <th class="col-xs-1 text-center">
-                    <button class="btn btn-xs btn-default table-button" data-ng-click="statsCtrl.viewState.isShowingMinutes = !statsCtrl.viewState.isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ statsCtrl.viewState.isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
-                    <div data-ng-click="statsCtrl.viewState.sortField = 'totalTimeTracked'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
-                        {{ statsCtrl.viewState.isShowingMinutes ? "Minutes" : "Hours"}} Tracked
+                    </th>
+                    <th class="col-xs-1 text-center">
+                        <button class="btn btn-xs btn-default table-button" data-ng-click="statsCtrl.viewState.isShowingMinutes = !statsCtrl.viewState.isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ statsCtrl.viewState.isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
+                        <div data-ng-click="statsCtrl.viewState.sortField = 'totalTimeTracked'; statsCtrl.viewState.isAscending = !statsCtrl.viewState.isAscending">
+                            {{ statsCtrl.viewState.isShowingMinutes ? "Minutes" : "Hours"}} Tracked
                             <span ng-show="statsCtrl.viewState.sortField === 'totalTimeTracked'">
                                 <span ng-show="statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
                                 <span ng-show="!statsCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
                             </span>
-                    </div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
                 <tr ng-repeat="groupStat in statsCtrl.groupStats | orderBy:statsCtrl.viewState.sortField:statsCtrl.viewState.isAscending">
                     <td> {{ groupStat.group }}</td>
                     <td class="text-center"> {{ groupStat.remainingTaskCount + groupStat.completedTaskCount }}</td>
@@ -68,15 +66,16 @@ author: Joseph Gefroh
                         }}
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <h3 data-ng-if="statsCtrl.operations.getGroupStats.status === 'LOADING'"
-            class="text-center">
-            <span class="fa fa-spin fa-spinner"></span> Loading stats...
-        </h3>
-        <h3 data-ng-if="statsCtrl.operations.getTasks.status === 'ERROR'"
-            class="text-center">
-            A server error occurred while loading stats.
-        </h3>
+                </tbody>
+            </table>
+            <h3 data-ng-if="statsCtrl.operations.getGroupStats.status === 'LOADING'"
+                class="text-center">
+                <span class="fa fa-spin fa-spinner"></span> Loading stats...
+            </h3>
+            <h3 data-ng-if="statsCtrl.operations.getTasks.status === 'ERROR'"
+                class="text-center">
+                A server error occurred while loading stats.
+            </h3>
+        </div>
     </div>
 </div>

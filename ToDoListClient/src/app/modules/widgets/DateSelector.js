@@ -82,6 +82,6 @@
         };
     }
     angular
-        .module('ToDoList.TaskModule')
+        .module('jgefroh.WidgetModule')
         .directive("dateSelector", MonthSelector);
 })();

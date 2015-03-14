@@ -1,0 +1,63 @@
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th>Date</th>
+        <th>Task</th>
+    </tr>
+    <tr data-ng-repeat-start="date in calendarCtrl.datesOfMonth">
+        <td class="col-xs-2 text-right"
+            data-ng-class="{'active':calendarCtrl.isWeekend(date)}"
+            rowspan="{{ calendarCtrl.getTasksOnDate(date).length + 1 }}">
+            <span data-ng-bind="date | date:'EEEE, M/d'"></span>
+        </td>
+        <td data-ng-if="calendarCtrl.getTasksOnDate(date).length === 0"></td>
+    </tr>
+    <tr data-ng-if="calendarCtrl.getTasksOnDate(date).length !== 0"
+        data-ng-repeat="task in calendarCtrl.getTasksOnDate(date) | orderBy: 'timestampDue'">
+        <td data-ng-class="{'success': task.complete, 'info' : !task.complete}">
+                    <span data-ng-bind="task.timestampDue | date:'h:mm a'"
+                          class="small"></span>
+            <div class="pull-right">
+                <button class="btn btn-link btn-xs complete-button icon-button"
+                        data-ng-click="calendarCtrl.markIncomplete(task)"
+                        data-ng-disabled="task.readOnly"
+                        data-ng-if="task.complete"
+                        title="Mark this task as incompleted.">
+                            <span class="fa-stack">
+                                <span class="fa fa-circle fa-stack-2x"></span>
+                                <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status !== 'LOADING'"
+                                      class="fa fa-reply fa-stack-1x fa-inverse"></span>
+                                <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status === 'LOADING'"
+                                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+                            </span>
+                </button>
+                <button class="btn btn-xs btn-link complete-button icon-button"
+                        data-ng-click="calendarCtrl.markComplete(task)"
+                        data-ng-disabled="task.readOnly"
+                        data-ng-if="!task.complete"
+                        title="Mark this task as completed.">
+                            <span class="fa-stack">
+                                <span class="fa fa-circle fa-stack-2x"></span>
+                                <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status !== 'LOADING'"
+                                      class="fa fa-check fa-stack-1x fa-inverse"></span>
+                                <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status === 'LOADING'"
+                                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+                            </span>
+                </button>
+                <button class="btn btn-xs btn-link icon-button"
+                        data-ng-click="calendarCtrl.showEditTask(task)"
+                        data-ng-disabled="task.readOnly"
+                        data-ng-if="!task.complete"
+                        title="Edit the details of this task.">
+                            <span class="fa-stack">
+                                <span class="fa fa-circle fa-stack-2x"></span>
+                                <span class="fa fa-pencil fa-stack-1x fa-inverse"></span>
+                            </span>
+                </button>
+            </div>
+            <br/>
+                    <span data-ng-bind="task.name"
+                          class="task-name"></span>
+        </td>
+    </tr>
+    <tr data-ng-repeat-end></tr>
+</table>

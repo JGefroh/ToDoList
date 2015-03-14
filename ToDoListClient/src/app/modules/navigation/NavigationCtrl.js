@@ -23,7 +23,7 @@
         };
 
         vm.isActive = function(route) {
-            return $location.path() === route;
+            return $location.path() === route || $location.path().indexOf(route) === 0;
         };
     }
 

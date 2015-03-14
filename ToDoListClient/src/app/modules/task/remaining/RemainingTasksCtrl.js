@@ -82,6 +82,7 @@
             );
             modal.result.then(function(savedTask) {
                 angular.copy(savedTask, task);
+                updateTags();
             });
         };
 
