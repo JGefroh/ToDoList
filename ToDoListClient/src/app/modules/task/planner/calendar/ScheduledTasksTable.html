@@ -4,7 +4,7 @@
         <th>Task</th>
     </tr>
     <tr data-ng-repeat-start="date in calendarCtrl.datesOfMonth">
-        <td class="col-xs-2 text-right"
+        <td class="col-xs-3 col-md-2 text-right"
             data-ng-class="{'active':calendarCtrl.isWeekend(date)}"
             rowspan="{{ calendarCtrl.getTasksOnDate(date).length + 1 }}">
             <span data-ng-bind="date | date:'EEEE, M/d'"></span>
