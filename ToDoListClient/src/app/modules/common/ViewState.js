@@ -28,7 +28,8 @@
             taskCreationViewState: {
             },
             calendarViewState: {
-                selectedDate: new Date()
+                selectedDate: new Date(),
+                isShowingScheduled: true
             }
         }
     }

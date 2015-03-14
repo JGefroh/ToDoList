@@ -1,0 +1,25 @@
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th>Task</th>
+    </tr>
+    <tr data-ng-repeat="task in calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask">
+        <td data-ng-class="{'success': task.complete, 'info' : !task.complete}">
+            <div class="pull-right">
+                <button class="btn btn-xs btn-link icon-button"
+                        data-ng-click="calendarCtrl.showEditTask(task)"
+                        data-ng-disabled="task.readOnly"
+                        data-ng-if="!task.complete"
+                        title="Edit the details of this task.">
+                            <span class="fa-stack">
+                                <span class="fa fa-circle fa-stack-2x"></span>
+                                <span class="fa fa-pencil fa-stack-1x fa-inverse"></span>
+                            </span>
+                </button>
+            </div>
+            <br/>
+            <span data-ng-bind="task.name"
+                  class="task-name"></span>
+        </td>
+    </tr>
+    <tr data-ng-repeat-end></tr>
+</table>

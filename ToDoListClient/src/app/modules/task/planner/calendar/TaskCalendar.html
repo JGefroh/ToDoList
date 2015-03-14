@@ -1,0 +1,36 @@
+<div class="container">
+    <div data-ng-if="!calendarCtrl.operations.getTasks.status"
+         class="row">
+        <div class="col-xs-12">
+            <h2 data-ng-bind="calendarCtrl.viewState.selectedDate | date: 'MMMM yyyy'"
+                class="text-center"></h2>
+            <div data-date-selector
+                 data-view-state="calendarCtrl.viewState"
+                 data-api="calendarCtrl.dateSelectorAPI"
+                 data-on-change="calendarCtrl.loadDatesOfMonth(calendarCtrl.viewState.selectedDate)"></div>
+            <button data-ng-click="calendarCtrl.viewState.isShowingScheduled = !calendarCtrl.viewState.isShowingScheduled"
+                    class="btn btn-xs btn-link pull-right">
+                <span data-ng-if="!calendarCtrl.viewState.isShowingScheduled">Show Scheduled Tasks</span>
+                <span data-ng-if="calendarCtrl.viewState.isShowingScheduled">Show Unscheduled Tasks</span>
+            </button>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div data-ng-if="calendarCtrl.viewState.isShowingScheduled"
+                         data-ng-include data-src="'modules/task/planner/calendar/ScheduledTasksTable.html'"></div>
+                    <div data-ng-if="!calendarCtrl.viewState.isShowingScheduled"
+                         data-ng-include data-src="'modules/task/planner/calendar/UnscheduledTasksTable.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <h3 data-ng-if="calendarCtrl.operations.getTasks.status === 'LOADING'"
+            class="text-center">
+            <span class="fa fa-spin fa-spinner"></span> Loading calendar...
+        </h3>
+        <h3 data-ng-if="calendarCtrl.operations.getTasks.status === 'ERROR'"
+            class="text-center">
+            A server error occurred while loading the calendar.
+        </h3>
+    </div>
+</div>
