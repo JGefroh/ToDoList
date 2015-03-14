@@ -4,13 +4,11 @@
     </div>
     <div class="col-xs-10">
         <div class="row">
-            <div class="col-xs-4">
-                Created <span data-ng-bind="task.timestampCreated | date:'MMMM dd \'at\' h:mma'"></span>
+            <div class="col-xs-6">
+                <span data-ng-bind="task.timestampCompleted| date:'\'Completed\' MMMM dd \'at\' h:mma'"
+                                class="small"></span>
             </div>
-            <div class="col-xs-4">
-                Completed <span data-ng-bind="task.timestampCompleted| date:'MMMM dd \'at\' h:mma'"></span>
-            </div>
-            <div class="col-xs-4 text-right">
+            <div class="col-xs-6 text-right">
                 Tracked for
                 <a data-ng-click="completedCtrl.viewState.isShowingMinutes = !completedCtrl.viewState.isShowingMinutes"
                    style="cursor: pointer">
