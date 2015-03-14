@@ -3,7 +3,7 @@
         <th>Task</th>
     </tr>
     <tr data-ng-repeat="task in calendarCtrl.unscheduledTasks = (calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask)">
-        <td data-ng-class="{'success': task.complete, 'info' : !task.complete}">
+        <td data-ng-class="{'success': task.complete, 'warning' : !task.complete}">
             <div class="pull-right">
                 <button class="btn btn-xs btn-link icon-button"
                         data-ng-click="calendarCtrl.showEditTask(task)"

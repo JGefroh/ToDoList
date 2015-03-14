@@ -114,7 +114,7 @@
                 if (savedTask.timestampDue && !task.timestampDue) {
                     AlertService.setAlert('alert-info', 'Task Scheduled!', $filter('limitTo')(task.name || 'A task', truncateLimit) + ' has been scheduled.', 2000);
                 }
-                else if (!savedTask.timestampDue) {
+                else if (!savedTask.timestampDue && task.timestampDue) {
                     AlertService.setAlert('alert-info', 'Task Unscheduled!', $filter('limitTo')(task.name || 'A task', truncateLimit) + ' has been unscheduled.', 2000);
                 }
                 angular.copy(savedTask, task);

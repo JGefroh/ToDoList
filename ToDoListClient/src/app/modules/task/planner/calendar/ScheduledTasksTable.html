@@ -15,7 +15,7 @@
     </tr>
     <tr data-ng-if="calendarCtrl.getTasksOnDate(date).length !== 0"
         data-ng-repeat="task in calendarCtrl.getTasksOnDate(date) | orderBy: 'timestampDue'">
-        <td data-ng-class="{'success': task.complete, 'info' : !task.complete}">
+        <td data-ng-class="{'success': task.complete, 'warning' : !task.complete}">
                     <span data-ng-bind="task.timestampDue | date:'h:mm a'"
                           class="small"></span>
             <div class="pull-right">
