@@ -3,7 +3,7 @@
  */
 (function() {
     var $jQuery = jQuery.noConflict();
-    function RemainingTasksCtrl($scope, $timeout, ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
+    function RemainingTasksCtrl($scope, $timeout, $modal, ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
         var vm = this;
         var ENTER_KEY_ID = 13;
         var TRACKED_TIME_UPDATE_INTERVAL_IN_MS = 30000;
@@ -67,6 +67,24 @@
             });
         };
 
+        vm.showEditTask = function(task) {
+            var modal = $modal.open(
+                {
+                    templateUrl: '../modification/TaskModification.html',
+                    controller: 'TaskModificationCtrl',
+                    controllerAs: 'modificationCtrl',
+                    resolve: {
+                        editedTask: function() {
+                            return task;
+                        }
+                    }
+                }
+            );
+            modal.result.then(function(savedTask) {
+                angular.copy(savedTask, task);
+            });
+        };
+
         vm.markComplete = function (task) {
             task.readOnly = true;
             vm.operations.markComplete.tasks[task.id] = {
@@ -90,34 +108,6 @@
             .finally(function() {
                 task.readOnly = false;
             });
-        };
-
-        vm.prepareEditTask = function (task) {
-            currentlyEditedTask = task;
-            vm.form = {};
-            vm.inputCopy = angular.copy(currentlyEditedTask);
-        };
-
-        vm.addTagOnEnterKeyPressed = function(tag, key) {
-            if (key.which === ENTER_KEY_ID) {
-                vm.addTag(tag);
-            }
-        };
-
-        vm.addTag = function(tag) {
-            if (!vm.inputCopy.tags) {
-                vm.inputCopy.tags = [];
-            }
-
-            if (tag && vm.inputCopy.tags.indexOf(tag) === -1) {
-                vm.inputCopy.tags.push(tag);
-            }
-
-            vm.form.tag = null;
-        };
-
-        vm.removeTag = function(tag) {
-            vm.inputCopy.tags.splice(vm.inputCopy.tags.indexOf(tag), 1);
         };
 
         vm.toggleTagFilter = function(tag) {
@@ -147,23 +137,6 @@
             });
             vm.viewState.tagsToFilterBy = tagsToKeep;
         }
-
-        vm.editTask = function (taskFields) {
-            vm.addTag(vm.form.tag);
-            vm.operations.editTask.status = 'LOADING';
-            TaskService.saveTask(UserService.user.id, taskFields).then(function(savedTask) {
-                vm.operations.editTask.status = null;
-                angular.copy(savedTask, currentlyEditedTask);
-                vm.inputCopy = null;
-                currentlyEditedTask = null;
-                $jQuery("#editTaskView").modal("hide");
-                updateTags();
-            })
-            .catch(function(error) {
-                vm.operations.editTask.status = 'ERROR';
-                console.error('An error occurred while saving a task.');
-            });
-        };
 
         vm.startTrackingTask = function (task) {
             task.readOnly = true;
@@ -249,5 +222,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('RemainingTasksCtrl', ['$scope', '$timeout', 'ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
+        .controller('RemainingTasksCtrl', ['$scope', '$timeout', '$modal', 'ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
 })();
