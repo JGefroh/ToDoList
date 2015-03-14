@@ -194,7 +194,12 @@ public class Task {
     }
     
     private void setGroup(String group) {
-        this.group = group;
+        if (group != null && group.isEmpty()) {
+            this.group = null;
+        }
+        else {
+            this.group = group;
+        }
     }
     
     private void setName(String name) {
