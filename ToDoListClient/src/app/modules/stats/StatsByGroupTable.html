@@ -1,0 +1,60 @@
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class="col-xs-8" data-ng-click="statsCtrl.viewState.byGroup.sortField = 'group'; statsCtrl.viewState.byGroup.isAscending = !statsCtrl.viewState.byGroup.isAscending">
+            Group
+                            <span ng-show="statsCtrl.viewState.byGroup.sortField === 'group'">
+                                <span ng-show="statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+        </th>
+        <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.byGroup.sortField = 'totalTaskCount'; statsCtrl.viewState.byGroup.isAscending = !statsCtrl.viewState.byGroup.isAscending">
+            # Tasks
+                            <span ng-show="statsCtrl.viewState.byGroup.sortField === 'totalTaskCount'">
+                                <span ng-show="statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+        </th>
+
+        <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.byGroup.sortField = 'remainingTaskCount'; statsCtrl.viewState.byGroup.isAscending = !statsCtrl.viewState.byGroup.isAscending">
+            # Remaining
+                            <span ng-show="statsCtrl.viewState.byGroup.sortField === 'remainingTaskCount'">
+                                <span ng-show="statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+        </th>
+
+        <th class="col-xs-1 text-center" data-ng-click="statsCtrl.viewState.byGroup.sortField = 'completedTaskCount'; statsCtrl.viewState.byGroup.isAscending = !statsCtrl.viewState.byGroup.isAscending">
+            # Completed
+                            <span ng-show="statsCtrl.viewState.byGroup.sortField === 'completedTaskCount'">
+                                <span ng-show="statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+        </th>
+        <th class="col-xs-1 text-center">
+            <button class="btn btn-xs btn-default table-button" data-ng-click="statsCtrl.viewState.byGroup.isShowingMinutes = !statsCtrl.viewState.byGroup.isShowingMinutes"><span class="glyphicon glyphicon-time"></span> {{ statsCtrl.viewState.byGroup.isShowingMinutes ? "To Hours" : "To Minutes"}} </button>
+            <div data-ng-click="statsCtrl.viewState.byGroup.sortField = 'totalTimeTracked'; statsCtrl.viewState.byGroup.isAscending = !statsCtrl.viewState.byGroup.isAscending">
+                {{ statsCtrl.viewState.byGroup.isShowingMinutes ? "Minutes" : "Hours"}} Tracked
+                            <span ng-show="statsCtrl.viewState.byGroup.sortField === 'totalTimeTracked'">
+                                <span ng-show="statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-down"></span>
+                                <span ng-show="!statsCtrl.viewState.byGroup.isAscending" class="glyphicon glyphicon-chevron-up"></span>
+                            </span>
+            </div>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="groupStat in statsCtrl.statsByGroup | orderBy:statsCtrl.viewState.byGroup.sortField:statsCtrl.viewState.byGroup.isAscending">
+        <td> {{ groupStat.group }}</td>
+        <td class="text-center"> {{ groupStat.remainingTaskCount + groupStat.completedTaskCount }}</td>
+        <td class="text-center"> {{ groupStat.remainingTaskCount }}</td>
+        <td class="text-center"> {{ groupStat.completedTaskCount }}</td>
+        <td data-ng-class="{'task-highlighted': task.isTracking, 'text-right':true}">
+            {{ statsCtrl.viewState.byGroup.isShowingMinutes
+            ? (groupStat.totalTimeTracked | msToMinutes)
+            : (groupStat.totalTimeTracked | msToHours:2)
+            }}
+        </td>
+    </tr>
+    </tbody>
+</table>

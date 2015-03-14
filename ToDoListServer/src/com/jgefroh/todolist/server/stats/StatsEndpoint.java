@@ -20,7 +20,15 @@ public class StatsEndpoint {
     
     @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public List<GroupStats> getStats(@QueryParam("ownerId") final String ownerId) {
-        return statsManager.calculateStats(ownerId);
+    @Path("/byGroup")
+    public List<GroupStats> getStatsByGroup(@QueryParam("ownerId") final String ownerId) {
+        return statsManager.calculateStatsByGroup(ownerId);
+    }
+    
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    @Path("/byTag")
+    public List<GroupStats> getStatsByTag(@QueryParam("ownerId") final String ownerId) {
+        return statsManager.calculateStatsByTag(ownerId);
     }
 }
