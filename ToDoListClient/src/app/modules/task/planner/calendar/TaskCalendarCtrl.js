@@ -26,9 +26,9 @@
             angular.forEach(vm.tasks, function(task, index) {
                 if (task.timestampDue) {
                     var taskDate = new Date(task.timestampDue);
-                    if (date.getUTCDate() === taskDate.getUTCDate()
-                        && date.getUTCFullYear() === taskDate.getUTCFullYear()
-                        && date.getUTCMonth() === taskDate.getUTCMonth()) {
+                    if (date.getDate() === taskDate.getDate()
+                        && date.getYear() === taskDate.getYear()
+                        && date.getMonth() === taskDate.getMonth()) {
                         tasksOnDate.push(task);
                     }
                 }
