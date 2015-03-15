@@ -20,6 +20,7 @@ public class ToDoListManager {
     
     public Task createTask(final String ownerId, final Task taskToCreate) {
         Task task = Task.create(ownerId, taskToCreate.getName(), taskToCreate.getGroup(), taskToCreate.getTags());
+        task.schedule(taskToCreate.getTimestampDue());
         validationLayer.validateThrowIfError(task);
         task = taskDAO.update(task);
         ToDoList list = getList(ownerId);

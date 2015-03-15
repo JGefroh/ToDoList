@@ -66,7 +66,6 @@ public class Task {
         task.setGroup(group);
         task.setName(name);
         task.setTimestampCreated(new Date());
-        task.setTimestampDue(new Date());
         return task;
     }
     
@@ -135,6 +134,10 @@ public class Task {
         else {
             return getTotalTimeTracked();
         }
+    }
+
+    public void schedule(final Date timestampDue) {
+        setTimestampDue(timestampDue);
     }
     
 

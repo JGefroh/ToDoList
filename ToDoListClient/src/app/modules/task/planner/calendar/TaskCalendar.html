@@ -9,6 +9,39 @@
                  data-view-state="calendarCtrl.viewState"
                  data-api="calendarCtrl.dateSelectorAPI"
                  data-on-change="calendarCtrl.loadDatesOfMonth(calendarCtrl.viewState.selectedDate)"></div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label>Task</label>
+                        <input data-ng-model="calendarCtrl.viewState.input.name"
+                               data-ng-disabled="calendarCtrl.operations.addTask.status === 'LOADING'"
+                               placeholder="Enter your task name or description..."
+                               class="form-control"
+                               maxlength="500"/>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <div data-date-input-field
+                             data-model="calendarCtrl.viewState.input.timestampDue"
+                             data-config="datePickerConfig"
+                             data-is-disabled="operations.editTask.status === 'LOADING'"></div>
+                    </div>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-success inline-button"
+                            data-ng-click="calendarCtrl.addTask(calendarCtrl.viewState.input)"
+                            data-ng-disabled="calendarCtrl.operations.addTask.status === 'LOADING'"
+                            title="Add a new task to the To Do List."
+                            style="margin-top: 24px;">
+                        <span data-ng-if="calendarCtrl.operations.addTask.status !== 'LOADING'" class="fa fa-plus"></span>
+                        <span data-ng-if="calendarCtrl.operations.addTask.status === 'LOADING'" class="fa fa-spin fa-spinner"></span>
+                        Add Task
+                    </button>
+                </div>
+            </div>
+
             <label>Tags:</label>
             <div data-tag-display
                  data-tags="calendarCtrl.usedTags"

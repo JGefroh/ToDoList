@@ -5,7 +5,11 @@
     <div class="col-xs-10">
         <div class="row">
             <div class="col-xs-6">
-                <span data-ng-bind="task.timestampDue | date:'MMMM dd \'at\' h:mm a'"
+                <span data-ng-if="task.timestampDue"
+                      data-ng-bind="task.timestampDue | date:'MMMM dd \'at\' h:mm a'"
+                      class="small"></span>
+                <span data-ng-if="!task.timestampDue"
+                      data-ng-bind="task.timestampCreated | date:'\'Created\' MMMM dd \'at\' h:mm a'"
                       class="small"></span>
             </div>
             <div class="col-xs-6 text-right">

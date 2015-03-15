@@ -4,6 +4,7 @@
 (function() {
     function TaskCalendarCtrl(ViewState, UserService, $stateParams, $modal, TaskService, AlertService, $filter, truncateLimit) {
         var vm = this;
+        var ENTER_KEY_ID = 13;
         var SATURDAY = 6;
         var SUNDAY = 0;
 
@@ -56,6 +57,36 @@
         vm.isWeekend = function(date) {
             return date.getDay() === SATURDAY || date.getDay() === SUNDAY;
         };
+
+        vm.addTaskOnEnterKeyPressed = function(taskFields, key) {
+            if (key.which === ENTER_KEY_ID) {
+                vm.addTask(taskFields);
+            }
+        };
+
+        vm.addTask = function(taskFields) {
+            vm.operations.addTask.status = 'LOADING';
+            taskFields.tags = angular.copy(vm.viewState.tagsToFilterBy);
+            TaskService.saveTask(UserService.user.id, taskFields).then(function(task) {
+                vm.operations.addTask.status = null;
+                vm.tasks.push(task);
+                resetInputFields(taskFields);
+                if (task.name != null) {
+                    AlertService.setAlert('alert-info', 'Task Added!', $filter('limitTo')(task.name, truncateLimit) + ' has been added.', 2000);
+                }
+                else {
+                    AlertService.setAlert('alert-info', 'Task Added!', 'A task has been added to your list.', 2000);
+                }
+            })
+            .catch(function(error) {
+                vm.operations.addTask.status = 'ERROR';
+                console.error("An error occurred while adding task.");
+            });
+        };
+
+        function resetInputFields(taskFields) {
+            taskFields.name = null;
+        }
 
         vm.markComplete = function (task) {
             task.readOnly = true;
@@ -164,6 +195,7 @@
 
         function initializeVariables() {
             vm.operations = {
+                addTask: {},
                 getTasks: {},
                 markComplete: {
                     tasks: {},
