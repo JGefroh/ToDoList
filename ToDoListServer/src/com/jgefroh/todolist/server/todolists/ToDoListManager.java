@@ -18,8 +18,8 @@ public class ToDoListManager {
     @Inject private TaskDAO taskDAO;
 
     
-    public Task createTask(final String ownerId, final String name, final String group) {
-        Task task = Task.create(ownerId, name, group);
+    public Task createTask(final String ownerId, final Task taskToCreate) {
+        Task task = Task.create(ownerId, taskToCreate.getName(), taskToCreate.getGroup(), taskToCreate.getTags());
         validationLayer.validateThrowIfError(task);
         task = taskDAO.update(task);
         ToDoList list = getList(ownerId);

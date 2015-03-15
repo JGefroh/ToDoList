@@ -47,7 +47,7 @@ public class TaskEndpoint {
     public Task saveTask(@QueryParam("ownerId") final String ownerId, final Task task) throws ToDoListException {
         try {
             if (task.getId() == null) {
-                return listManager.createTask(ownerId, task.getName(), task.getGroup());
+                return listManager.createTask(ownerId, task);
             }
             else {
                 return listManager.updateTask(ownerId, task.getId(), task);

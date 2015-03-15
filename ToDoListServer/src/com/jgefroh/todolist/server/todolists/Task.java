@@ -68,6 +68,12 @@ public class Task {
         return task;
     }
     
+    public static Task create(final String ownerId, final String name, final String group, final List<String> tags) {
+        Task task = Task.create(ownerId, name, group);
+        task.setTags(tags);
+        return task;
+    }
+    
     public void markComplete() {
         untrack();
         setTimestampCompleted(new Date());

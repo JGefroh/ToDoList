@@ -50,6 +50,7 @@
 
         vm.addTask = function(taskFields) {
             vm.operations.addTask.status = 'LOADING';
+            taskFields.tags = angular.copy(vm.viewState.tagsToFilterBy);
             TaskService.saveTask(UserService.user.id, taskFields).then(function(task) {
                 vm.operations.addTask.status = null;
                 vm.tasks.push(task);
