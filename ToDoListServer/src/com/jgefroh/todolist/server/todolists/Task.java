@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -36,6 +37,7 @@ public class Task {
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(length = 100)
     @Size(max = 100, message = "A task tag can only be 100 characters long.")
+    @OrderBy
     private List<String> tags;
     
     private boolean isComplete;
