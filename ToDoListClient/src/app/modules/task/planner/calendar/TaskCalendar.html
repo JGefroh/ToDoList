@@ -1,16 +1,14 @@
 <div class="container">
-    <h3 class="text-center">Planner</h3>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Calendar<span class="small"> - a breakdown of tasks by date</span></h3>
+        </div>
+    </div>
     <div data-ng-if="!calendarCtrl.operations.getTasks.status"
          class="row">
         <div class="col-xs-12">
-            <h2 data-ng-bind="calendarCtrl.viewState.selectedDate | date: 'MMMM yyyy'"
-                class="text-center"></h2>
-            <div data-date-selector
-                 data-view-state="calendarCtrl.viewState"
-                 data-api="calendarCtrl.dateSelectorAPI"
-                 data-on-change="calendarCtrl.loadDatesOfMonth(calendarCtrl.viewState.selectedDate)"></div>
             <div class="row">
-                <div class="col-xs-3">
+                <div class="col-xs-12 col-md-5">
                     <div class="form-group">
                         <label>Task</label>
                         <input data-ng-model="calendarCtrl.viewState.input.name"
@@ -20,7 +18,7 @@
                                maxlength="500"/>
                     </div>
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-10 col-md-3">
                     <div class="form-group">
                         <label>Due Date</label>
                         <div data-date-input-field
@@ -29,7 +27,7 @@
                              data-is-disabled="operations.editTask.status === 'LOADING'"></div>
                     </div>
                 </div>
-                <div class="col-xs-1">
+                <div class="col-xs-2">
                     <button class="btn btn-success inline-button"
                             data-ng-click="calendarCtrl.addTask(calendarCtrl.viewState.input)"
                             data-ng-disabled="calendarCtrl.operations.addTask.status === 'LOADING'"
@@ -46,6 +44,13 @@
             <div data-tag-display
                  data-tags="calendarCtrl.usedTags"
                  data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
+
+            <h3 data-ng-bind="calendarCtrl.viewState.selectedDate | date: 'MMMM yyyy'"
+                class="text-center"></h3>
+            <div data-date-selector
+                 data-view-state="calendarCtrl.viewState"
+                 data-api="calendarCtrl.dateSelectorAPI"
+                 data-on-change="calendarCtrl.loadDatesOfMonth(calendarCtrl.viewState.selectedDate)"></div>
             <button data-ng-click="calendarCtrl.viewState.isShowingScheduled = !calendarCtrl.viewState.isShowingScheduled"
                     class="btn btn-xs btn-link pull-right">
                 <span data-ng-if="!calendarCtrl.viewState.isShowingScheduled">Show Scheduled Tasks</span>
