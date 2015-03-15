@@ -29,7 +29,12 @@
             },
             calendarViewState: {
                 selectedDate: new Date(),
-                isShowingScheduled: true
+                isShowingScheduled: true,
+                tagsToFilterBy: [],
+                input: {
+                    name: null,
+                    timestampDue: new Date()
+                }
             }
         }
     }

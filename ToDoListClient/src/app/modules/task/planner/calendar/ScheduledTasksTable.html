@@ -6,7 +6,7 @@
     <tr data-ng-repeat-start="date in calendarCtrl.datesOfMonth">
         <td class="col-xs-3 col-md-2 text-right"
             data-ng-class="{'active':calendarCtrl.isWeekend(date)}"
-            rowspan="{{ calendarCtrl.getTasksOnDate(date).length + 1 }}">
+            rowspan="{{ (calendarCtrl.getTasksOnDate(date) | tagFilter:calendarCtrl.viewState.tagsToFilterBy).length + 1 }}">
             <span data-ng-bind="date | date:'EEEE, M/d'"></span>
             <span data-ng-if="calendarCtrl.isToday(date)"
                   class="badge calendar-badge-today">Today</span>
@@ -14,7 +14,7 @@
         <td data-ng-if="calendarCtrl.getTasksOnDate(date).length === 0"></td>
     </tr>
     <tr data-ng-if="calendarCtrl.getTasksOnDate(date).length !== 0"
-        data-ng-repeat="task in calendarCtrl.getTasksOnDate(date) | orderBy: 'timestampDue'">
+        data-ng-repeat="task in calendarCtrl.getTasksOnDate(date) | tagFilter:calendarCtrl.viewState.tagsToFilterBy | orderBy: 'timestampDue'">
         <td data-ng-class="{'success': task.complete, 'warning' : !task.complete}">
                     <span data-ng-bind="task.timestampDue | date:'h:mm a'"
                           class="small"></span>
@@ -57,8 +57,11 @@
                 </button>
             </div>
             <br/>
-                    <span data-ng-bind="task.name"
-                          class="task-name"></span>
+            <span data-ng-bind="task.name"
+                  class="task-name"></span>
+            <div data-tag-display
+                 data-tags="task.tags"
+                 data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
         </td>
     </tr>
     <tr data-ng-repeat-end></tr>

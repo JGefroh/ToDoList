@@ -1,6 +1,7 @@
 package com.jgefroh.todolist.server.todolists;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,8 +19,9 @@ public class ToDoListManager {
     @Inject private TaskDAO taskDAO;
 
     
-    public Task createTask(final String ownerId, final String name, final String group) {
-        Task task = Task.create(ownerId, name, group);
+    public Task createTask(final String ownerId, final Task taskToCreate) {
+        Task task = Task.create(ownerId, taskToCreate.getName(), taskToCreate.getGroup(), taskToCreate.getTags());
+        task.schedule(taskToCreate.getTimestampDue());
         validationLayer.validateThrowIfError(task);
         task = taskDAO.update(task);
         ToDoList list = getList(ownerId);
@@ -92,10 +94,12 @@ public class ToDoListManager {
     
     private void addTutorialTasks(final ToDoList list) {
         Task firstTask = taskDAO.update(Task.create(list.getOwnerId(), "Welcome to ToDoList! You can mark this task as 'Complete', edit its details, or track time on it!", "Tutorial"));
+        firstTask.schedule(new Date());
         firstTask.tag("Tutorial");
         list.addTask(firstTask);
         
         Task firstCompletedTask = Task.create(list.getOwnerId(), "You can mark this completed task as 'Incomplete', or delete it forever!", "Tutorial");
+        firstCompletedTask.schedule(new Date());
         firstCompletedTask.markComplete();
         firstCompletedTask.tag("Tutorial");
         firstCompletedTask = taskDAO.update(firstCompletedTask);

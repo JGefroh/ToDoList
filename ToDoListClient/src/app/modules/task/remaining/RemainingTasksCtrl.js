@@ -50,6 +50,7 @@
 
         vm.addTask = function(taskFields) {
             vm.operations.addTask.status = 'LOADING';
+            taskFields.tags = angular.copy(vm.viewState.tagsToFilterBy);
             TaskService.saveTask(UserService.user.id, taskFields).then(function(task) {
                 vm.operations.addTask.status = null;
                 vm.tasks.push(task);
@@ -114,15 +115,6 @@
             .finally(function() {
                 task.readOnly = false;
             });
-        };
-
-        vm.toggleTagFilter = function(tag) {
-            if (vm.viewState.tagsToFilterBy.indexOf(tag) === -1) {
-                vm.viewState.tagsToFilterBy.push(tag);
-            }
-            else {
-                vm.viewState.tagsToFilterBy.splice(vm.viewState.tagsToFilterBy.indexOf(tag), 1);
-            }
         };
 
         function updateTags() {

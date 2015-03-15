@@ -3,17 +3,24 @@
  */
 (function() {
     function TagDisplayDirective() {
-        function TagDisplayDirectiveCtrl() {
+        function TagDisplayDirectiveCtrl($scope) {
+            $scope.toggleTagFilter = function(tag) {
+                if ($scope.tagsToFilterBy.indexOf(tag) === -1) {
+                    $scope.tagsToFilterBy.push(tag);
+                }
+                else {
+                    $scope.tagsToFilterBy.splice($scope.tagsToFilterBy.indexOf(tag), 1);
+                }
+            };
         }
         return {
             restrict: 'A',
             scope: {
-                task: '=',
-                tagsToFilterBy: '=',
-                toggleTagFilter: '&'
+                tags: '=',
+                tagsToFilterBy: '='
             },
             templateUrl: 'TagDisplay.html',
-            controller: [TagDisplayDirectiveCtrl]
+            controller: ['$scope', TagDisplayDirectiveCtrl]
         }
     }
     angular
