@@ -6,29 +6,46 @@
         var vm = this;
         var TRACKED_TIME_UPDATE_INTERVAL_IN_MS = 60000;
         var isDestroyed = false;
-        vm.operations = {
-            getGroupStats: {
-                status: null
-            }
-        };
 
-        vm.getGroupStats = function () {
-            vm.operations.getGroupStats.status = 'LOADING';
-            StatsService.getGroupStats(UserService.user.id).then(function(groupStats) {
-                vm.operations.getGroupStats.status = null;
-                vm.groupStats = groupStats;
+        vm.getStatsByGroup = function () {
+            vm.operations.getStatsByGroup.status = 'LOADING';
+            StatsService.getStatsByGroup(UserService.user.id).then(function(statsByGroup) {
+                vm.operations.getStatsByGroup.status = null;
+                vm.statsByGroup = statsByGroup;
             })
             .catch(function(error) {
-                vm.operations.getGroupStats.status = 'ERROR';
+                vm.operations.getStatsByGroup.status = 'ERROR';
             });
         };
 
+        vm.getStatsByTag = function () {
+            vm.operations.getStatsByTag.status = 'LOADING';
+            StatsService.getStatsByTag(UserService.user.id).then(function(statsByTag) {
+                vm.operations.getStatsByTag.status = null;
+                vm.statsByTag = statsByTag;
+            })
+            .catch(function(error) {
+                vm.operations.getStatsByTag.status = 'ERROR';
+            });
+        };
+
+
         function initialize() {
             UserService.reserveID($stateParams.userID);
+            vm.operations = {
+                getStatsByGroup: {
+                    status: null
+                },
+                getStatsByTag: {
+                    status: null
+                }
+            };
+
             initializeViewState();
             initializeStatUpdaterSentinel();
             initializeStatUpdater();
-            vm.getGroupStats();
+            vm.getStatsByGroup();
+            vm.getStatsByTag();
         }
 
         function initializeViewState() {
@@ -43,8 +60,12 @@
         function initializeStatUpdater() {
             $timeout(function() {
                 if (!isDestroyed) {
-                    StatsService.getGroupStats(UserService.user.id).then(function(groupStats) {
-                        vm.groupStats = groupStats; //[JG]: Silently update stats - don't care if it fails.
+                    //[JG]: Silently update stats - don't care if it fails.
+                    StatsService.getStatsByGroup(UserService.user.id).then(function(statsByGroup) {
+                        vm.statsByGroup = statsByGroup;
+                    });
+                    StatsService.getStatsByTag(UserService.user.id).then(function(statsByTag) {
+                        vm.statsByTag = statsByTag;
                     });
                     initializeStatUpdater();
                 }

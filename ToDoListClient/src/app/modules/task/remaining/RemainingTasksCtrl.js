@@ -76,6 +76,11 @@
                     resolve: {
                         editedTask: function() {
                             return task;
+                        },
+                        options: function() {
+                            return {
+                                layout: 'FULL'
+                            }
                         }
                     }
                 }

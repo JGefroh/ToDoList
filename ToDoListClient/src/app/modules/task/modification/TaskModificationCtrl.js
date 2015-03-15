@@ -1,5 +1,5 @@
 (function() {
-    function TaskModificationCtrl($scope, $modalInstance, UserService, TaskService, editedTask) {
+    function TaskModificationCtrl($scope, $modalInstance, UserService, TaskService, editedTask, options) {
         var ENTER_KEY_ID = 13;
         $scope.saveTask = function (taskFields) {
             $scope.addTag($scope.form.tag);
@@ -44,6 +44,7 @@
 
         function initialize() {
             $scope.form = {};
+            $scope.options = options;
             $scope.operations = {
                 editTask: {}
             };
@@ -54,5 +55,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('TaskModificationCtrl', ['$scope', '$modalInstance', 'UserService', 'TaskService', 'editedTask', TaskModificationCtrl]);
+        .controller('TaskModificationCtrl', ['$scope', '$modalInstance', 'UserService', 'TaskService', 'editedTask', 'options', TaskModificationCtrl]);
 })();
