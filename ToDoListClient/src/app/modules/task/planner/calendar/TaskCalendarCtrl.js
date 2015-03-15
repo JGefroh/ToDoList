@@ -137,7 +137,7 @@
         }
 
         function updateUsedTags() {
-            vm.usedTags = TaskService.getUsedTags($filter('filter')(vm.tasks, {complete: false}));
+            vm.usedTags = TaskService.getUsedTags(vm.tasks);
         }
 
         function updateFilterTags() {
