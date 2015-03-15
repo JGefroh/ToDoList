@@ -9,6 +9,10 @@
                  data-view-state="calendarCtrl.viewState"
                  data-api="calendarCtrl.dateSelectorAPI"
                  data-on-change="calendarCtrl.loadDatesOfMonth(calendarCtrl.viewState.selectedDate)"></div>
+            <label>Tags:</label>
+            <div data-tag-display
+                 data-tags="calendarCtrl.usedTags"
+                 data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
             <button data-ng-click="calendarCtrl.viewState.isShowingScheduled = !calendarCtrl.viewState.isShowingScheduled"
                     class="btn btn-xs btn-link pull-right">
                 <span data-ng-if="!calendarCtrl.viewState.isShowingScheduled">Show Scheduled Tasks</span>

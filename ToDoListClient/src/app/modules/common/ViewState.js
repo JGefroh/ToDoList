@@ -29,7 +29,8 @@
             },
             calendarViewState: {
                 selectedDate: new Date(),
-                isShowingScheduled: true
+                isShowingScheduled: true,
+                tagsToFilterBy: []
             }
         }
     }

@@ -2,7 +2,7 @@
     <tr>
         <th>Task</th>
     </tr>
-    <tr data-ng-repeat="task in calendarCtrl.unscheduledTasks = (calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask)">
+    <tr data-ng-repeat="task in calendarCtrl.unscheduledTasks = (calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask | tagFilter:calendarCtrl.viewState.tagsToFilterBy )">
         <td data-ng-class="{'success': task.complete, 'warning' : !task.complete}">
             <div class="pull-right">
                 <button class="btn btn-xs btn-link icon-button"
@@ -19,6 +19,9 @@
             <br/>
             <span data-ng-bind="task.name"
                   class="task-name"></span>
+            <div data-tag-display
+                 data-tags="task.tags"
+                 data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
         </td>
     </tr>
     <tr data-ng-repeat-end></tr>

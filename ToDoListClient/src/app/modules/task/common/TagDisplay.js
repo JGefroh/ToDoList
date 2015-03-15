@@ -4,13 +4,20 @@
 (function() {
     function TagDisplayDirective() {
         function TagDisplayDirectiveCtrl($scope) {
+            $scope.toggleTagFilter = function(tag) {
+                if ($scope.tagsToFilterBy.indexOf(tag) === -1) {
+                    $scope.tagsToFilterBy.push(tag);
+                }
+                else {
+                    $scope.tagsToFilterBy.splice($scope.tagsToFilterBy.indexOf(tag), 1);
+                }
+            };
         }
         return {
             restrict: 'A',
             scope: {
                 tags: '=',
-                tagsToFilterBy: '=',
-                toggleTagFilter: '&'
+                tagsToFilterBy: '='
             },
             templateUrl: 'TagDisplay.html',
             controller: ['$scope', TagDisplayDirectiveCtrl]

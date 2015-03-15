@@ -117,15 +117,6 @@
             });
         };
 
-        vm.toggleTagFilter = function(tag) {
-            if (vm.viewState.tagsToFilterBy.indexOf(tag) === -1) {
-                vm.viewState.tagsToFilterBy.push(tag);
-            }
-            else {
-                vm.viewState.tagsToFilterBy.splice(vm.viewState.tagsToFilterBy.indexOf(tag), 1);
-            }
-        };
-
         function updateTags() {
             updateUsedTags();
             updateFilterTags();

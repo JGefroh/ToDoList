@@ -14,6 +14,7 @@
             TaskService.getTasks(UserService.user.id).then(function(tasks) {
                 vm.operations.getTasks.status = null;
                 vm.tasks = tasks;
+                updateTags();
             })
             .catch(function(error) {
                 vm.operations.getTasks.status = 'ERROR';
@@ -118,6 +119,7 @@
                     AlertService.setAlert('alert-info', 'Task Unscheduled!', $filter('limitTo')(task.name || 'A task', truncateLimit) + ' has been unscheduled.', 2000);
                 }
                 angular.copy(savedTask, task);
+                updateTags();
             });
         };
 
@@ -128,6 +130,25 @@
                 && today.getMonth() === date.getMonth()
                 && today.getFullYear() === date.getFullYear();
         };
+
+        function updateTags() {
+            updateUsedTags();
+            updateFilterTags();
+        }
+
+        function updateUsedTags() {
+            vm.usedTags = TaskService.getUsedTags($filter('filter')(vm.tasks, {complete: false}));
+        }
+
+        function updateFilterTags() {
+            var tagsToKeep = [];
+            angular.forEach(vm.viewState.tagsToFilterBy, function(filterTag, index) {
+                if (vm.usedTags.indexOf(filterTag) !== -1) {
+                    tagsToKeep.push(filterTag);
+                }
+            });
+            vm.viewState.tagsToFilterBy = tagsToKeep;
+        }
 
         function initialize() {
             UserService.reserveID($stateParams.userID);
