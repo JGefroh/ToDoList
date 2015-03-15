@@ -3,17 +3,17 @@
  */
 (function() {
     function TagDisplayDirective() {
-        function TagDisplayDirectiveCtrl() {
+        function TagDisplayDirectiveCtrl($scope) {
         }
         return {
             restrict: 'A',
             scope: {
-                task: '=',
+                tags: '=',
                 tagsToFilterBy: '=',
                 toggleTagFilter: '&'
             },
             templateUrl: 'TagDisplay.html',
-            controller: [TagDisplayDirectiveCtrl]
+            controller: ['$scope', TagDisplayDirectiveCtrl]
         }
     }
     angular

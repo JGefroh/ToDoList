@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <span data-ng-repeat="tag in task.tags"
+        <span data-ng-repeat="tag in tags | orderBy:'toString()'"
               data-ng-bind="tag"
               data-ng-click="toggleTagFilter({tag:tag})"
               style="cursor: pointer;"
