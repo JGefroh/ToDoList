@@ -37,6 +37,32 @@
             $scope.inputCopy.tags.splice($scope.inputCopy.tags.indexOf(tag), 1);
         };
 
+        $scope.addSubtaskOnEnterKeyPressed = function(subtask, key) {
+            if (key.which === ENTER_KEY_ID) {
+                $scope.addSubtask(subtask);
+            }
+        };
+
+        $scope.addSubtask = function(subtaskName) {
+            if (!$scope.inputCopy.subtasks) {
+                $scope.inputCopy.subtasks = [];
+            }
+            var subtask = {
+                name: subtaskName
+            };
+
+            if (!subtask.name) {
+                return;
+            }
+            $scope.inputCopy.subtasks.push(subtask);
+
+            $scope.form.subtask = null;
+        };
+
+        $scope.removeSubtask = function(subtask) {
+            $scope.inputCopy.subtasks.splice($scope.inputCopy.subtasks.indexOf(subtask), 1);
+        };
+
         $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
         };

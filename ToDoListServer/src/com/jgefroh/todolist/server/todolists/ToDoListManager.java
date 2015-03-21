@@ -34,6 +34,7 @@ public class ToDoListManager {
         Task task = getTask(ownerId, taskId);
         task.updateTask(dto.getName(), dto.getGroup(), dto.getTags(), dto.getTimestampDue());
         validationLayer.validateThrowIfError(task);
+        task.syncSubtasks(dto.getSubtasks());
         return taskDAO.update(task);
     }
 
@@ -42,18 +43,27 @@ public class ToDoListManager {
     }
     
     
-    public Task markComplete(final String ownerId, final int taskId) {
+    public Task markTaskComplete(final String ownerId, final int taskId) {
         Task task = getTask(ownerId, taskId);
         task.markComplete();
         return task;
     }
     
-    public Task markIncomplete(final String ownerId, final int taskId) {
+    public Task markTaskIncomplete(final String ownerId, final int taskId) {
         Task task = getTask(ownerId, taskId);
         task.markIncomplete();
         return task;
     }
     
+    public Subtask markSubtaskComplete(final String ownerId, final int taskId, final int subtaskId) {
+        Task task = getTask(ownerId, taskId);
+        return task.markSubtaskComplete(subtaskId);
+    }
+    
+    public Subtask markSubtaskIncomplete(final String ownerId, final int taskId, final int subtaskId) {
+        Task task = getTask(ownerId, taskId);
+        return task.markSubtaskIncomplete(subtaskId);
+    }
     
     public List<Task> getIncompleteTasks(final String ownerId) {
         ToDoList list = getList(ownerId);

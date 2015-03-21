@@ -1,9 +1,12 @@
 package com.jgefroh.todolist.server.todolists;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +43,9 @@ public class Task {
     @Size(max = 100, message = "A task tag can only be 100 characters long.")
     @OrderBy
     private List<String> tags;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Subtask> subtasks;
     
     private boolean isComplete;
     private boolean isTracking;
@@ -113,6 +120,51 @@ public class Task {
         setTimestampDue(timestampDue);
     }
     
+    public void syncSubtasks(final List<Subtask> subtaskSources) {
+        removeDeletedSubtasks(subtaskSources);
+        addOrUpdateSavedSubtasks(subtaskSources);
+    }
+    
+    private void removeDeletedSubtasks(final Collection<Subtask> subtaskSource) {
+        if (subtaskSource == null || subtaskSource.isEmpty()) {
+            getSubtasks().clear();
+            return;
+        }
+        
+        Iterator<Subtask> iter = getSubtasks().iterator();
+        while (iter.hasNext()) {
+            Subtask existingSubtask = iter.next();
+            if (getSubtaskFromCollection(existingSubtask.getId(), subtaskSource) == null) {
+                iter.remove();
+            }
+        }
+    }
+    
+    private void addOrUpdateSavedSubtasks(final List<Subtask> subtaskSources) {
+        for (Subtask subtaskSource : subtaskSources) {
+            Subtask existingSubtask = getSubtaskFromCollection(subtaskSource.getId(), getSubtasks());
+            if (existingSubtask == null) {
+                getSubtasks().add(subtaskSource);
+            }
+            else {
+                existingSubtask.update(subtaskSource.getName());
+            }
+        }
+    }
+    
+    private Subtask getSubtaskFromCollection(final Integer id, final Collection<Subtask> subtasks) {
+        if (id == null ) {
+            return null;
+        }
+        for (Subtask subtask : subtasks) {
+            if (subtask.getId() != null && subtask.getId().equals(id)) {
+                return subtask;
+            }
+        }
+        
+        return null;
+    }
+    
     public void tag(final String tag) {
         if (tags == null) {
             tags = new ArrayList<String>();
@@ -138,6 +190,18 @@ public class Task {
 
     public void schedule(final Date timestampDue) {
         setTimestampDue(timestampDue);
+    }
+
+    public Subtask markSubtaskComplete(final int subtaskId) {
+        Subtask subtask = getSubtaskFromCollection(subtaskId, getSubtasks());
+        subtask.markComplete();
+        return subtask;
+    }
+
+    public Subtask markSubtaskIncomplete(final int subtaskId) {
+        Subtask subtask = getSubtaskFromCollection(subtaskId, getSubtasks());
+        subtask.markIncomplete();
+        return subtask;
     }
     
 
@@ -176,6 +240,13 @@ public class Task {
     
     public boolean isReadOnly() {
         return isReadOnly;
+    }
+    
+    public List<Subtask> getSubtasks() {
+        if (this.subtasks == null) {
+            setSubtasks(new ArrayList<Subtask>());
+        }
+        return this.subtasks;
     }
     
     public Date getTimestampCompleted() {
@@ -235,6 +306,10 @@ public class Task {
     
     public void setReadOnly(boolean isReadOnly) {
         this.isReadOnly = isReadOnly;
+    }
+    
+    private void setSubtasks(final List<Subtask> subtasks) {
+        this.subtasks = subtasks;
     }
     
     private void setTimestampCompleted(Date timestampCompleted) {

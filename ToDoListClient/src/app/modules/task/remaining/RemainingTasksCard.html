@@ -36,6 +36,51 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h5>
+                    Subtasks
+                </h5>
+            </div>
+            <div class="col-xs-12">
+                <table class="table table-condensed">
+                    <tr data-ng-repeat="subtask in task.subtasks" data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">
+                        <td>
+                            <button class="btn btn-link btn-xs complete-button icon-button"
+                                    data-ng-if="!subtask.complete"
+                                    data-ng-click="remainingCtrl.markSubtaskComplete(task, subtask)"
+                                    data-ng-disabled="task.readOnly || subtask.readOnly"
+                                    title="Mark this subtask as completed.">
+                                <span class="fa-stack">
+                                    <span class="fa fa-circle fa-stack-2x"></span>
+                                    <span data-ng-if="remainingCtrl.operations.markComplete.subtasks[subtask.id].status !== 'LOADING'"
+                                          class="fa fa-check fa-stack-1x fa-inverse"></span>
+                                    <span data-ng-if="remainingCtrl.operations.markComplete.subtasks[subtask.id].status === 'LOADING'"
+                                          class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+                                </span>
+                            </button>
+                            <button class="btn btn-link btn-xs complete-button icon-button"
+                                    data-ng-if="subtask.complete"
+                                    data-ng-click="remainingCtrl.markSubtaskIncomplete(task, subtask)"
+                                    data-ng-disabled="task.readOnly || subtask.readOnly"
+                                    title="Mark this subtask as incomplete.">
+                                <span class="fa-stack">
+                                    <span class="fa fa-circle fa-stack-2x"></span>
+                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.subtasks[subtask.id].status !== 'LOADING'"
+                                          class="fa fa-reply fa-stack-1x fa-inverse"></span>
+                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.subtasks[subtask.id].status === 'LOADING'"
+                                          class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
+                                </span>
+                            </button>
+                        </td>
+                        <td>
+                            <span data-ng-bind="subtask.name"
+                                  data-ng-class="{'task-highlighted':task.tracking}"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <div data-tag-display
              data-tags="task.tags"
              data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"></div>
