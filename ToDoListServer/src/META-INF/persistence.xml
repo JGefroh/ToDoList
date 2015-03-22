@@ -7,7 +7,7 @@
         <jta-data-source>ToDoListDS</jta-data-source>
         <properties>
 <!--             <property name="openjpa.jdbc.Schema" value="TODOLIST_PROD"/>--> <!-- DB selection moved to server -->
-             <property name="openjpa.jdbc.SynchronizeMappings"  value="buildSchema(schemaAction='add')"/>
+            <!--  <property name="openjpa.jdbc.SynchronizeMappings"  value="buildSchema(schemaAction='add')"/> -->
         </properties>
 	</persistence-unit>
 </persistence>
