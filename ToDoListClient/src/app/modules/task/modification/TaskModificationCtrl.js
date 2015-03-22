@@ -20,7 +20,6 @@
         function assignOrderTo(subtasks) {
             angular.forEach(subtasks, function(subtask, index) {
                 subtask.order = index;
-                console.info(subtask.name + " is order number " + subtask.order);
             });
         }
 
