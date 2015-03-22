@@ -2,8 +2,9 @@
     function TaskModificationCtrl($scope, $modalInstance, UserService, TaskService, editedTask, options) {
         var ENTER_KEY_ID = 13;
         $scope.saveTask = function (taskFields) {
-            console.info(taskFields);
             $scope.addTag($scope.form.tag);
+            $scope.addSubtask($scope.form.subtaskName);
+            assignOrderTo(taskFields.subtasks);
             $scope.operations.editTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(savedTask) {
                 $scope.operations.editTask.status = null;
@@ -15,6 +16,13 @@
                 console.error('An error occurred while saving a task.');
             });
         };
+
+        function assignOrderTo(subtasks) {
+            angular.forEach(subtasks, function(subtask, index) {
+                subtask.order = index;
+                console.info(subtask.name + " is order number " + subtask.order);
+            });
+        }
 
         $scope.addTagOnEnterKeyPressed = function(tag, key) {
             if (key.which === ENTER_KEY_ID) {

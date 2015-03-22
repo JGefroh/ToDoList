@@ -2,6 +2,8 @@ package com.jgefroh.todolist.server.todolists;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -45,9 +47,11 @@ public class Task {
     private List<String> tags;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OrderBy("order")
     private List<Task> subtasks;
     
     private Integer parentTaskId;
+    private Integer order;
     
     private boolean isComplete;
     private boolean isTracking;
@@ -78,11 +82,12 @@ public class Task {
         return task;
     }
     
-    public static Task createAsSubtask(final String ownerId, final String name, final Integer parentTaskId) {
+    public static Task createAsSubtask(final String ownerId, final String name, final Integer parentTaskId, final int order) {
         Task task = new Task();
         task.setOwnerId(ownerId);
         task.setName(name);
         task.setTimestampCreated(new Date());
+        task.setOrder(order);
         return task;
         
     }
@@ -131,13 +136,15 @@ public class Task {
         setTimestampDue(timestampDue);
     }
     
-    public void updateAsSubtask(final String name) {
+    public void updateAsSubtask(final String name, final int priority) {
         setName(name);
+        setOrder(priority);
     }
     
     public void syncSubtasks(final List<Task> subtaskSources) {
         removeDeletedSubtasks(subtaskSources);
         addOrUpdateSavedSubtasks(subtaskSources);
+        orderSubtasks(getSubtasks());
     }
     
     private void removeDeletedSubtasks(final Collection<Task> subtaskSource) {
@@ -159,12 +166,29 @@ public class Task {
         for (Task subtaskSource : subtaskSources) {
             Task existingSubtask = getSubtaskFromCollection(subtaskSource.getId(), getSubtasks());
             if (existingSubtask == null) {
-                getSubtasks().add(Task.createAsSubtask(getOwnerId(), subtaskSource.getName(), getId()));
+                getSubtasks().add(Task.createAsSubtask(getOwnerId(), subtaskSource.getName(), getId(), subtaskSource.getOrder()));
             }
             else {
-                existingSubtask.updateAsSubtask(subtaskSource.getName());
+                existingSubtask.updateAsSubtask(subtaskSource.getName(), subtaskSource.getOrder());
             }
         }
+    }
+    
+    private void orderSubtasks(final List<Task> subtasksToOrder) {
+        Collections.sort(subtasksToOrder, new Comparator<Task>() {
+            @Override
+            public int compare(Task o1, Task o2) {
+                if (o1.order.equals(o2.order)) {
+                    return 0;
+                }
+                    
+                if (o1.order >= o2.order) {
+                    return 1;
+                }
+                
+                return -1;
+            }
+        });
     }
     
     private Task getSubtaskFromCollection(final Integer id, final Collection<Task> subtasks) {
@@ -269,6 +293,10 @@ public class Task {
     public Integer getParentTaskId() {
         return parentTaskId;
     }
+    
+    public Integer getOrder() {
+        return order;
+    }
 
     private void setComplete(boolean isComplete) {
         this.isComplete = isComplete;
@@ -329,5 +357,9 @@ public class Task {
     
     private void setTags(final List<String> tags) {
         this.tags = tags;
+    }
+    
+    public void setOrder(final Integer order) {
+        this.order = order;
     }
 }
