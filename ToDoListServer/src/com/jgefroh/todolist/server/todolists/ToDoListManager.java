@@ -20,14 +20,35 @@ public class ToDoListManager {
 
     
     public Task createTask(final String ownerId, final Task taskToCreate) {
+        if (isSubtask(taskToCreate)) {
+            return createAsSubtask(ownerId, taskToCreate.getName(), taskToCreate.getParentTaskId());
+        }
+        else {
+            return createAsTask(ownerId, taskToCreate);
+        }
+    }
+    
+    private boolean isSubtask(final Task task) {
+        return task.getParentTaskId() != null;
+    }
+    
+    private Task createAsTask(final String ownerId, final Task taskToCreate) {
         Task task = Task.create(ownerId, taskToCreate.getName(), taskToCreate.getGroup(), taskToCreate.getTags());
         task.schedule(taskToCreate.getTimestampDue());
         validationLayer.validateThrowIfError(task);
         task = taskDAO.update(task);
+        
         ToDoList list = getList(ownerId);
         list.addTask(task);
         listDAO.update(list);
         return task;
+    }
+    
+    private Task createAsSubtask(final String ownerId, final String name, final int parentTaskId) {
+        Task subtask = Task.createAsSubtask(ownerId, name, parentTaskId);
+        validationLayer.validateThrowIfError(subtask);
+        subtask = taskDAO.update(subtask);
+        return subtask;
     }
     
     public Task updateTask(final String ownerId, final int taskId, final Task dto) {
@@ -53,16 +74,6 @@ public class ToDoListManager {
         Task task = getTask(ownerId, taskId);
         task.markIncomplete();
         return task;
-    }
-    
-    public Subtask markSubtaskComplete(final String ownerId, final int taskId, final int subtaskId) {
-        Task task = getTask(ownerId, taskId);
-        return task.markSubtaskComplete(subtaskId);
-    }
-    
-    public Subtask markSubtaskIncomplete(final String ownerId, final int taskId, final int subtaskId) {
-        Task task = getTask(ownerId, taskId);
-        return task.markSubtaskIncomplete(subtaskId);
     }
     
     public List<Task> getIncompleteTasks(final String ownerId) {

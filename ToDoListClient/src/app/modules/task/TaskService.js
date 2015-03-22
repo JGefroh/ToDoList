@@ -33,18 +33,6 @@
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
-            markSubtaskComplete: function(ownerId, taskId, subtaskId) {
-                return '../rest/tasks/{taskId}/{subtaskId}/{ownerId}/markComplete'
-                    .replace('{taskId}', taskId)
-                    .replace('{subtaskId}', subtaskId)
-                    .replace('{ownerId}', ownerId);
-            },
-            markSubtaskIncomplete: function(ownerId, taskId, subtaskId) {
-                return '../rest/tasks/{taskId}/{subtaskId}/{ownerId}/markIncomplete'
-                    .replace('{taskId}', taskId)
-                    .replace('{subtaskId}', subtaskId)
-                    .replace('{ownerId}', ownerId);
-            },
             trackTask: function(ownerId, taskId) {
                 return '../rest/tasks/{taskId}/{ownerId}/track'
                     .replace('{taskId}', taskId)
@@ -87,18 +75,6 @@
             return $http.get(endpoints.getTasks(ownerId, completed)).then(function(response) {
                 return response.data;
             })
-        };
-
-        this.markSubtaskComplete = function(ownerId, taskId, subtaskId) {
-            return $http.put(endpoints.markSubtaskComplete(ownerId, taskId, subtaskId)).then(function(response) {
-                return response.data;
-            });
-        };
-
-        this.markSubtaskIncomplete = function(ownerId, taskId, subtaskId) {
-            return $http.put(endpoints.markSubtaskIncomplete(ownerId, taskId, subtaskId)).then(function(response) {
-                return response.data;
-            });
         };
 
         this.markTaskComplete = function(ownerId, taskId) {

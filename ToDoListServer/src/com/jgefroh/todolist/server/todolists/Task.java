@@ -45,7 +45,9 @@ public class Task {
     private List<String> tags;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Subtask> subtasks;
+    private List<Task> subtasks;
+    
+    private Integer parentTaskId;
     
     private boolean isComplete;
     private boolean isTracking;
@@ -74,6 +76,15 @@ public class Task {
         task.setName(name);
         task.setTimestampCreated(new Date());
         return task;
+    }
+    
+    public static Task createAsSubtask(final String ownerId, final String name, final Integer parentTaskId) {
+        Task task = new Task();
+        task.setOwnerId(ownerId);
+        task.setName(name);
+        task.setTimestampCreated(new Date());
+        return task;
+        
     }
     
     public static Task create(final String ownerId, final String name, final String group, final List<String> tags) {
@@ -120,43 +131,47 @@ public class Task {
         setTimestampDue(timestampDue);
     }
     
-    public void syncSubtasks(final List<Subtask> subtaskSources) {
+    public void updateAsSubtask(final String name) {
+        setName(name);
+    }
+    
+    public void syncSubtasks(final List<Task> subtaskSources) {
         removeDeletedSubtasks(subtaskSources);
         addOrUpdateSavedSubtasks(subtaskSources);
     }
     
-    private void removeDeletedSubtasks(final Collection<Subtask> subtaskSource) {
+    private void removeDeletedSubtasks(final Collection<Task> subtaskSource) {
         if (subtaskSource == null || subtaskSource.isEmpty()) {
             getSubtasks().clear();
             return;
         }
         
-        Iterator<Subtask> iter = getSubtasks().iterator();
+        Iterator<Task> iter = getSubtasks().iterator();
         while (iter.hasNext()) {
-            Subtask existingSubtask = iter.next();
+            Task existingSubtask = iter.next();
             if (getSubtaskFromCollection(existingSubtask.getId(), subtaskSource) == null) {
                 iter.remove();
             }
         }
     }
     
-    private void addOrUpdateSavedSubtasks(final List<Subtask> subtaskSources) {
-        for (Subtask subtaskSource : subtaskSources) {
-            Subtask existingSubtask = getSubtaskFromCollection(subtaskSource.getId(), getSubtasks());
+    private void addOrUpdateSavedSubtasks(final List<Task> subtaskSources) {
+        for (Task subtaskSource : subtaskSources) {
+            Task existingSubtask = getSubtaskFromCollection(subtaskSource.getId(), getSubtasks());
             if (existingSubtask == null) {
-                getSubtasks().add(subtaskSource);
+                getSubtasks().add(Task.createAsSubtask(getOwnerId(), subtaskSource.getName(), getId()));
             }
             else {
-                existingSubtask.update(subtaskSource.getName());
+                existingSubtask.updateAsSubtask(subtaskSource.getName());
             }
         }
     }
     
-    private Subtask getSubtaskFromCollection(final Integer id, final Collection<Subtask> subtasks) {
+    private Task getSubtaskFromCollection(final Integer id, final Collection<Task> subtasks) {
         if (id == null ) {
             return null;
         }
-        for (Subtask subtask : subtasks) {
+        for (Task subtask : subtasks) {
             if (subtask.getId() != null && subtask.getId().equals(id)) {
                 return subtask;
             }
@@ -191,20 +206,6 @@ public class Task {
     public void schedule(final Date timestampDue) {
         setTimestampDue(timestampDue);
     }
-
-    public Subtask markSubtaskComplete(final int subtaskId) {
-        Subtask subtask = getSubtaskFromCollection(subtaskId, getSubtasks());
-        subtask.markComplete();
-        return subtask;
-    }
-
-    public Subtask markSubtaskIncomplete(final int subtaskId) {
-        Subtask subtask = getSubtaskFromCollection(subtaskId, getSubtasks());
-        subtask.markIncomplete();
-        return subtask;
-    }
-    
-
     
     public boolean isComplete() {
         return isComplete;
@@ -242,9 +243,9 @@ public class Task {
         return isReadOnly;
     }
     
-    public List<Subtask> getSubtasks() {
+    public List<Task> getSubtasks() {
         if (this.subtasks == null) {
-            setSubtasks(new ArrayList<Subtask>());
+            setSubtasks(new ArrayList<Task>());
         }
         return this.subtasks;
     }
@@ -265,7 +266,9 @@ public class Task {
         return tags;
     }
 
-    
+    public Integer getParentTaskId() {
+        return parentTaskId;
+    }
 
     private void setComplete(boolean isComplete) {
         this.isComplete = isComplete;
@@ -308,7 +311,7 @@ public class Task {
         this.isReadOnly = isReadOnly;
     }
     
-    private void setSubtasks(final List<Subtask> subtasks) {
+    private void setSubtasks(final List<Task> subtasks) {
         this.subtasks = subtasks;
     }
     

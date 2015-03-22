@@ -48,32 +48,32 @@
                         <td>
                             <button class="btn btn-link btn-xs complete-button icon-button"
                                     data-ng-if="!subtask.complete"
-                                    data-ng-click="remainingCtrl.markSubtaskComplete(task, subtask)"
+                                    data-ng-click="remainingCtrl.markTaskComplete(subtask)"
                                     data-ng-disabled="task.readOnly || subtask.readOnly"
                                     title="Mark this subtask as completed.">
                                 <span class="fa-stack">
                                     <span class="fa fa-circle fa-stack-2x"></span>
-                                    <span data-ng-if="remainingCtrl.operations.markComplete.subtasks[subtask.id].status !== 'LOADING'"
+                                    <span data-ng-if="remainingCtrl.operations.markComplete.tasks[subtask.id].status !== 'LOADING'"
                                           class="fa fa-check fa-stack-1x fa-inverse"></span>
-                                    <span data-ng-if="remainingCtrl.operations.markComplete.subtasks[subtask.id].status === 'LOADING'"
+                                    <span data-ng-if="remainingCtrl.operations.markComplete.tasks[subtask.id].status === 'LOADING'"
                                           class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
                                 </span>
                             </button>
                             <button class="btn btn-link btn-xs complete-button icon-button"
                                     data-ng-if="subtask.complete"
-                                    data-ng-click="remainingCtrl.markSubtaskIncomplete(task, subtask)"
+                                    data-ng-click="remainingCtrl.markTaskIncomplete(subtask)"
                                     data-ng-disabled="task.readOnly || subtask.readOnly"
                                     title="Mark this subtask as incomplete.">
                                 <span class="fa-stack">
                                     <span class="fa fa-circle fa-stack-2x"></span>
-                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.subtasks[subtask.id].status !== 'LOADING'"
+                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.tasks[subtask.id].status !== 'LOADING'"
                                           class="fa fa-reply fa-stack-1x fa-inverse"></span>
-                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.subtasks[subtask.id].status === 'LOADING'"
+                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.tasks[subtask.id].status === 'LOADING'"
                                           class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
                                 </span>
                             </button>
                         </td>
-                        <td>
+                        <td class="col-xs-11">
                             <span data-ng-bind="subtask.name"
                                   data-ng-class="{'task-highlighted':task.tracking}"></span>
                         </td>

@@ -2,6 +2,7 @@
     function TaskModificationCtrl($scope, $modalInstance, UserService, TaskService, editedTask, options) {
         var ENTER_KEY_ID = 13;
         $scope.saveTask = function (taskFields) {
+            console.info(taskFields);
             $scope.addTag($scope.form.tag);
             $scope.operations.editTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(savedTask) {
@@ -48,19 +49,29 @@
                 $scope.inputCopy.subtasks = [];
             }
             var subtask = {
-                name: subtaskName
+                name: subtaskName,
+                parentTaskId: $scope.inputCopy.id
             };
 
             if (!subtask.name) {
                 return;
             }
             $scope.inputCopy.subtasks.push(subtask);
-
-            $scope.form.subtask = null;
+            $scope.form.subtaskName = null;
         };
 
         $scope.removeSubtask = function(subtask) {
             $scope.inputCopy.subtasks.splice($scope.inputCopy.subtasks.indexOf(subtask), 1);
+        };
+
+        $scope.increaseSubtaskPriority = function(subtask) {
+            var currentIndex = $scope.inputCopy.subtasks.indexOf(subtask);
+            $scope.inputCopy.subtasks.splice(currentIndex - 1, 0, $scope.inputCopy.subtasks.splice(currentIndex, 1)[0]);
+        };
+
+        $scope.decreaseSubtaskPriority = function(subtask) {
+            var currentIndex = $scope.inputCopy.subtasks.indexOf(subtask);
+            $scope.inputCopy.subtasks.splice(currentIndex + 1, 0, $scope.inputCopy.subtasks.splice(currentIndex, 1)[0]);
         };
 
         $scope.cancel = function() {

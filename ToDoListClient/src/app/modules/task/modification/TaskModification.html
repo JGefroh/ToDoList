@@ -77,15 +77,38 @@
                 </button>
             </div>
         </div>
-        <span data-ng-repeat="subtask in inputCopy.subtasks">
-            <button data-ng-click="removeSubtask(subtask)"
-                    data-ng-disabled="operations.editTask.status === 'LOADING'"
-                    class="btn btn-xs btn-link">
-                <span class="fa fa-times"></span>
-            </button>
-            <span data-ng-bind="subtask.name"></span>
-            <br/>
-        </span>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-condensed">
+                    <tr data-ng-repeat="subtask in inputCopy.subtasks">
+                        <td>
+                            <button data-ng-click="removeSubtask(subtask)"
+                                    data-ng-disabled="operations.editTask.status === 'LOADING'"
+                                    class="btn btn-xs btn-link">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </td>
+                        <td class="col-xs-10">
+                            <span data-ng-bind="subtask.name"></span>
+                        </td>
+                        <td>
+                            <button data-ng-click="increaseSubtaskPriority(subtask)"
+                                    data-ng-if="!$first"
+                                    data-ng-disabled="operations.editTask.status === 'LOADING'"
+                                    class="btn btn-xs btn-link">
+                                <span class="fa fa-arrow-up"></span>
+                            </button>
+                            <button data-ng-click="decreaseSubtaskPriority(subtask)"
+                                    data-ng-if="!$last"
+                                    data-ng-disabled="operations.editTask.status === 'LOADING'"
+                                    class="btn btn-xs btn-link">
+                                <span class="fa fa-arrow-down"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">

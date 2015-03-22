@@ -21,11 +21,10 @@
             },
             markComplete: {
                 tasks: {},
-                subtasks: {},
                 status: null
             },
             markIncomplete: {
-                subtasks: {},
+                tasks: {},
                 status: null
             },
             trackingUntracking: {
@@ -122,42 +121,31 @@
             });
         };
 
-        vm.markSubtaskComplete = function(task, subtask) {
-            subtask.readOnly = true;
-            vm.operations.markComplete.subtasks[subtask.id] = {
+        vm.markTaskIncomplete = function (task) {
+            task.readOnly = true;
+            vm.operations.markIncomplete.tasks[task.id] = {
                 status: 'LOADING'
             };
-            TaskService.markSubtaskComplete(UserService.user.id, task.id, subtask.id).then(function(completedSubtask) {
-                delete vm.operations.markComplete.subtasks[subtask.id];
-                angular.copy(completedSubtask, subtask);
+            TaskService.markTaskIncomplete(UserService.user.id, task.id).then(function(completedTask) {
+                delete vm.operations.markIncomplete.tasks[task.id];
+                angular.copy(completedTask, task);
+                if (task.name != null) {
+                    AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as incomplete.', 2000);
+                }
+                else {
+                    AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as incomplete.', 2000);
+                }
+                updateTags();
             })
-            .catch(function() {
-                vm.operations.markComplete.subtasks[subtask.id].status = 'ERROR';
-                console.error("An error occurred while completing subtask.");
-            })
-            .finally(function() {
-                subtask.readOnly = false;
-            });
+                .catch(function() {
+                    vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
+                    console.error("An error occurred while marking task as incomplete.");
+                })
+                .finally(function() {
+                    task.readOnly = false;
+                });
         };
 
-        vm.markSubtaskIncomplete = function(task, subtask) {
-            subtask.readOnly = true;
-            vm.operations.markIncomplete.subtasks[subtask.id] = {
-                status: 'LOADING'
-            };
-            TaskService.markSubtaskIncomplete(UserService.user.id, task.id, subtask.id).then(function(incompleteSubtask) {
-                delete vm.operations.markIncomplete.subtasks[subtask.id];
-                angular.copy(incompleteSubtask, subtask);
-            })
-            .catch(function() {
-                vm.operations.markIncomplete.subtasks[subtask.id].status = 'ERROR';
-                console.error("An error occurred while incompleting subtask.");
-            })
-            .finally(function() {
-                subtask.readOnly = false;
-            });
-        };
-        
         function updateTags() {
             updateUsedTags();
             updateFilterTags();

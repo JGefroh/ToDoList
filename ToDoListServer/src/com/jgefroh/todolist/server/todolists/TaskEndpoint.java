@@ -78,22 +78,6 @@ public class TaskEndpoint {
         return listManager.markTaskIncomplete(ownerId, taskId);
     }
     
-    @PUT
-    @Path("/{taskId}/{subtaskId}/{ownerId}/markComplete")
-    public Subtask markSubtaskComplete(@PathParam("ownerId") final String ownerId,
-                             @PathParam("taskId") final int taskId,
-                             @PathParam("subtaskId") final int subtaskId) {
-        return listManager.markSubtaskComplete(ownerId, taskId, subtaskId);
-    }
-    
-    @PUT
-    @Path("{taskId}/{subtaskId}/{ownerId}/markIncomplete")
-    public Subtask markSubtaskIncomplete(@PathParam("ownerId") final String ownerId,
-                               @PathParam("taskId") final int taskId,
-                               @PathParam("subtaskId") final int subtaskId) {
-        return listManager.markSubtaskIncomplete(ownerId, taskId, subtaskId);
-    }
-    
     
     @PUT
     @Path("/{taskId}/{ownerId}/track")
