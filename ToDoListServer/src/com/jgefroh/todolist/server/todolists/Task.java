@@ -1,9 +1,14 @@
 package com.jgefroh.todolist.server.todolists;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,6 +16,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +46,13 @@ public class Task {
     @OrderBy
     private List<String> tags;
     
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OrderBy("order")
+    private List<Task> subtasks;
+    
+    private Integer parentTaskId;
+    private Integer order;
+    
     private boolean isComplete;
     private boolean isTracking;
     private long totalTimeTracked;
@@ -67,6 +80,16 @@ public class Task {
         task.setName(name);
         task.setTimestampCreated(new Date());
         return task;
+    }
+    
+    public static Task createAsSubtask(final String ownerId, final String name, final Integer parentTaskId, final int order) {
+        Task task = new Task();
+        task.setOwnerId(ownerId);
+        task.setName(name);
+        task.setTimestampCreated(new Date());
+        task.setOrder(order);
+        return task;
+        
     }
     
     public static Task create(final String ownerId, final String name, final String group, final List<String> tags) {
@@ -113,6 +136,74 @@ public class Task {
         setTimestampDue(timestampDue);
     }
     
+    public void updateAsSubtask(final String name, final int priority) {
+        setName(name);
+        setOrder(priority);
+    }
+    
+    public void syncSubtasks(final List<Task> subtaskSources) {
+        removeDeletedSubtasks(subtaskSources);
+        addOrUpdateSavedSubtasks(subtaskSources);
+        orderSubtasks(getSubtasks());
+    }
+    
+    private void removeDeletedSubtasks(final Collection<Task> subtaskSource) {
+        if (subtaskSource == null || subtaskSource.isEmpty()) {
+            getSubtasks().clear();
+            return;
+        }
+        
+        Iterator<Task> iter = getSubtasks().iterator();
+        while (iter.hasNext()) {
+            Task existingSubtask = iter.next();
+            if (getSubtaskFromCollection(existingSubtask.getId(), subtaskSource) == null) {
+                iter.remove();
+            }
+        }
+    }
+    
+    private void addOrUpdateSavedSubtasks(final List<Task> subtaskSources) {
+        for (Task subtaskSource : subtaskSources) {
+            Task existingSubtask = getSubtaskFromCollection(subtaskSource.getId(), getSubtasks());
+            if (existingSubtask == null) {
+                getSubtasks().add(Task.createAsSubtask(getOwnerId(), subtaskSource.getName(), getId(), subtaskSource.getOrder()));
+            }
+            else {
+                existingSubtask.updateAsSubtask(subtaskSource.getName(), subtaskSource.getOrder());
+            }
+        }
+    }
+    
+    private void orderSubtasks(final List<Task> subtasksToOrder) {
+        Collections.sort(subtasksToOrder, new Comparator<Task>() {
+            @Override
+            public int compare(Task o1, Task o2) {
+                if (o1.order.equals(o2.order)) {
+                    return 0;
+                }
+                    
+                if (o1.order >= o2.order) {
+                    return 1;
+                }
+                
+                return -1;
+            }
+        });
+    }
+    
+    private Task getSubtaskFromCollection(final Integer id, final Collection<Task> subtasks) {
+        if (id == null ) {
+            return null;
+        }
+        for (Task subtask : subtasks) {
+            if (subtask.getId() != null && subtask.getId().equals(id)) {
+                return subtask;
+            }
+        }
+        
+        return null;
+    }
+    
     public void tag(final String tag) {
         if (tags == null) {
             tags = new ArrayList<String>();
@@ -139,8 +230,6 @@ public class Task {
     public void schedule(final Date timestampDue) {
         setTimestampDue(timestampDue);
     }
-    
-
     
     public boolean isComplete() {
         return isComplete;
@@ -178,6 +267,13 @@ public class Task {
         return isReadOnly;
     }
     
+    public List<Task> getSubtasks() {
+        if (this.subtasks == null) {
+            setSubtasks(new ArrayList<Task>());
+        }
+        return this.subtasks;
+    }
+    
     public Date getTimestampCompleted() {
         return timestampCompleted;
     }
@@ -194,7 +290,13 @@ public class Task {
         return tags;
     }
 
+    public Integer getParentTaskId() {
+        return parentTaskId;
+    }
     
+    public Integer getOrder() {
+        return order;
+    }
 
     private void setComplete(boolean isComplete) {
         this.isComplete = isComplete;
@@ -237,6 +339,10 @@ public class Task {
         this.isReadOnly = isReadOnly;
     }
     
+    private void setSubtasks(final List<Task> subtasks) {
+        this.subtasks = subtasks;
+    }
+    
     private void setTimestampCompleted(Date timestampCompleted) {
         this.timestampCompleted = timestampCompleted;
     }
@@ -251,5 +357,9 @@ public class Task {
     
     private void setTags(final List<String> tags) {
         this.tags = tags;
+    }
+    
+    public void setOrder(final Integer order) {
+        this.order = order;
     }
 }
