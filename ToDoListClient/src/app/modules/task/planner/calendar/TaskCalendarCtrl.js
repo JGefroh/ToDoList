@@ -93,7 +93,7 @@
             vm.operations.markComplete.tasks[task.id] = {
                 status: 'LOADING'
             };
-            TaskService.markTaskComplete(UserService.user.id, task.id).then(function(completedTask) {
+            TaskService.markComplete(UserService.user.id, task.id).then(function(completedTask) {
                 delete vm.operations.markComplete.tasks[task.id];
                 angular.copy(completedTask, task);
             })
@@ -111,7 +111,7 @@
             vm.operations.markIncomplete.tasks[task.id] = {
                 status: 'LOADING'
             };
-            TaskService.markTaskIncomplete(UserService.user.id, task.id).then(function(incompleteTask) {
+            TaskService.markIncomplete(UserService.user.id, task.id).then(function(incompleteTask) {
                 delete vm.operations.markIncomplete.tasks[task.id];
                 angular.copy(incompleteTask, task);
             })

@@ -96,12 +96,12 @@
             });
         };
 
-        vm.markTaskComplete = function (task) {
+        vm.markComplete = function (task) {
             task.readOnly = true;
             vm.operations.markComplete.tasks[task.id] = {
                 status: 'LOADING'
             };
-            TaskService.markTaskComplete(UserService.user.id, task.id).then(function(completedTask) {
+            TaskService.markComplete(UserService.user.id, task.id).then(function(completedTask) {
                 delete vm.operations.markComplete.tasks[task.id];
                 angular.copy(completedTask, task);
                 if (task.name != null) {
@@ -121,12 +121,12 @@
             });
         };
 
-        vm.markTaskIncomplete = function (task) {
+        vm.markIncomplete = function (task) {
             task.readOnly = true;
             vm.operations.markIncomplete.tasks[task.id] = {
                 status: 'LOADING'
             };
-            TaskService.markTaskIncomplete(UserService.user.id, task.id).then(function(completedTask) {
+            TaskService.markIncomplete(UserService.user.id, task.id).then(function(completedTask) {
                 delete vm.operations.markIncomplete.tasks[task.id];
                 angular.copy(completedTask, task);
                 if (task.name != null) {

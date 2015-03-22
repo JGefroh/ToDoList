@@ -21,7 +21,7 @@ public class ToDoListManager {
     
     public Task createTask(final String ownerId, final Task taskToCreate) {
         if (isSubtask(taskToCreate)) {
-            return createAsSubtask(ownerId, taskToCreate.getName(), taskToCreate.getParentTaskId());
+            return createAsSubtask(ownerId, taskToCreate.getName(), taskToCreate.getParentTaskId(), taskToCreate.getOrder());
         }
         else {
             return createAsTask(ownerId, taskToCreate);
@@ -44,8 +44,8 @@ public class ToDoListManager {
         return task;
     }
     
-    private Task createAsSubtask(final String ownerId, final String name, final int parentTaskId) {
-        Task subtask = Task.createAsSubtask(ownerId, name, parentTaskId);
+    private Task createAsSubtask(final String ownerId, final String name, final int parentTaskId, final Integer order) {
+        Task subtask = Task.createAsSubtask(ownerId, name, parentTaskId, order);
         validationLayer.validateThrowIfError(subtask);
         subtask = taskDAO.update(subtask);
         return subtask;

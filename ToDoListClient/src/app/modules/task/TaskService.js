@@ -23,12 +23,12 @@
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
-            markTaskComplete: function(ownerId, taskId) {
+            markComplete: function(ownerId, taskId) {
                 return '../rest/tasks/{taskId}/{ownerId}/markComplete'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
-            markTaskIncomplete: function(ownerId, taskId) {
+            markIncomplete: function(ownerId, taskId) {
                 return '../rest/tasks/{taskId}/{ownerId}/markIncomplete'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
@@ -77,14 +77,14 @@
             })
         };
 
-        this.markTaskComplete = function(ownerId, taskId) {
-            return $http.put(endpoints.markTaskComplete(ownerId, taskId)).then(function(response) {
+        this.markComplete = function(ownerId, taskId) {
+            return $http.put(endpoints.markComplete(ownerId, taskId)).then(function(response) {
                 return response.data;
             });
         };
 
-        this.markTaskIncomplete = function(ownerId, taskId) {
-            return $http.put(endpoints.markTaskIncomplete(ownerId, taskId)).then(function(response) {
+        this.markIncomplete = function(ownerId, taskId) {
+            return $http.put(endpoints.markIncomplete(ownerId, taskId)).then(function(response) {
                 return response.data;
             });
         };

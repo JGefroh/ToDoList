@@ -62,7 +62,7 @@
             vm.operations.markIncomplete.tasks[task.id] = {
                 status: 'LOADING'
             };
-            TaskService.markTaskIncomplete(UserService.user.id, task.id).then(function(incompleteTask) {
+            TaskService.markIncomplete(UserService.user.id, task.id).then(function(incompleteTask) {
                 delete vm.operations.markIncomplete.tasks[task.id];
                 angular.copy(incompleteTask, task);
                 if (task.name != null) {

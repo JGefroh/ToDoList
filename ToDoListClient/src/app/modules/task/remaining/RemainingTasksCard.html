@@ -36,7 +36,8 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
-        <div class="row">
+        <div data-ng-if="task.subtasks"
+             class="row">
             <div class="col-xs-12">
                 <h5>
                     Subtasks
@@ -48,7 +49,7 @@
                         <td>
                             <button class="btn btn-link btn-xs complete-button icon-button"
                                     data-ng-if="!subtask.complete"
-                                    data-ng-click="remainingCtrl.markTaskComplete(subtask)"
+                                    data-ng-click="remainingCtrl.markComplete(subtask)"
                                     data-ng-disabled="task.readOnly || subtask.readOnly"
                                     title="Mark this subtask as completed.">
                                 <span class="fa-stack">
@@ -61,7 +62,7 @@
                             </button>
                             <button class="btn btn-link btn-xs complete-button icon-button"
                                     data-ng-if="subtask.complete"
-                                    data-ng-click="remainingCtrl.markTaskIncomplete(subtask)"
+                                    data-ng-click="remainingCtrl.markIncomplete(subtask)"
                                     data-ng-disabled="task.readOnly || subtask.readOnly"
                                     title="Mark this subtask as incomplete.">
                                 <span class="fa-stack">
