@@ -58,6 +58,58 @@
             <span data-ng-bind="tag"></span>
         </span>
     </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-7">
+                <label>Subtasks</label>
+                <input data-ng-model="form.subtaskName"
+                       data-ng-disabled="operations.editTask.status === 'LOADING'"
+                       placeholder="Enter a subtask name..."
+                       class="form-control"
+                       maxlength="500">
+            </div>
+            <div class="col-xs-2">
+                <label>&nbsp;</label>
+                <button data-ng-click="addSubtask(form.subtaskName);"
+                        data-ng-disabled="operations.editTask.status === 'LOADING'"
+                        class="btn btn-link">
+                    <span class="fa fa-plus"></span> Add Subtask
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-condensed">
+                    <tr data-ng-repeat="subtask in inputCopy.subtasks">
+                        <td>
+                            <button data-ng-click="removeSubtask(subtask)"
+                                    data-ng-disabled="operations.editTask.status === 'LOADING'"
+                                    class="btn btn-xs btn-link">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </td>
+                        <td class="col-xs-10">
+                            <span data-ng-bind="subtask.name"></span>
+                        </td>
+                        <td class="col-xs-1">
+                            <button data-ng-click="increaseSubtaskPriority(subtask)"
+                                    data-ng-if="!$first"
+                                    data-ng-disabled="operations.editTask.status === 'LOADING'"
+                                    class="btn btn-xs btn-link">
+                                <span class="fa fa-arrow-up"></span>
+                            </button>
+                            <button data-ng-click="decreaseSubtaskPriority(subtask)"
+                                    data-ng-if="!$last"
+                                    data-ng-disabled="operations.editTask.status === 'LOADING'"
+                                    class="btn btn-xs btn-link">
+                                <span class="fa fa-arrow-down"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-link pull-left"

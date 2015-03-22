@@ -20,20 +20,42 @@ public class ToDoListManager {
 
     
     public Task createTask(final String ownerId, final Task taskToCreate) {
+        if (isSubtask(taskToCreate)) {
+            return createAsSubtask(ownerId, taskToCreate.getName(), taskToCreate.getParentTaskId(), taskToCreate.getOrder());
+        }
+        else {
+            return createAsTask(ownerId, taskToCreate);
+        }
+    }
+    
+    private boolean isSubtask(final Task task) {
+        return task.getParentTaskId() != null;
+    }
+    
+    private Task createAsTask(final String ownerId, final Task taskToCreate) {
         Task task = Task.create(ownerId, taskToCreate.getName(), taskToCreate.getGroup(), taskToCreate.getTags());
         task.schedule(taskToCreate.getTimestampDue());
         validationLayer.validateThrowIfError(task);
         task = taskDAO.update(task);
+        
         ToDoList list = getList(ownerId);
         list.addTask(task);
         listDAO.update(list);
         return task;
     }
     
+    private Task createAsSubtask(final String ownerId, final String name, final int parentTaskId, final Integer order) {
+        Task subtask = Task.createAsSubtask(ownerId, name, parentTaskId, order);
+        validationLayer.validateThrowIfError(subtask);
+        subtask = taskDAO.update(subtask);
+        return subtask;
+    }
+    
     public Task updateTask(final String ownerId, final int taskId, final Task dto) {
         Task task = getTask(ownerId, taskId);
         task.updateTask(dto.getName(), dto.getGroup(), dto.getTags(), dto.getTimestampDue());
         validationLayer.validateThrowIfError(task);
+        task.syncSubtasks(dto.getSubtasks());
         return taskDAO.update(task);
     }
 
@@ -42,18 +64,17 @@ public class ToDoListManager {
     }
     
     
-    public Task markComplete(final String ownerId, final int taskId) {
+    public Task markTaskComplete(final String ownerId, final int taskId) {
         Task task = getTask(ownerId, taskId);
         task.markComplete();
         return task;
     }
     
-    public Task markIncomplete(final String ownerId, final int taskId) {
+    public Task markTaskIncomplete(final String ownerId, final int taskId) {
         Task task = getTask(ownerId, taskId);
         task.markIncomplete();
         return task;
     }
-    
     
     public List<Task> getIncompleteTasks(final String ownerId) {
         ToDoList list = getList(ownerId);

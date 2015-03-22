@@ -23,6 +23,10 @@
                 tasks: {},
                 status: null
             },
+            markIncomplete: {
+                tasks: {},
+                status: null
+            },
             trackingUntracking: {
                 tasks: {},
                 status: null
@@ -115,6 +119,31 @@
             .finally(function() {
                 task.readOnly = false;
             });
+        };
+
+        vm.markIncomplete = function (task) {
+            task.readOnly = true;
+            vm.operations.markIncomplete.tasks[task.id] = {
+                status: 'LOADING'
+            };
+            TaskService.markIncomplete(UserService.user.id, task.id).then(function(completedTask) {
+                delete vm.operations.markIncomplete.tasks[task.id];
+                angular.copy(completedTask, task);
+                if (task.name != null) {
+                    AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as incomplete.', 2000);
+                }
+                else {
+                    AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as incomplete.', 2000);
+                }
+                updateTags();
+            })
+                .catch(function() {
+                    vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
+                    console.error("An error occurred while marking task as incomplete.");
+                })
+                .finally(function() {
+                    task.readOnly = false;
+                });
         };
 
         function updateTags() {

@@ -3,6 +3,8 @@
         var ENTER_KEY_ID = 13;
         $scope.saveTask = function (taskFields) {
             $scope.addTag($scope.form.tag);
+            $scope.addSubtask($scope.form.subtaskName);
+            assignOrderTo(taskFields.subtasks);
             $scope.operations.editTask.status = 'LOADING';
             TaskService.saveTask(UserService.user.id, taskFields).then(function(savedTask) {
                 $scope.operations.editTask.status = null;
@@ -14,6 +16,12 @@
                 console.error('An error occurred while saving a task.');
             });
         };
+
+        function assignOrderTo(subtasks) {
+            angular.forEach(subtasks, function(subtask, index) {
+                subtask.order = index;
+            });
+        }
 
         $scope.addTagOnEnterKeyPressed = function(tag, key) {
             if (key.which === ENTER_KEY_ID) {
@@ -35,6 +43,42 @@
 
         $scope.removeTag = function(tag) {
             $scope.inputCopy.tags.splice($scope.inputCopy.tags.indexOf(tag), 1);
+        };
+
+        $scope.addSubtaskOnEnterKeyPressed = function(subtask, key) {
+            if (key.which === ENTER_KEY_ID) {
+                $scope.addSubtask(subtask);
+            }
+        };
+
+        $scope.addSubtask = function(subtaskName) {
+            if (!$scope.inputCopy.subtasks) {
+                $scope.inputCopy.subtasks = [];
+            }
+            var subtask = {
+                name: subtaskName,
+                parentTaskId: $scope.inputCopy.id
+            };
+
+            if (!subtask.name) {
+                return;
+            }
+            $scope.inputCopy.subtasks.push(subtask);
+            $scope.form.subtaskName = null;
+        };
+
+        $scope.removeSubtask = function(subtask) {
+            $scope.inputCopy.subtasks.splice($scope.inputCopy.subtasks.indexOf(subtask), 1);
+        };
+
+        $scope.increaseSubtaskPriority = function(subtask) {
+            var currentIndex = $scope.inputCopy.subtasks.indexOf(subtask);
+            $scope.inputCopy.subtasks.splice(currentIndex - 1, 0, $scope.inputCopy.subtasks.splice(currentIndex, 1)[0]);
+        };
+
+        $scope.decreaseSubtaskPriority = function(subtask) {
+            var currentIndex = $scope.inputCopy.subtasks.indexOf(subtask);
+            $scope.inputCopy.subtasks.splice(currentIndex + 1, 0, $scope.inputCopy.subtasks.splice(currentIndex, 1)[0]);
         };
 
         $scope.cancel = function() {
