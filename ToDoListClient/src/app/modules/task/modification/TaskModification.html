@@ -29,6 +29,14 @@
              data-is-disabled="operations.editTask.status === 'LOADING'"></div>
     </div>
     <div class="form-group">
+        <label>Total Time Tracked (Hours)</label>
+        <input data-ng-model="shadowInput.totalTimeTrackedAsHours"
+               data-ng-blur="inputCopy.totalTimeTracked = (shadowInput.totalTimeTrackedAsHours | hoursToMS)"
+               placeholder="Change the total time tracked for this task."
+               maxlength="7"
+               class="form-control" />
+    </div>
+    <div class="form-group">
         <div class="row">
             <div class="col-xs-7">
                 <label>Tags</label>
