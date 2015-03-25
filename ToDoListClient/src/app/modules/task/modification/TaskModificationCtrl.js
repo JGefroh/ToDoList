@@ -1,5 +1,5 @@
 (function() {
-    function TaskModificationCtrl($scope, $modalInstance, UserService, TaskService, editedTask, options) {
+    function TaskModificationCtrl($scope, $modalInstance, $filter, UserService, TaskService, editedTask, options) {
         var ENTER_KEY_ID = 13;
         $scope.saveTask = function (taskFields) {
             $scope.addTag($scope.form.tag);
@@ -93,11 +93,13 @@
                 editTask: {}
             };
             $scope.inputCopy = angular.copy(editedTask);
+            $scope.shadowInput = angular.copy(editedTask);
+            $scope.shadowInput.totalTimeTrackedAsHours = $filter('msToHours')($scope.inputCopy.totalTimeTracked);
         }
 
         initialize();
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('TaskModificationCtrl', ['$scope', '$modalInstance', 'UserService', 'TaskService', 'editedTask', 'options', TaskModificationCtrl]);
+        .controller('TaskModificationCtrl', ['$scope', '$modalInstance', '$filter', 'UserService', 'TaskService', 'editedTask', 'options', TaskModificationCtrl]);
 })();

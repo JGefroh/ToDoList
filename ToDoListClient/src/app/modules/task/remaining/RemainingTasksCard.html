@@ -36,6 +36,12 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <span data-ng-bind-html="remainingCtrl.trustHTML(task.description)"
+                      data-ng-class="{'task-highlighted':task.tracking}"></span>
+            </div>
+        </div>
         <div data-ng-if="task.subtasks"
              class="row">
             <div class="col-xs-12">

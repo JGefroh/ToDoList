@@ -21,12 +21,30 @@
                class="form-control"
                maxlength="500"/>
     </div>
+    <div data-ng-if="options.layout === 'FULL'"
+         class="form-group">
+        <label>Description</label>
+        <textarea data-ng-model="inputCopy.description"
+                  data-ng-disabled="operations.editTask.status === 'LOADING'"
+                  class="form-control"
+                  maxlength="500"></textarea>
+        <span data-ng-if="inputCopy.description.length > 450"
+              class="help-block">{{ inputCopy.description.length }} out of 500 characters used.</span>
+    </div>
     <div class="form-group">
         <label>Due Date</label>
         <div data-date-input-field
              data-model="inputCopy.timestampDue"
              data-config="datePickerConfig"
              data-is-disabled="operations.editTask.status === 'LOADING'"></div>
+    </div>
+    <div data-ng-if="options.layout === 'FULL'"
+         class="form-group">
+        <label>Total Time Tracked (Hours)</label>
+        <input data-ng-model="shadowInput.totalTimeTrackedAsHours"
+               data-ng-blur="inputCopy.totalTimeTracked = (shadowInput.totalTimeTrackedAsHours | hoursToMS)"
+               maxlength="7"
+               class="form-control" />
     </div>
     <div class="form-group">
         <div class="row">

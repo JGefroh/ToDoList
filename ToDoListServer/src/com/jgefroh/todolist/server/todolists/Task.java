@@ -50,6 +50,10 @@ public class Task {
     @OrderBy("order")
     private List<Task> subtasks;
     
+    @Column(length = 1000)
+    @Size(max = 1000, message = "A task description can only be 1000 characters long.")
+    private String description;
+    
     private Integer parentTaskId;
     private Integer order;
     
@@ -129,11 +133,14 @@ public class Task {
         }
     }
     
-    public void updateTask(final String name, final String group, final List<String> tags, final Date timestampDue) {
+    public void updateTask(final String name, final String group, final String description, final List<String> tags, final Date timestampDue, final long totalTimeTracked) {
         setGroup(group);
         setName(name);
+        setDescription(description);
         setTags(tags);
         setTimestampDue(timestampDue);
+        bankTime();
+        setTotalTimeTracked(totalTimeTracked);
     }
     
     public void updateAsSubtask(final String name, final int priority) {
@@ -251,6 +258,10 @@ public class Task {
         return ownerId;
     }
     
+    public String getDescription() {
+        return description;
+    }
+    
     public Date getTimestampTrackingStarted() {
         return timestampTrackingStarted;
     }
@@ -361,5 +372,9 @@ public class Task {
     
     public void setOrder(final Integer order) {
         this.order = order;
+    }
+    
+    private void setDescription(String description) {
+        this.description = description;
     }
 }
