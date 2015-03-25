@@ -137,13 +137,13 @@
                 }
                 updateTags();
             })
-                .catch(function() {
-                    vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
-                    console.error("An error occurred while marking task as incomplete.");
-                })
-                .finally(function() {
-                    task.readOnly = false;
-                });
+            .catch(function() {
+                vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
+                console.error("An error occurred while marking task as incomplete.");
+            })
+            .finally(function() {
+                task.readOnly = false;
+            });
         };
 
         function updateTags() {
