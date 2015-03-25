@@ -3,7 +3,7 @@
  */
 (function() {
     var $jQuery = jQuery.noConflict();
-    function RemainingTasksCtrl($scope, $timeout, $modal, ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
+    function RemainingTasksCtrl($scope, $timeout, $modal, $sce, ViewState, UserService, $stateParams, TaskService, AlertService, truncateLimit, $filter, $rootScope) {
         var vm = this;
         var ENTER_KEY_ID = 13;
         var TRACKED_TIME_UPDATE_INTERVAL_IN_MS = 30000;
@@ -199,6 +199,10 @@
             });
         };
 
+        vm.trustHTML = function(text) {
+            return $sce.trustAsHtml(text);
+        };
+
         function resetInputFields(taskFields) {
             taskFields.name = null;
             taskFields.group = null;
@@ -249,5 +253,5 @@
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('RemainingTasksCtrl', ['$scope', '$timeout', '$modal', 'ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
+        .controller('RemainingTasksCtrl', ['$scope', '$timeout', '$modal', '$sce', 'ViewState', 'UserService', '$stateParams',  'TaskService', 'AlertService', 'truncateLimit', '$filter', '$rootScope',  RemainingTasksCtrl]);
 })();
