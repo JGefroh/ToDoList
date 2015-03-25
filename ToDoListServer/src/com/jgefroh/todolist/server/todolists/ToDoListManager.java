@@ -53,7 +53,7 @@ public class ToDoListManager {
     
     public Task updateTask(final String ownerId, final int taskId, final Task dto) {
         Task task = getTask(ownerId, taskId);
-        task.updateTask(dto.getName(), dto.getGroup(), dto.getTags(), dto.getTimestampDue(), dto.getTotalTimeTracked());
+        task.updateTask(dto.getName(), dto.getGroup(), dto.getDescription(), dto.getTags(), dto.getTimestampDue(), dto.getTotalTimeTracked());
         validationLayer.validateThrowIfError(task);
         task.syncSubtasks(dto.getSubtasks());
         return taskDAO.update(task);
