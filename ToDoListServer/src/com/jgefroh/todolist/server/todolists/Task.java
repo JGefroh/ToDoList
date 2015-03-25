@@ -129,11 +129,13 @@ public class Task {
         }
     }
     
-    public void updateTask(final String name, final String group, final List<String> tags, final Date timestampDue) {
+    public void updateTask(final String name, final String group, final List<String> tags, final Date timestampDue, final long totalTimeTracked) {
         setGroup(group);
         setName(name);
         setTags(tags);
         setTimestampDue(timestampDue);
+        bankTime();
+        setTotalTimeTracked(totalTimeTracked);
     }
     
     public void updateAsSubtask(final String name, final int priority) {
