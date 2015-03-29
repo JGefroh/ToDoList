@@ -31,7 +31,8 @@
         <span data-ng-if="inputCopy.description.length > 450"
               class="help-block">{{ inputCopy.description.length }} out of 500 characters used.</span>
     </div>
-    <div class="form-group">
+    <div data-ng-if="options.layout !== 'SUBTASK'"
+         class="form-group">
         <label>Due Date</label>
         <div data-date-input-field
              data-model="inputCopy.timestampDue"
@@ -46,7 +47,8 @@
                maxlength="7"
                class="form-control" />
     </div>
-    <div class="form-group">
+    <div data-ng-if="options.layout !== 'SUBTASK'"
+         class="form-group">
         <div class="row">
             <div class="col-xs-7">
                 <label>Tags</label>
@@ -76,7 +78,8 @@
             <span data-ng-bind="tag"></span>
         </span>
     </div>
-    <div class="form-group">
+    <div data-ng-if="options.layout !== 'SUBTASK'"
+         class="form-group">
         <div class="row">
             <div class="col-xs-7">
                 <label>Subtasks</label>

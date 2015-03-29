@@ -22,9 +22,9 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'group', label:'Group'}">Group</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCompleted', label:'Date Completed'}">Date Completed</a></li>
                         <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
+                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampDue', label:'Date Scheduled'}">Date Scheduled</a></li>
+                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCompleted', label:'Date Completed'}">Date Completed</a></li>
                         <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
                     </ul>
                 </div>
@@ -37,10 +37,18 @@
         </div>
     </div>
     <br/>
-    <div ng-repeat="task in completedCtrl.tasks | filter: { complete: true}  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
-        <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
-        <hr class="hr-small">
+    <div data-ng-repeat-start="group in completedCtrl.getUniqueGroups(completedCtrl.tasks)">
+        <h3 data-ng-bind="group ? group : 'Ungrouped'"
+            class="task-group task-group-heading"></h3>
     </div>
+    <div data-ng-repeat="task in completedCtrl.tasks | filter: { complete: true, group: group}:true  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
+        <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
+        <hr data-ng-if="!$last"
+            class="hr-small">
+        <div data-ng-if="$last"
+             class="task-group-separator"></div>
+    </div>
+    <div data-ng-repeat-end></div>
     <div class="row">
         <div class="col-xs-12">
             <h3 data-ng-if="completedCtrl.operations.getTasks.status === 'LOADING'"
