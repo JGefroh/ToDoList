@@ -93,5 +93,9 @@
             class="text-center">
             A server error occurred while loading tasks.
         </h3>
+        <h3 data-ng-if="remainingCtrl.operations.getTasks.status !== 'LOADING' && (remainingCtrl.tasks | filter: {complete: false}).length === 0"
+            class="text-center">
+            You have no tasks on your ToDoList.
+        </h3>
     </div>
 </div>
