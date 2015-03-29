@@ -46,6 +46,16 @@
             });
         };
 
+        vm.getUniqueGroups = function() {
+            vm.uniqueGroups = {};
+            var completedTasks = $filter('filter')(vm.tasks, {complete: false});
+            var filteredCompletedTasks = $filter('tagFilter')(completedTasks, vm.viewState.tagsToFilterBy);
+            angular.forEach(filteredCompletedTasks, function(task, index) {
+                vm.uniqueGroups[task.group] = task.group;
+            });
+            return vm.uniqueGroups;
+        };
+
         vm.addTaskOnEnterKeyPressed = function(taskFields, key) {
             if (key.which === ENTER_KEY_ID) {
                 vm.addTask(taskFields);
@@ -72,7 +82,15 @@
             });
         };
 
+        vm.showEditSubtask = function(task) {
+            showEdit(task, 'SUBTASK');
+        };
+
         vm.showEditTask = function(task) {
+            showEdit(task, 'FULL');
+        };
+
+        function showEdit(task, layout) {
             var modal = $modal.open(
                 {
                     templateUrl: '../modification/TaskModification.html',
@@ -84,7 +102,7 @@
                         },
                         options: function() {
                             return {
-                                layout: 'FULL'
+                                layout: layout
                             }
                         }
                     }
@@ -94,7 +112,7 @@
                 angular.copy(savedTask, task);
                 updateTags();
             });
-        };
+        }
 
         vm.markComplete = function (task) {
             task.readOnly = true;
@@ -205,7 +223,6 @@
 
         function resetInputFields(taskFields) {
             taskFields.name = null;
-            taskFields.group = null;
         }
 
         function initialize() {

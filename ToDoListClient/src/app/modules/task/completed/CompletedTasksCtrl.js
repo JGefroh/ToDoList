@@ -31,6 +31,16 @@
             });
         };
 
+        vm.getUniqueGroups = function() {
+            vm.uniqueGroups = {};
+            var completedTasks = $filter('filter')(vm.tasks, {complete: true});
+            var filteredCompletedTasks = $filter('tagFilter')(completedTasks, vm.viewState.tagsToFilterBy);
+            angular.forEach(filteredCompletedTasks, function(task, index) {
+                vm.uniqueGroups[task.group] = task.group;
+            });
+            return vm.uniqueGroups;
+        };
+
         vm.deleteTask = function(task) {
             task.readOnly = true;
             vm.operations.deleteTask.tasks[task.id] = {
