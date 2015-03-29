@@ -48,7 +48,9 @@
 
         vm.getUniqueGroups = function() {
             vm.uniqueGroups = {};
-            angular.forEach($filter('filter')(vm.tasks, {complete: false}), function(task, index) {
+            var completedTasks = $filter('filter')(vm.tasks, {complete: false});
+            var filteredCompletedTasks = $filter('tagFilter')(completedTasks, vm.viewState.tagsToFilterBy);
+            angular.forEach(filteredCompletedTasks, function(task, index) {
                 vm.uniqueGroups[task.group] = task.group;
             });
             return vm.uniqueGroups;
@@ -213,7 +215,6 @@
 
         function resetInputFields(taskFields) {
             taskFields.name = null;
-            taskFields.group = null;
         }
 
         function initialize() {

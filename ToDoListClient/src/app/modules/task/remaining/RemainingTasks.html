@@ -57,8 +57,8 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
-                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'group', label:'Group'}">Group</a></li>
                         <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
+                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampDue', label:'Date Scheduled'}">Date Scheduled</a></li>
                         <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
                     </ul>
                 </div>
@@ -73,7 +73,7 @@
     <br/>
     <div data-ng-repeat-start="group in remainingCtrl.getUniqueGroups(remainingCtrl.tasks)">
         <h3 data-ng-bind="group ? group : 'Ungrouped'"
-            class="task-group-heading"></h3>
+            class="task-group task-group-heading"></h3>
     </div>
     <div ng-repeat="task in remainingCtrl.tasks | filter: {complete: false, group: group}  | tagFilter:remainingCtrl.viewState.tagsToFilterBy | orderBy:remainingCtrl.viewState.sortField.value:!remainingCtrl.viewState.isAscending">
         <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
