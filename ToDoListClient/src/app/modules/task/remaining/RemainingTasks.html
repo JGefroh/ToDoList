@@ -71,10 +71,18 @@
         </div>
     </div>
     <br/>
-    <div ng-repeat="task in remainingCtrl.tasks | filter: { complete: false}  | tagFilter:remainingCtrl.viewState.tagsToFilterBy | orderBy:remainingCtrl.viewState.sortField.value:!remainingCtrl.viewState.isAscending">
-        <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
-        <hr class="hr-small">
+    <div data-ng-repeat-start="group in remainingCtrl.getUniqueGroups(remainingCtrl.tasks)">
+        <h3 data-ng-bind="group ? group : 'Ungrouped'"
+            class="task-group-heading"></h3>
     </div>
+    <div ng-repeat="task in remainingCtrl.tasks | filter: {complete: false, group: group}  | tagFilter:remainingCtrl.viewState.tagsToFilterBy | orderBy:remainingCtrl.viewState.sortField.value:!remainingCtrl.viewState.isAscending">
+        <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
+        <hr data-ng-if="!$last"
+            class="hr-small">
+        <div data-ng-if="$last"
+             class="task-group-separator"></div>
+    </div>
+    <div data-ng-repeat-end></div>
 
     <div class="row">
         <h3 data-ng-if="remainingCtrl.operations.getTasks.status === 'LOADING'"

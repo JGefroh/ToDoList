@@ -4,6 +4,7 @@ html {
 
 body {
     padding-top: 70px;
+    margin-bottom: 2em;
 }
 
 
@@ -53,6 +54,15 @@ body {
     word-break: break-all;
 }
 
+.task-group-heading {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    border-bottom: 1px black solid;
+}
+
+.task-group-separator {
+    margin-bottom: 1.5em;
+}
 
 .hr-small {
     margin-top: 8px;

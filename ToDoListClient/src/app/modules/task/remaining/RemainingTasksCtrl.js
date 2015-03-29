@@ -46,6 +46,14 @@
             });
         };
 
+        vm.getUniqueGroups = function() {
+            vm.uniqueGroups = {};
+            angular.forEach($filter('filter')(vm.tasks, {complete: false}), function(task, index) {
+                vm.uniqueGroups[task.group] = task.group;
+            });
+            return vm.uniqueGroups;
+        };
+
         vm.addTaskOnEnterKeyPressed = function(taskFields, key) {
             if (key.which === ENTER_KEY_ID) {
                 vm.addTask(taskFields);
