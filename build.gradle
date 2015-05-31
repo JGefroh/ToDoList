@@ -47,7 +47,7 @@ task gruntProd(type:Exec) {
     workingDir applicationName + 'Client'
     doFirst {
         println '\nRunning task gruntProd...'
-        commandLine 'cmd', '/c', 'grunt prod'
+        commandLine 'cmd', '/c', 'grunt clean prod'
     }
     doLast {
         println '\n...gruntProd finished.'
