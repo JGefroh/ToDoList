@@ -1,10 +1,48 @@
-html {
-    overflow-y: scroll;
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+
+.navbar {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.navbar .navbar-header .navbar-toggle .icon-bar {
+    color: #DDD;
+}
+.navbar-default .navbar-brand, .navbar-default .navbar-nav li a, .navbar-default .navbar-text {
+    color: #DDD;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-nav li a:hover, .navbar-text a:hover {
+    color: black;
+    background-color: #DDD;
+}
+.navbar-default .navbar-brand, .navbar-default .navbar-nav li a, .navbar-default .navbar-text a {
+    color: #DDD;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-nav li a:hover {
+    color: black;
+    background-color: #DDD;
+}
+
+.splash-jumbotron h1, .splash-jumbotron h3 {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5em;
+}
+
+.splash-jumbotron {
+    background-image: url('../images/person-time.jpg');
+    background-size: cover;
+    background-position: bottom;
+}
+
+.splash-description {
+    font-size: 1.2em;
 }
 
 body {
-    padding-top: 70px;
+    /*padding-top: 50px;*/
     margin-bottom: 2em;
+    font-family: 'Open Sans', sans-serif;
 }
 
 

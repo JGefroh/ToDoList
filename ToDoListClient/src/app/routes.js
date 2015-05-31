@@ -5,7 +5,10 @@
                 url: '/splash/:userID',
                 templateUrl: 'modules/splash/Splash.html',
                 controller: 'SplashCtrl',
-                controllerAs: 'splashCtrl'
+                controllerAs: 'splashCtrl',
+                data: {
+                    isHidingAlerts: true
+                }
             })
             .state('remaining', {
                 url: '/remaining/:userID',

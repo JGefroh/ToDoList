@@ -21,4 +21,17 @@ angular
 angular
     .module('ToDoList')
     .constant('applicationName', 'ToDoList')
-    .constant('versionNumber', 'v2.1.7');
+    .constant('versionNumber', 'v2.1.8');
+
+angular
+    .module('ToDoList')
+    .controller('AppCtrl', ['$state', function($state) {
+        var vm = this;
+
+        vm.isHidingAlerts = function() {
+            if ($state.current.data) {
+                return $state.current.data.isHidingAlerts;
+            }
+            return false;
+        }
+    }]);
