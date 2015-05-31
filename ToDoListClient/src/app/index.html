@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html data-ng-app="ToDoList" manifest="jg_todolist.appcache">
+<html data-ng-app="ToDoList" data-ng-controller="AppCtrl as appCtrl"
+      manifest="jg_todolist.appcache">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +32,10 @@
             <div data-ng-include src="'modules/navigation/NavigationView.html'"></div>
         </div>
         <div class="container">
-            <div data-alert-panel class="alertPanel"></div>
+            <div data-alert-panel
+                 data-ng-if="!appCtrl.isHidingAlerts()"
+                 class="alertPanel"
+                 style="margin-top: 5em;"></div>
         </div>
         <div data-ui-view></div>
     </body>

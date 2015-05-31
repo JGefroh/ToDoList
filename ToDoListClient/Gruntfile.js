@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     var appName = 'ToDoList';
     var prodPath = '../ToDoListServer/WebContent';
     grunt.initConfig({
@@ -13,7 +13,7 @@ module.exports = function(grunt) {
                 ],
                 dest: 'grunt_temp/' + appName + '_UNCAT.js',
                 options: {
-                    process: function(src, filePath) {
+                    process: function (src, filePath) {
                         if (filePath.indexOf("routes.js") > -1) {
                             return src;
                         }
@@ -41,38 +41,100 @@ module.exports = function(grunt) {
             },
             dev: {
                 src: 'grunt_temp/' + appName + '_UNCAT.js',
-                dest: 'src/app/' + appName + '.min.js',
+                dest: 'prod_dist/app/' + appName + '.min.js',
                 options: {
-                    mangle:false,
+                    mangle: false,
                     beautify: true
                 }
             }
         },
         copy: {
-            prod: {
+            minified_to_src: {
+                files: [
+                    {expand: true, cwd: 'prod_dist/', src: ['app/ToDoList.min.js'], dest: 'src/'}
+                ]
+            },
+            from_src_to_prod_dist: {
                 files: [
                     {expand: true, cwd: 'src/', src: ['app/**/*.html'], dest: 'prod_dist/'},
-                    {expand: true, cwd: 'src/', src: ['app/resources/**/*'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src/', src: ['app/**/*.css'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src/', src: ['app/test_data/*.json'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src/', src: ['app/resources/**/*'], dest: 'prod_dist/'}
+                ]
+            },
+            from_prod_dist_to_server: {
+                files: [
                     {expand: true, cwd: 'prod_dist/', src: ['**/*'], dest: prodPath}
                 ]
             }
         },
         watch: {
             scripts: {
-                files: ['src/app/**/*.js', '!**/*.min.js', 'src/app/**/*.css', 'src/app/**/*.html'],
-                tasks: ['prod']
+                files: ['src/app/**/*.js', '!**/*.min.js', 'src/app/**/*.html', 'src/app/**/*.css', 'src/app/**/*.json'],
+                tasks: ['dev'],
+                options: {
+                    livereload: true
+                }
+            }
+        },
+        clean: {
+            options: {
+                'no-write': false,
+                force: true
+
+            },
+            prod: ['prod_dist/**/*', 'grunt_temp/**/*', prodPath + '/app']
+        },
+        connect: {
+            server: {
+                options: {
+                    port: 9999,
+                    hostname: 'localhost',
+                    base: 'src/app/',
+                    keepalive: false,
+                    open: true,
+                    livereload: true,
+                    middleware: function (connect, options) {
+                        var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+                        return [
+                            // Include the proxy first
+                            proxy,
+                            // Serve static files.
+                            connect.static('src/app'),
+                            // Make empty directories browsable.
+                            connect.directory('src/app')
+                        ];
+                    }
+                },
+                proxies: [
+                    {
+                        context: '/rest',
+                        host: 'localhost',
+                        port: 8080,
+                        rewrite: {
+                            '^': '/ToDoListServer'
+                        }
+                    }
+                ]
             }
         }
     });
 
-    grunt.event.on('watch', function(action, filepath, target) {
+    grunt.event.on('watch', function (action, filepath, target) {
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
+    grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-war');
+    grunt.loadNpmTasks('grunt-contrib-connect'); //test
+    grunt.loadNpmTasks('grunt-connect-proxy');
     grunt.registerTask('default', 'dev');
-    grunt.registerTask('prod', ['concat', 'uglify:prod', 'copy:prod']);
-    grunt.registerTask('dev', ['concat', 'uglify:dev']);
+    grunt.registerTask('prod', ['clean:prod', 'concat', 'uglify:prod', 'copy:from_src_to_prod_dist', 'copy:from_prod_dist_to_server']);
+    grunt.registerTask('dev', ['concat', 'uglify:dev', 'copy:minified_to_src']);
+    grunt.registerTask('server', ['clean', 'configureProxies:server', 'connect:server', 'watch']);
 };
