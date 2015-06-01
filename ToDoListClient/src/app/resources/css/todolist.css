@@ -12,20 +12,17 @@
     color: #DDD;
 }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav li a:hover, .navbar-text a:hover {
-    color: black;
-    background-color: #DDD;
+    color: red;
+    transition: 0.3s all;
 }
 .navbar-default .navbar-brand, .navbar-default .navbar-nav li a, .navbar-default .navbar-text a {
     color: #DDD;
-}
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-nav li a:hover {
-    color: black;
-    background-color: #DDD;
+    transition: 0.3s all;
 }
 
 .splash-jumbotron h1, .splash-jumbotron h3 {
     background-color: rgba(0, 0, 0, 0.6);
-    color: white;
+    color: #DDD;
     padding: 0.5em;
 }
 
@@ -35,13 +32,32 @@
     background-position: bottom;
 }
 
+.splash-jumbotron button {
+    background-color: rgba(0,0,0,0.6);
+    color: #DDD;
+}
+
+.splash-jumbotron button:hover {
+    background-color: #DDD;
+    color: black;
+    transition: all 0.3s;
+}
+.splash-jumbotron input {
+    background-color: rgba(0,0,0,0.6);
+    color: #DDD;
+}
+
+.splash-jumbotron input:hover {
+    transition: all 0.3s;
+}
+
+
 .splash-description {
     font-size: 1.2em;
 }
 
 body {
     /*padding-top: 50px;*/
-    margin-bottom: 2em;
     font-family: 'Open Sans', sans-serif;
 }
 
