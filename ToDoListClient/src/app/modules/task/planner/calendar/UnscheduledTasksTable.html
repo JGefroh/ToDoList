@@ -5,15 +5,12 @@
     <tr data-ng-repeat="task in calendarCtrl.unscheduledTasks = (calendarCtrl.tasks | filter:calendarCtrl.isUnscheduledTask | tagFilter:calendarCtrl.viewState.tagsToFilterBy )">
         <td data-ng-class="{'success': task.complete, 'warning' : !task.complete}">
             <div class="pull-right">
-                <button class="btn btn-xs btn-link icon-button"
+                <button class="btn btn-default btn-xs btn-primary-outline"
                         data-ng-click="calendarCtrl.showEditTask(task)"
                         data-ng-disabled="task.readOnly"
                         data-ng-if="!task.complete"
                         title="Edit the details of this task.">
-                            <span class="fa-stack">
-                                <span class="fa fa-circle fa-stack-2x"></span>
-                                <span class="fa fa-pencil fa-stack-1x fa-inverse"></span>
-                            </span>
+                        <span class="fa fa-pencil"></span>
                 </button>
             </div>
             <br/>
