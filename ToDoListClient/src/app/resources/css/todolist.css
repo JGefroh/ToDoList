@@ -71,6 +71,43 @@ body {
 .icon-button {
     padding: 0;
 }
+
+.btn-success-outline {
+    border-color: #449D44;
+    color: #449D44;
+    transition: all 0.2s;
+}
+
+.btn-success-outline:hover {
+    border-color: white;
+    color: white;
+    background-color: #449D44;
+    transition: all 0.2s;
+}
+
+.btn-primary-outline {
+    border-color: #2A6496;
+    color: #2A6496;
+}
+
+.btn-primary-outline:hover {
+    border-color: white;
+    color: white;
+    background-color: #2A6496;
+    transition: all 0.2s;
+}
+
+.btn-stop:hover {
+    border-color: white;
+    color: white;
+    background-color: #449D44;
+    transition: all 0.2s;
+}
+
+
+.btn-edit {
+}
+
 .complete-button {
     color: #5CB85C;
 }
@@ -87,6 +124,9 @@ body {
 .task-tag {
     margin-top: 0.5em;
     margin-right: 0.5em;
+    color: gray;
+    background-color: white;
+    border: 1px gray solid;
 }
 
 .task-tag button {
@@ -95,7 +135,9 @@ body {
 .task-tag-inactive {
 }
 .task-tag-active {
-    background-color: red;
+    background-color: #D58512;
+    border-color: white;
+    color: white;
 }
 
 .task-name {

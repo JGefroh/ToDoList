@@ -221,6 +221,11 @@
             return $sce.trustAsHtml(text);
         };
 
+        vm.removeFilters = function() {
+            vm.viewState.tagsToFilterBy = [];
+            vm.viewState.filter = '';
+        };
+
         function resetInputFields(taskFields) {
             taskFields.name = null;
         }
