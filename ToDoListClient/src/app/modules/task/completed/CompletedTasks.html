@@ -4,51 +4,29 @@
             <h3>Completed Tasks<span class="small"> - tasks that you have completed.</span></h3>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <label>Tags: </label>
-            <div data-tag-display
-                 data-tags="completedCtrl.usedTags"
-                 data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="pull-right">
-                <div class="btn-group">
-                    <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ completedCtrl.viewState.sortField.label }}</button>
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
-                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampDue', label:'Date Scheduled'}">Date Scheduled</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCompleted', label:'Date Completed'}">Date Completed</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
-                    </ul>
-                </div>
-                <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending"
-                        class="btn btn-default">
-                    <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                    <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
-                </button>
+    <div data-ng-if="completedCtrl.operations.getTasks.status !== 'LOADING'">
+        <div class="row">
+            <div class="col-xs-12">
+                <label>Tags <span class="small"> - Select to filter by specific tags</span></label>
+                <div data-tag-display
+                     data-tags="completedCtrl.usedTags"
+                     data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
             </div>
         </div>
+        <br/>
+        <div data-ng-repeat-start="group in completedCtrl.getUniqueGroups(completedCtrl.tasks)">
+            <h3 data-ng-bind="group ? group : 'Ungrouped'"
+                class="task-group task-group-heading"></h3>
+        </div>
+        <div data-ng-repeat="task in completedCtrl.tasks | filter: { complete: true, group: group}:true  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
+            <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
+            <hr data-ng-if="!$last"
+                class="hr-small">
+            <div data-ng-if="$last"
+                 class="task-group-separator"></div>
+        </div>
+        <div data-ng-repeat-end></div>
     </div>
-    <br/>
-    <div data-ng-repeat-start="group in completedCtrl.getUniqueGroups(completedCtrl.tasks)">
-        <h3 data-ng-bind="group ? group : 'Ungrouped'"
-            class="task-group task-group-heading"></h3>
-    </div>
-    <div data-ng-repeat="task in completedCtrl.tasks | filter: { complete: true, group: group}:true  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
-        <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
-        <hr data-ng-if="!$last"
-            class="hr-small">
-        <div data-ng-if="$last"
-             class="task-group-separator"></div>
-    </div>
-    <div data-ng-repeat-end></div>
     <div class="row">
         <div class="col-xs-12">
             <h3 data-ng-if="completedCtrl.operations.getTasks.status === 'LOADING'"

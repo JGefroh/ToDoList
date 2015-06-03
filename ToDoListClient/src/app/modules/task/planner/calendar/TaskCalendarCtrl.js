@@ -124,7 +124,15 @@
             });
         };
 
+        vm.showEditSubtask = function(task) {
+            showEdit(task, 'SUBTASK');
+        };
+
         vm.showEditTask = function(task) {
+            showEdit(task, 'FULL');
+        };
+
+        function showEdit(task, layout) {
             var modal = $modal.open(
                 {
                     templateUrl: '../../modification/TaskModification.html',
@@ -136,7 +144,7 @@
                         },
                         options: function() {
                             return {
-                                layout: 'SCHEDULE'
+                                layout: layout
                             }
                         }
                     }
@@ -152,7 +160,7 @@
                 angular.copy(savedTask, task);
                 updateTags();
             });
-        };
+        }
 
 
         vm.isToday = function(date) {

@@ -4,3 +4,4 @@ src/app/modules/**/*.min.js
 src/app/app.min.js
 node_modules
 grunt_temp
+ToDoList.min.js

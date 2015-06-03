@@ -5,18 +5,15 @@
     function ViewState() {
         return {
             remainingTaskViewState: {
-                isAscending: null,
-                sortField: null,
                 isShowingMinutes: null,
                 tagsToFilterBy: [],
                 input: {
                     name: null,
                     group: null
-                }
+                },
+                filter: ''
             },
             completedTaskViewState: {
-                isAscending: null,
-                sortField: null,
                 isShowingMinutes: null,
                 tagsToFilterBy: []
             },

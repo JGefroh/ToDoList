@@ -14,7 +14,9 @@
             scope: {
                 model: '=',
                 config: '=',
-                isDisabled: '='
+                isDisabled: '=',
+                inputSizeClass: '@',
+                buttonSizeClass: '@'
             },
             templateUrl: 'DateInputField.html',
             controller: ['$scope', DateInputFieldController]

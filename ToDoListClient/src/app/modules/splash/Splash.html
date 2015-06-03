@@ -19,7 +19,7 @@
                 <br/>
                 <div class="row">
                     <div class="col-xs-12 text-center">
-                        <button class="btn btn-success btn-lg inline-button"
+                        <button class="btn btn-lg inline-button"
                                 data-ng-click="splashCtrl.goToRemaining();"
                                 title="Get started using the ID above.">
                             Get Started
@@ -32,64 +32,73 @@
 </div>
 <div class="container splash-description" >
     <div class="row">
-        <div class="col-xs-2">
+        <div class="col-xs-12 col-md-7">
             <a data-ng-href="#/remaining/{{splashCtrl.params.userID}}">
-                <h3 class="text-right">
-                    <span class="fa fa-list-ol fa-2x"></span>
+                <h3>
+                    <span class="fa fa-list-ol"></span>
+                    Tracking Made Easy
                 </h3>
             </a>
+            <p>You have things to do, people to see, places to be. ToDoList helps you keep track of all of it with simple but powerful tagging and grouping features. See how many features are left for your project's next milestone, or time how long it took you to finish that run.</p>
         </div>
-        <div class="col-xs-7">
-            <h3>Track Your Tasks</h3>
-            <p>You have things to do, people to see, places to be. ToDoList helps you keep track of all of it with simple but powerful tagging, grouping, and tracking features. See how many features are left for your project's next milestone, or time how long it took you to finish that run.</p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-2">
-            <a data-ng-href="#/planner/calendar/{{splashCtrl.params.userID}}">
-                <h3 class="text-right">
-                    <span class="fa fa-calendar fa-2x"></span>
-                </h3>
-            </a>
-        </div>
-        <div class="col-xs-7">
-            <h3>Plan and Schedule</h3>
-            <p>Sometimes you'll want to have a 10,000-foot view of your day, week, or month. With ToDoList's simple to use calendar feature, you can take that coffee break with Steve and still make it to your project's status meeting on time.</p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-2">
-            <a data-ng-href="#/statistics/{{splashCtrl.params.userID}}">
-                <h3 class="text-right">
-                    <span class="fa fa-bar-chart fa-2x"></span>
-                </h3>
-            </a>
-        </div>
-        <div class="col-xs-7">
-            <h3>Information is Power</h3>
-            <p>With automatic time tracking and relevant, useful statistics, ToDoList makes it easy to recall all of the things you accomplished, and how long it took. No more struggling to recall what to put on your invoices or timesheets.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-2">
-            <h3 class="text-right">
-                <span class="fa fa-bookmark fa-2x"></span>
-            </h3>
-        </div>
-        <div class="col-xs-7">
-            <h3>Bookmark to Save</h3>
-            <p>We get it - you want your list to be secure but easy to access. Simply bookmark your list and you can access it again at any time. By using a hard-to-guess ID, you can rest easy knowing your list is safe from prying eyes.</p>
+        <div class="col-xs-12 col-md-5">
+            <img class="img-thumbnail img-responsive"
+                 src="resources/images/tasks.jpg">
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="col-xs-offset-2 col-xs-7">
-            <blockquote>
-                <p>ToDoList is amazing! I've tried more than my share of productivity apps, but nothing comes close to this one. I use, and have come to rely on this app, every day!</p>
-                <footer>Casey Cho, Business Analyst at eWorld Enterprise Solutions</footer>
-            </blockquote>
+        <div class="col-xs-12 col-md-7">
+            <a data-ng-href="#/planner/calendar/{{splashCtrl.params.userID}}">
+                <h3>
+                    <span class="fa fa-calendar"></span>
+                    Plan and Schedule
+                </h3>
+            </a>
+            <p>Sometimes you'll want to have a 10,000-foot view of your day, week, or month. With ToDoList's simple to use calendar feature, you can take that coffee break with Steve and still make it to your project's status meeting on time.</p>
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <img class="img-thumbnail img-responsive"
+                 src="resources/images/calendar.jpg">
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12 col-md-7">
+            <a data-ng-href="#/statistics/{{splashCtrl.params.userID}}">
+                <h3>
+                    <span class="fa fa-bar-chart"></span>
+                    Information is Power
+                </h3>
+            </a>
+            <p>With automatic time tracking and relevant, useful statistics, ToDoList makes it easy to recall all of the things you accomplished, and how long it took. No more struggling to recall what to put on your invoices or timesheets.</p>
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <img class="img-thumbnail img-responsive"
+                 src="resources/images/stats.jpg">
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-12 col-md-7">
+            <h3>
+                <span class="fa fa-bookmark"></span>
+                Bookmark to Save
+            </h3>
+            <p>We get it - you want your list to be secure but easy to access. Simply bookmark your list and you can access it again at any time. By using a hard-to-guess ID, you can rest easy knowing your list is safe from prying eyes.</p>
+        </div>
+    </div>
+    <hr>
+</div>
+<div class="jumbotron" style="margin-bottom: 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-offset-2 col-md-8">
+                <blockquote>
+                    <p>ToDoList is amazing! I've tried more than my share of productivity apps, but nothing comes close to this one. I use, and have come to rely on this app, every day!</p>
+                    <footer>Casey Cho, Business Analyst at eWorld Enterprise Solutions</footer>
+                </blockquote>
+            </div>
         </div>
     </div>
 </div>

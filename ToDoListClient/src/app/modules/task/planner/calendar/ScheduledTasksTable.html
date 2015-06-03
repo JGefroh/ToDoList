@@ -19,41 +19,32 @@
                     <span data-ng-bind="task.timestampDue | date:'h:mm a'"
                           class="small"></span>
             <div class="pull-right">
-                <button class="btn btn-link btn-xs complete-button icon-button"
+                <button class="btn btn-default btn-xs btn-success-outline"
                         data-ng-click="calendarCtrl.markIncomplete(task)"
                         data-ng-disabled="task.readOnly"
                         data-ng-if="task.complete"
                         title="Mark this task as incompleted.">
-                            <span class="fa-stack">
-                                <span class="fa fa-circle fa-stack-2x"></span>
-                                <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status !== 'LOADING'"
-                                      class="fa fa-reply fa-stack-1x fa-inverse"></span>
-                                <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status === 'LOADING'"
-                                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
-                            </span>
+                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status !== 'LOADING'"
+                              class="fa fa-reply"></span>
+                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status === 'LOADING'"
+                              class="fa fa-spin fa-spinner"></span>
                 </button>
-                <button class="btn btn-xs btn-link complete-button icon-button"
+                <button class="btn btn-default btn-xs btn-success-outline"
                         data-ng-click="calendarCtrl.markComplete(task)"
                         data-ng-disabled="task.readOnly"
                         data-ng-if="!task.complete"
                         title="Mark this task as completed.">
-                            <span class="fa-stack">
-                                <span class="fa fa-circle fa-stack-2x"></span>
-                                <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status !== 'LOADING'"
-                                      class="fa fa-check fa-stack-1x fa-inverse"></span>
-                                <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status === 'LOADING'"
-                                      class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
-                            </span>
+                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status !== 'LOADING'"
+                              class="fa fa-check"></span>
+                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status === 'LOADING'"
+                              class="fa fa-spin fa-spinner"></span>
                 </button>
-                <button class="btn btn-xs btn-link icon-button"
+                <button class="btn btn-default btn-xs btn-primary-outline"
                         data-ng-click="calendarCtrl.showEditTask(task)"
                         data-ng-disabled="task.readOnly"
                         data-ng-if="!task.complete"
                         title="Edit the details of this task.">
-                            <span class="fa-stack">
-                                <span class="fa fa-circle fa-stack-2x"></span>
-                                <span class="fa fa-pencil fa-stack-1x fa-inverse"></span>
-                            </span>
+                        <span class="fa fa-pencil"></span>
                 </button>
             </div>
             <br/>
@@ -70,31 +61,32 @@
                     <table class="table table-condensed">
                         <tr data-ng-repeat="subtask in task.subtasks" data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">
                             <td>
-                                <button class="btn btn-link btn-xs complete-button icon-button"
+                                <button class="btn btn-default btn-xs btn-success-outline"
                                         data-ng-if="!subtask.complete"
                                         data-ng-click="calendarCtrl.markComplete(subtask)"
                                         data-ng-disabled="task.readOnly || subtask.readOnly"
                                         title="Mark this subtask as completed.">
-                                <span class="fa-stack">
-                                    <span class="fa fa-circle fa-stack-2x"></span>
-                                    <span data-ng-if="calendarCtrl.operations.markComplete.tasks[subtask.id].status !== 'LOADING'"
-                                          class="fa fa-check fa-stack-1x fa-inverse"></span>
-                                    <span data-ng-if="calendarCtrl.operations.markComplete.tasks[subtask.id].status === 'LOADING'"
-                                          class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
-                                </span>
+                                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[subtask.id].status !== 'LOADING'"
+                                              class="fa fa-check"></span>
+                                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[subtask.id].status === 'LOADING'"
+                                              class="fa fa-spin fa-spinner"></span>
                                 </button>
-                                <button class="btn btn-link btn-xs complete-button icon-button"
+                                <button class="btn btn-default btn-xs btn-success-outline"
                                         data-ng-if="subtask.complete"
                                         data-ng-click="calendarCtrl.markIncomplete(subtask)"
                                         data-ng-disabled="task.readOnly || subtask.readOnly"
                                         title="Mark this subtask as incomplete.">
-                                <span class="fa-stack">
-                                    <span class="fa fa-circle fa-stack-2x"></span>
-                                    <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[subtask.id].status !== 'LOADING'"
-                                          class="fa fa-reply fa-stack-1x fa-inverse"></span>
-                                    <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[subtask.id].status === 'LOADING'"
-                                          class="fa fa-spin fa-spinner fa-stack-1x fa-inverse"></span>
-                                </span>
+                                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[subtask.id].status !== 'LOADING'"
+                                              class="fa fa-reply"></span>
+                                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[subtask.id].status === 'LOADING'"
+                                              class="fa fa-spin fa-spinner"></span>
+                                </button>
+                                <button class="btn btn-default btn-xs btn-primary-outline"
+                                        data-ng-click="calendarCtrl.showEditSubtask(subtask)"
+                                        data-ng-disabled="task.readOnly || subtask.readOnly"
+                                        data-ng-if="!task.complete"
+                                        title="Edit the details of this task.">
+                                    <span class="fa fa-pencil"></span>
                                 </button>
                             </td>
                             <td class="col-xs-11">

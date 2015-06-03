@@ -4,85 +4,85 @@
             <h3>Remaining Tasks<span class="small"> - tasks that you have not yet completed.</span></h3>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12 col-md-5">
-            <div class="form-group">
-                <label>Task</label>
-                <input data-ng-model="remainingCtrl.viewState.input.name"
-                       data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
-                       data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
-                       class="form-control"
-                       placeholder="Enter your task name or description..."
-                       maxlength="500"/>
-            </div>
-        </div>
-        <div class="col-xs-10 col-md-3">
-            <div class="form-group">
-                <label>Group</label>
-                <input data-ng-model="remainingCtrl.viewState.input.group"
-                       data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
-                       data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
-                       class="form-control"
-                       placeholder="Enter a group name for this task..."
-                       maxlength="500"/>
-            </div>
-        </div>
-        <div class="col-xs-2">
-            <button class="btn btn-success inline-button"
-                    data-ng-click="remainingCtrl.addTask(remainingCtrl.viewState.input)"
-                    data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
-                    title="Add a new task to the To Do List."
-                    style="margin-top: 24px;">
-                <span data-ng-if="remainingCtrl.operations.addTask.status !== 'LOADING'" class="fa fa-plus"></span>
-                <span data-ng-if="remainingCtrl.operations.addTask.status === 'LOADING'" class="fa fa-spin fa-spinner"></span>
-                Add Task
-            </button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <label>Tags: </label>
-            <div data-tag-display
-                 data-tags="remainingCtrl.usedTags"
-                 data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="pull-right">
-                <div class="btn-group">
-                    <button data-ng-click="remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ remainingCtrl.viewState.sortField.label }}</button>
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
-                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
-                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampDue', label:'Date Scheduled'}">Date Scheduled</a></li>
-                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
-                    </ul>
+
+    <div data-ng-if="remainingCtrl.operations.getTasks.status !== 'LOADING'">
+        <div class="well">
+            <div class="row">
+                <div class="col-xs-12 col-md-5">
+                    <div class="form-group">
+                        <label>New Task</label>
+                        <input data-ng-model="remainingCtrl.viewState.input.name"
+                               data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
+                               data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
+                               class="form-control input-lg"
+                               maxlength="500"/>
+                    </div>
                 </div>
-                <button data-ng-click="remainingCtrl.viewState.isAscending = !remainingCtrl.viewState.isAscending"
-                        class="btn btn-default">
-                    <span ng-show="!remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                    <span ng-show="remainingCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
-                </button>
+                <div class="col-xs-12 col-md-3">
+                    <div class="form-group">
+                        <label>Grouping</label>
+                        <input data-ng-model="remainingCtrl.viewState.input.group"
+                               data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
+                               data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
+                               class="form-control input-lg"
+                               title="Use groups to organize tasks under categories."
+                               maxlength="500"/>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <button class="btn btn-default btn-success-outline inline-button btn-lg"
+                            data-ng-click="remainingCtrl.addTask(remainingCtrl.viewState.input)"
+                            data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
+                            title="Add a new task to the To Do List."
+                            style="margin-top: 24px;">
+                        <span data-ng-if="remainingCtrl.operations.addTask.status !== 'LOADING'" class="fa fa-plus"></span>
+                        <span data-ng-if="remainingCtrl.operations.addTask.status === 'LOADING'" class="fa fa-spin fa-spinner"></span>
+                        Add Task
+                    </button>
+                </div>
             </div>
         </div>
+
+
+        <div class="row">
+            <hr>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8">
+                <label>Tags <span class="small"> - Select to filter by specific tags</span></label>
+                <div data-tag-display
+                     data-tags="remainingCtrl.usedTags"
+                     data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"></div>
+                <br/>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <label>Filter</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="fa fa-filter"></span></span>
+                    <input data-ng-model="remainingCtrl.viewState.filter"
+                           class="form-control"
+                           maxlength="500"/>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div data-ng-repeat-start="group in remainingCtrl.getUniqueGroups()"
+             data-ng-if="(remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy).length !== 0">
+            <h3 data-ng-bind="group ? group : 'Ungrouped'"
+                class="task-group task-group-heading"></h3>
+        </div>
+        <div ng-repeat="task in (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy) track by task.id">
+            <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
+            <hr data-ng-if="!$last"
+                class="hr-small">
+            <div data-ng-if="$last"
+                 class="task-group-separator"></div>
+        </div>
+        <div data-ng-repeat-end></div>
     </div>
-    <br/>
-    <div data-ng-repeat-start="group in remainingCtrl.getUniqueGroups()">
-        <h3 data-ng-bind="group ? group : 'Ungrouped'"
-            class="task-group task-group-heading"></h3>
-    </div>
-    <div ng-repeat="task in remainingCtrl.tasks | filter: {complete: false, group: group}:true  | tagFilter:remainingCtrl.viewState.tagsToFilterBy | orderBy:remainingCtrl.viewState.sortField.value:!remainingCtrl.viewState.isAscending">
-        <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
-        <hr data-ng-if="!$last"
-            class="hr-small">
-        <div data-ng-if="$last"
-             class="task-group-separator"></div>
-    </div>
-    <div data-ng-repeat-end></div>
+
 
     <div class="row">
         <h3 data-ng-if="remainingCtrl.operations.getTasks.status === 'LOADING'"
@@ -96,6 +96,15 @@
         <h3 data-ng-if="remainingCtrl.operations.getTasks.status !== 'LOADING' && (remainingCtrl.tasks | filter: {complete: false}).length === 0"
             class="text-center">
             You have no tasks on your ToDoList.
+        </h3>
+        <h3 data-ng-if="remainingCtrl.operations.getTasks.status !== 'LOADING'
+                        && (remainingCtrl.tasks | filter: {complete: false}).length !== 0
+                        && (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy).length === 0"
+            class="text-center">
+            There are no tasks that match your active filters.
+            <br/>
+            <button data-ng-click="remainingCtrl.removeFilters()"
+                    class="btn btn-link">Remove filters</button>
         </h3>
     </div>
 </div>
