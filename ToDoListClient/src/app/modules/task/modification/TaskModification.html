@@ -85,6 +85,7 @@
                 <label>Subtasks</label>
                 <input data-ng-model="form.subtaskName"
                        data-ng-disabled="operations.editTask.status === 'LOADING'"
+                       data-ng-keypress="addSubtaskOnEnterKeyPressed(form.subtaskName, $event)"
                        placeholder="Enter a subtask name..."
                        class="form-control"
                        maxlength="500">

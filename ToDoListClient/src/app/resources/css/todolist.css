@@ -130,8 +130,9 @@ body {
 }
 
 .task-tag button {
-    color: white;
+    color: gray;
 }
+
 .task-tag-inactive {
 }
 .task-tag-active {
