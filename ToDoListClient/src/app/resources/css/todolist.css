@@ -97,6 +97,18 @@ body {
     transition: all 0.2s;
 }
 
+.btn-danger-outline {
+    border-color: #AC2925;
+    color: #AC2925;
+}
+
+.btn-danger-outline:hover {
+    border-color: white;
+    color: white;
+    background-color: #AC2925;
+    transition: all 0.2s;
+}
+
 .btn-stop:hover {
     border-color: white;
     color: white;

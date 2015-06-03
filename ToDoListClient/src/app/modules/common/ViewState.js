@@ -14,8 +14,6 @@
                 filter: ''
             },
             completedTaskViewState: {
-                isAscending: null,
-                sortField: null,
                 isShowingMinutes: null,
                 tagsToFilterBy: []
             },

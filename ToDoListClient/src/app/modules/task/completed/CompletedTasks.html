@@ -6,34 +6,10 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <label>Tags: </label>
+            <label>Tags <span class="small"> - Select to filter by specific tags</span></label>
             <div data-tag-display
                  data-tags="completedCtrl.usedTags"
                  data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="pull-right">
-                <div class="btn-group">
-                    <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending" class="btn btn-default">Sort by: {{ completedCtrl.viewState.sortField.label }}</button>
-                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'name', label:'Task'}">Task</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCreated', label:'Date Added'}">Date Added</a></li>
-                        <li><a class="btn btn-link" data-ng-click="remainingCtrl.viewState.sortField = {value:'timestampDue', label:'Date Scheduled'}">Date Scheduled</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'timestampCompleted', label:'Date Completed'}">Date Completed</a></li>
-                        <li><a class="btn btn-link" data-ng-click="completedCtrl.viewState.sortField = {value:'totalTimeTracked', label:'Total Time Tracked'}">Total Time Tracked</a></li>
-                    </ul>
-                </div>
-                <button data-ng-click="completedCtrl.viewState.isAscending = !completedCtrl.viewState.isAscending"
-                        class="btn btn-default">
-                    <span ng-show="!completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-down"></span>
-                    <span ng-show="completedCtrl.viewState.isAscending" class="glyphicon glyphicon-chevron-up"></span>
-                </button>
-            </div>
         </div>
     </div>
     <br/>
