@@ -45,38 +45,9 @@
                       data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
-        <div data-ng-if="task.subtasks"
-             class="row">
-            <div class="col-xs-12">
-                <h5>
-                    Subtasks
-                </h5>
-            </div>
-            <div class="col-xs-12">
-                <table class="table table-condensed">
-                    <tr data-ng-repeat="subtask in task.subtasks">
-                        <td>
-                            <button data-complete-button
-                                    data-task="subtask"
-                                    data-icon-only="true"
-                                    data-ng-disabled="task.readOnly"></button>
-                        </td>
-                        <td>
-                            <button data-edit-button
-                                    data-task="task"
-                                    data-icon-only="true"
-                                    data-layout="SUBTASK"
-                                    data-ng-disabled="task.readOnly"></button>
-                        </td>
-                        <td class="col-xs-11"
-                            data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">
-                            <span data-ng-bind="subtask.name"
-                                  data-ng-class="{'task-highlighted':task.tracking}"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        <div data-subtasks
+             data-tasks="task.subtasks"
+             data-ng-disabled="task.readOnly"></div>
         <div data-tag-display
              data-tags="task.tags"
              data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"></div>

@@ -1,0 +1,32 @@
+<div data-ng-if="tasks"
+     class="row">
+    <div class="col-xs-12">
+        <h5>
+            Subtasks
+        </h5>
+    </div>
+    <div class="col-xs-12">
+        <table class="table table-condensed">
+            <tr data-ng-repeat="subtask in tasks">
+                <td data-ng-if="!hideButtons">
+                    <button data-complete-button
+                            data-task="subtask"
+                            data-icon-only="true"
+                            data-ng-disabled="disabled"></button>
+                </td>
+                <td data-ng-if="!hideButtons">
+                    <button data-edit-button
+                            data-task="subtask"
+                            data-icon-only="true"
+                            data-layout="SUBTASK"
+                            data-ng-disabled="disabled"></button>
+                </td>
+                <td class="col-xs-11"
+                    data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">
+                            <span data-ng-bind="subtask.name"
+                                  data-ng-class="{'task-highlighted':task.tracking}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

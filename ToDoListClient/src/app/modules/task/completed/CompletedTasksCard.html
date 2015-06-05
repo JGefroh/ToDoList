@@ -32,23 +32,10 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
-        <div data-ng-if="task.subtasks"
-             class="row">
-            <div class="col-xs-12">
-                <h5>
-                    Subtasks
-                </h5>
-            </div>
-            <div class="col-xs-12">
-                <table class="table table-condensed">
-                    <tr data-ng-repeat="subtask in task.subtasks">
-                        <td class="col-xs-12">
-                            <span data-ng-bind="subtask.name"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        <div data-subtasks
+             data-tasks="task.subtasks"
+             data-hide-buttons="true"
+             data-ng-disabled="task.readOnly"></div>
         <div data-tag-display
              data-tags="task.tags"
              data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
