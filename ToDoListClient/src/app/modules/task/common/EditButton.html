@@ -1,9 +1,11 @@
-<button class="btn btn-default btn-block btn-primary-outline"
-        data-ng-click="buttonCtrl.showEdit(task, layout)"
-        data-ng-disabled="task.readOnly"
-        data-ng-class="size"
-        title="Edit the details of this task.">
-    <span class="fa fa-pencil"></span>
+<div>
+    <button class="btn btn-default btn-block btn-primary-outline"
+            data-ng-click="buttonCtrl.showEdit(task, layout)"
+            data-ng-class="size"
+            data-ng-disabled="task.readOnly || disabled"
+            title="Edit the details of this task.">
+        <span class="fa fa-pencil"></span>
     <span class="hidden-xs"
           data-ng-if="!iconOnly">Edit</span>
-</button>
+    </button>
+</div>

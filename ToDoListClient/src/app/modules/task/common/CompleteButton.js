@@ -65,7 +65,8 @@
             replace: true,
             scope: {
                 task: '=',
-                iconOnly: '=?'
+                iconOnly: '=?',
+                disabled: '=ngDisabled'
             },
             templateUrl: 'CompleteButton.html',
             controller: ['$scope', '$filter',

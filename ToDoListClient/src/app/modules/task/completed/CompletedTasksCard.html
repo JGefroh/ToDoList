@@ -1,6 +1,12 @@
 <div class="row">
     <div class="col-xs-3 col-md-2">
-        <div data-ng-include data-src="'modules/task/completed/CompletedTasksActions.html'"></div>
+        <div class="text-center">
+            <button data-complete-button
+                    data-task="task"></button>
+            <button data-delete-button
+                    data-task="task"
+                    data-size="btn-xs"></button>
+        </div>
     </div>
     <div class="col-xs-9 col-md-10">
         <div class="row">

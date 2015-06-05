@@ -1,6 +1,15 @@
 <div class="row">
     <div class="col-xs-3 col-md-2">
-        <div data-ng-include data-src="'modules/task/remaining/RemainingTasksActions.html'"></div>
+        <div class="text-center">
+            <button data-complete-button
+                    data-task="task"></button>
+            <button data-timer-button
+                    data-task="task"></button>
+            <button data-edit-button
+                    data-task="task"
+                    data-layout="FULL"
+                    data-size="btn-xs"></button>
+        </div>
     </div>
     <div class="col-xs-9 col-md-10">
         <div class="row">
@@ -49,13 +58,15 @@
                         <td>
                             <button data-complete-button
                                     data-task="subtask"
-                                    data-icon-only="true"></button>
+                                    data-icon-only="true"
+                                    data-ng-disabled="task.readOnly"></button>
                         </td>
                         <td>
                             <button data-edit-button
                                     data-task="task"
                                     data-icon-only="true"
-                                    data-layout="SUBTASK"></button>
+                                    data-layout="SUBTASK"
+                                    data-ng-disabled="task.readOnly"></button>
                         </td>
                         <td class="col-xs-11"
                             data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">

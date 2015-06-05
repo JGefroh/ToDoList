@@ -36,7 +36,8 @@
                 task: '=',
                 layout: '@',
                 iconOnly: '=?',
-                size: '@'
+                size: '@',
+                disabled: '=ngDisabled'
             },
             templateUrl: 'EditButton.html',
             controller: ['$scope', '$modal', EditButtonDirectiveCtrl],
