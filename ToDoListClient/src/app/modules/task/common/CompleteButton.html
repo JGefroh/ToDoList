@@ -1,0 +1,27 @@
+<div>
+    <button class="btn btn-default btn-block btn-success-outline"
+            style="overflow:hidden;"
+            data-ng-if="!task.complete"
+            data-ng-click="buttonCtrl.markComplete(task)"
+            data-ng-disabled="task.readOnly"
+            title="Mark this task as completed.">
+            <span data-ng-if="buttonCtrl.operations.markComplete.status !== 'LOADING'"
+                  class="fa fa-check"></span>
+            <span data-ng-if="buttonCtrl.operations.markComplete.status === 'LOADING'"
+                  class="fa fa-spin fa-spinner"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Mark Complete</span>
+    </button>
+    <button class="btn btn-default btn-block btn-success-outline"
+            data-ng-if="task.complete"
+            data-ng-click="buttonCtrl.markIncomplete(task)"
+            data-ng-disabled="task.readOnly"
+            title="Mark this task as incompleted.">
+            <span data-ng-if="buttonCtrl.operations.markIncomplete.status !== 'LOADING'"
+                  class="fa fa-reply"></span>
+            <span data-ng-if="buttonCtrl.operations.markIncomplete.status === 'LOADING'"
+                  class="fa fa-spin fa-spinner"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Mark Incomplete</span>
+    </button>
+</div>

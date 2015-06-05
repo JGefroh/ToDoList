@@ -114,31 +114,6 @@
             });
         }
 
-        vm.markComplete = function (task) {
-            task.readOnly = true;
-            vm.operations.markComplete.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.markComplete(UserService.user.id, task.id).then(function(completedTask) {
-                delete vm.operations.markComplete.tasks[task.id];
-                angular.copy(completedTask, task);
-                if (task.name != null) {
-                    AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as complete.', 2000);
-                }
-                else {
-                    AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as complete.', 2000);
-                }
-                updateTags();
-            })
-            .catch(function() {
-                vm.operations.markComplete.tasks[task.id].status = 'ERROR';
-                console.error("An error occurred while completing task.");
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
         vm.markIncomplete = function (task) {
             task.readOnly = true;
             vm.operations.markIncomplete.tasks[task.id] = {
@@ -183,39 +158,6 @@
             vm.viewState.tagsToFilterBy = tagsToKeep;
         }
 
-        vm.startTrackingTask = function (task) {
-            task.readOnly = true;
-            vm.operations.trackingUntracking.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.trackTask(UserService.user.id, task.id).then(function(trackedTask) {
-                delete vm.operations.trackingUntracking.tasks[task.id];
-                angular.copy(trackedTask, task);
-            })
-            .catch(function(error) {
-                vm.operations.trackingUntracking.tasks[task.id].status = 'ERROR';
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
-        vm.stopTrackingTask = function (task) {
-            task.readOnly = true;
-            vm.operations.trackingUntracking.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.untrackTask(UserService.user.id, task.id).then(function(untrackedTask) {
-                delete vm.operations.trackingUntracking.tasks[task.id];
-                angular.copy(untrackedTask, task);
-            })
-            .catch(function(error) {
-                vm.operations.trackingUntracking.tasks[task.id].status = 'ERROR';
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
 
         vm.trustHTML = function(text) {
             return $sce.trustAsHtml(text);

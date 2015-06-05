@@ -47,34 +47,15 @@
                 <table class="table table-condensed">
                     <tr data-ng-repeat="subtask in task.subtasks">
                         <td>
-                            <button class="btn btn-default btn-success-outline"
-                                    data-ng-if="!subtask.complete"
-                                    data-ng-click="remainingCtrl.markComplete(subtask)"
-                                    data-ng-disabled="task.readOnly || subtask.readOnly"
-                                    title="Mark this subtask as completed.">
-                                    <span data-ng-if="remainingCtrl.operations.markComplete.tasks[subtask.id].status !== 'LOADING'"
-                                          class="fa fa-check"></span>
-                                    <span data-ng-if="remainingCtrl.operations.markComplete.tasks[subtask.id].status === 'LOADING'"
-                                          class="fa fa-spin fa-spinner"></span>
-                            </button>
-                            <button class="btn btn-default btn-success-outline"
-                                    data-ng-if="subtask.complete"
-                                    data-ng-click="remainingCtrl.markIncomplete(subtask)"
-                                    data-ng-disabled="task.readOnly || subtask.readOnly"
-                                    title="Mark this subtask as incomplete.">
-                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.tasks[subtask.id].status !== 'LOADING'"
-                                          class="fa fa-reply"></span>
-                                    <span data-ng-if="remainingCtrl.operations.markIncomplete.tasks[subtask.id].status === 'LOADING'"
-                                          class="fa fa-spin fa-spinner"></span>
-                            </button>
+                            <button data-complete-button
+                                    data-task="subtask"
+                                    data-icon-only="true"></button>
                         </td>
                         <td>
-                            <button class="btn btn-default btn-primary-outline"
-                                    data-ng-click="remainingCtrl.showEditSubtask(subtask)"
-                                    data-ng-disabled="task.readOnly || subtask.readOnly"
-                                    title="Edit the details of this subtask.">
-                                <span class="fa fa-pencil"></span>
-                            </button>
+                            <button data-edit-button
+                                    data-task="task"
+                                    data-icon-only="true"
+                                    data-layout="SUBTASK"></button>
                         </td>
                         <td class="col-xs-11"
                             data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">
