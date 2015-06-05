@@ -66,7 +66,8 @@
             scope: {
                 task: '=',
                 iconOnly: '=?',
-                disabled: '=ngDisabled'
+                disabled: '=ngDisabled',
+                size: '@'
             },
             templateUrl: 'CompleteButton.html',
             controller: ['$scope', '$filter',

@@ -1,5 +1,6 @@
 <div>
     <button class="btn btn-default btn-block btn-success-outline"
+            data-ng-class="size"
             data-ng-if="!task.complete"
             data-ng-click="buttonCtrl.markComplete(task)"
             data-ng-disabled="task.readOnly || disabled"
@@ -12,6 +13,7 @@
                   data-ng-if="!iconOnly">Mark Complete</span>
     </button>
     <button class="btn btn-default btn-block btn-success-outline"
+            data-ng-class="size"
             data-ng-if="task.complete"
             data-ng-click="buttonCtrl.markIncomplete(task)"
             data-ng-disabled="task.readOnly || disabled"

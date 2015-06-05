@@ -12,14 +12,16 @@
                     <button data-complete-button
                             data-task="subtask"
                             data-icon-only="true"
-                            data-ng-disabled="disabled"></button>
+                            data-ng-disabled="disabled"
+                            data-size="{{ size }}"></button>
                 </td>
                 <td data-ng-if="!hideButtons">
                     <button data-edit-button
                             data-task="subtask"
                             data-icon-only="true"
                             data-layout="SUBTASK"
-                            data-ng-disabled="disabled"></button>
+                            data-ng-disabled="disabled"
+                            data-size="{{ size }}"></button>
                 </td>
                 <td class="col-xs-11"
                     data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">

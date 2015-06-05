@@ -16,7 +16,8 @@
             scope: {
                 tasks: '=',
                 disabled: '=ngDisabled',
-                hideButtons: '=?'
+                hideButtons: '=?',
+                size: '@'
             },
             templateUrl: 'Subtasks.html',
             controller: ['$scope', '$filter',
