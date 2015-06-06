@@ -1,9 +1,10 @@
 <div>
-    <button class="btn btn-default btn-block btn-primary-outline"
-            data-ng-if="!task.editing"
+    <button data-ng-if="!task.editing"
             data-ng-click="buttonCtrl.startEdit(task)"
             data-ng-class="size"
             data-ng-disabled="task.readOnly || disabled"
+            class="btn btn-default btn-block btn-primary-outline"
+            style="margin-top: 4px;"
             title="Edit the details of this task.">
             <span class="fa fa-pencil"></span>
             <span class="hidden-xs"

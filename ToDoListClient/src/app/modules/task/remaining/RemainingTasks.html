@@ -73,8 +73,8 @@
             <h3 data-ng-bind="group ? group : 'Ungrouped'"
                 class="task-group task-group-heading"></h3>
         </div>
-        <div ng-repeat="task in (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy) track by task.id">
-            <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
+        <div data-ng-repeat="task in (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy) track by task.id">
+            <div data-remaining-tasks-card></div>
             <hr data-ng-if="!$last"
                 class="hr-small">
             <div data-ng-if="$last"

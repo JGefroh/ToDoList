@@ -30,14 +30,42 @@
                       class="small"></span>
             </div>
             <div class="col-xs-6 text-right">
-                Tracked for
-                <a data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
-                   style="cursor: pointer">
+                <div data-ng-if="!task.editing">
+                    Tracked for
+                    <a data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
+                       style="cursor: pointer">
                     <span data-ng-if="remainingCtrl.viewState.isShowingMinutes"
                           data-ng-bind="(task.totalTimeTracked | msToMinutes) + ' minutes'"></span>
                     <span data-ng-if="!remainingCtrl.viewState.isShowingMinutes"
                           data-ng-bind="(task.totalTimeTracked | msToHours:2) + ' hours'"></span>
-                </a>
+                    </a>
+                </div>
+                <div data-ng-if="task.editing"
+                     data-ng-init="shadowInput.totalTimeTrackedAsMinutes = (task.totalTimeTracked | msToMinutes:2); shadowInput.totalTimeTrackedAsHours = (task.taskCopy.totalTimeTracked | msToHours:2)">
+                    <div data-ng-if="remainingCtrl.viewState.isShowingMinutes"
+                         class="input-group pull-right"
+                         style="width: 150px;">
+                        <input data-ng-init="shadowInput.totalTimeTrackedAsMinutes = ((shadowInput.totalTimeTrackedAsHours | hoursToMS) | msToMinutes)"
+                               data-ng-model="shadowInput.totalTimeTrackedAsMinutes"
+                               maxlength="7"
+                               class="form-control" />
+                    <span data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
+                          class="input-group-addon"
+                          style="cursor: pointer">Minutes</span>
+                    </div>
+                    <div data-ng-if="!remainingCtrl.viewState.isShowingMinutes"
+                         class="input-group pull-right"
+                         style="width: 150px;">
+                        <input data-ng-init="shadowInput.totalTimeTrackedAsHours = ((shadowInput.totalTimeTrackedAsMinutes | minutesToMS) | msToHours)"
+                               data-ng-model="shadowInput.totalTimeTrackedAsHours"
+                               data-ng-blur="task.taskCopy.totalTimeTracked = (shadowInput.totalTimeTrackedAsHours | hoursToMS)"
+                               maxlength="7"
+                               class="form-control" />
+                    <span data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
+                          class="input-group-addon"
+                          style="cursor: pointer">Hours</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
