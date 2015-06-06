@@ -17,6 +17,8 @@
                 <input data-ng-if="task.editing"
                        data-ng-disabled="task.taskCopy.readOnly"
                        data-ng-model="task.taskCopy.group"
+                       title="A group or category to place this task under."
+                       placeholder="Group..."
                        class="form-control">
             </div>
         </div>
@@ -34,8 +36,11 @@
                  class="col-xs-12 col-sm-6">
                 <div data-date-input-field
                      data-ng-model="task.taskCopy.timestampDue"
+                     data-ng-disabled="task.taskCopy.readOnly"
                      data-config="datePickerConfig"
-                     style="width: 275px;"></div>
+                     field-title="The date the task is scheduled."
+                     field-placeholder="Date due..."
+                     style="max-width: 275px;"></div>
             </div>
             <div class="col-xs-12 col-sm-6 text-right">
                 <div data-ng-if="!task.editing">
@@ -58,6 +63,8 @@
                                data-ng-model="shadowInput.totalTimeTrackedAsMinutes"
                                data-ng-blur="task.taskCopy.totalTimeTracked = (shadowInput.totalTimeTrackedAsMinutes | minutesToMS)"
                                maxlength="7"
+                               title="The total time tracked, in minutes."
+                               placeholder="Minutes tracked..."
                                class="form-control" />
                                <span data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
                                      class="input-group-addon"
@@ -71,6 +78,8 @@
                                data-ng-model="shadowInput.totalTimeTrackedAsHours"
                                data-ng-blur="task.taskCopy.totalTimeTracked = (shadowInput.totalTimeTrackedAsHours | hoursToMS)"
                                maxlength="7"
+                               title="The total time tracked, in hours."
+                               placeholder="Hours tracked..."
                                class="form-control" />
                     <span data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
                           class="input-group-addon"
@@ -88,6 +97,8 @@
                     <input data-ng-if="task.editing"
                            data-ng-disabled="task.taskCopy.readOnly"
                            data-ng-model="task.taskCopy.name"
+                           title="The name of the task."
+                           placeholder="Task Name (required)..."
                            class="form-control">
             </div>
         </div>
@@ -99,6 +110,8 @@
                 <textarea data-ng-if="task.editing"
                           data-ng-disabled="task.taskCopy.readOnly"
                           data-ng-model="task.taskCopy.description"
+                          title="A short description of the task."
+                          placeholder="Description"
                           class="form-control"></textarea>
             </div>
         </div>

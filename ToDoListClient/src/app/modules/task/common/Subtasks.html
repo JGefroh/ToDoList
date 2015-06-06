@@ -4,6 +4,7 @@
             Subtasks
             <button class="btn btn-xs btn-link"
                     data-ng-if="parentTask.editing"
+                    data-ng-disabled="parentTask.readOnly"
                     data-ng-click="subtaskCtrl.addSubtask()"><span class="fa fa-plus"></span> Add Subtask</button>
         </h5>
     </div>
@@ -38,6 +39,8 @@
                         <input data-ng-if="parentTask.editing"
                                data-ng-disabled="parentTask.readOnly"
                                data-ng-model="subtask.name"
+                               title="The name of this subtask."
+                               placholder="Subtask name..."
                                class="form-control">
                 </td>
                 <td data-ng-if="!hideButtons && parentTask.editing">

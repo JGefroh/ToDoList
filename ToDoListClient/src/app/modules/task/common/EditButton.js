@@ -32,6 +32,7 @@
                 })
                 .catch(function(error) {
                     vm.operations.saveChanges.status = 'ERROR';
+                    task.taskCopy.readOnly = false;
                     console.error('An error occurred while saving a task.');
                 });
             }

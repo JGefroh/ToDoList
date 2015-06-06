@@ -1,22 +1,26 @@
 <div class="input-group">
        <input type="text" class="form-control"
               data-ng-class="inputSizeClass"
-              data-ng-disabled="isDisabled"
+              data-ng-disabled="ngDisabled"
               data-show-button-bar="false"
               data-datepicker-popup="MM/dd/yyyy h:mm a"
               data-ng-model="ngModel"
               data-is-open="isOpen"
-              data-datepicker-options="config.datePickerOptions"/>
+              data-datepicker-options="config.datePickerOptions"
+              title="{{fieldTitle}}"
+              placeholder="{{fieldPlaceholder}}">
        <div class="input-group-btn">
               <button data-ng-click="open($event)"
-                      data-ng-disabled="isDisabled"
+                      data-ng-disabled="ngDisabled"
                       type="button"
                       class="btn btn-default"
                       data-ng-class="buttonSizeClass">
                      <span class="fa fa-calendar"></span>
               </button>
            <div class="btn-group">
-               <button class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+               <button class="btn btn-link btn-xs dropdown-toggle"
+                       data-ng-disabled="ngDisabled"
+                       data-toggle="dropdown">
                    Schedule...
                </button>
                <ul class="dropdown-menu">

@@ -50,7 +50,9 @@
             scope: {
                 ngModel: '=ngModel',
                 config: '=',
-                isDisabled: '=',
+                ngDisabled: '=ngDisabled',
+                fieldPlaceholder: '@',
+                fieldTitle: '@',
                 inputSizeClass: '@',
                 buttonSizeClass: '@'
             },
