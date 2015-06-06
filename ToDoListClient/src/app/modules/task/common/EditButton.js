@@ -47,6 +47,8 @@
                 if (!size) {
                     return 'btn-lg';
                 }
+
+                return size;
             };
 
             function initialize() {

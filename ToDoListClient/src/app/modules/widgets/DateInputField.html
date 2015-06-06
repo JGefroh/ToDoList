@@ -1,13 +1,13 @@
-<p class="input-group">
+<div class="input-group">
        <input type="text" class="form-control"
               data-ng-class="inputSizeClass"
               data-ng-disabled="isDisabled"
               data-show-button-bar="false"
               data-datepicker-popup="MM/dd/yyyy h:mm a"
-              data-ng-model="model"
+              data-ng-model="ngModel"
               data-is-open="isOpen"
               data-datepicker-options="config.datePickerOptions"/>
-       <span class="input-group-btn">
+       <div class="input-group-btn">
               <button data-ng-click="open($event)"
                       data-ng-disabled="isDisabled"
                       type="button"
@@ -15,5 +15,20 @@
                       data-ng-class="buttonSizeClass">
                      <span class="fa fa-calendar"></span>
               </button>
-       </span>
-</p>
+           <div class="btn-group">
+               <button class="btn btn-link btn-xs dropdown-toggle" data-toggle="dropdown">
+                   Schedule...
+               </button>
+               <ul class="dropdown-menu">
+                   <li><a class="btn btn-link" data-ng-click="scheduleFor('NOW')">Now</a></li>
+                   <li><a class="btn btn-link" data-ng-click="scheduleFor('NOON')">12:00 Noon</a></li>
+                   <li><a class="btn btn-link" data-ng-click="scheduleFor('TOMORROW')">Tomorrow</a></li>
+                   <li><hr style="margin: 0;"></li>
+                   <li><a class="btn btn-link" data-ng-click="scheduleFor('1HOUR')">1 hour from now</a></li>
+                   <li><a class="btn btn-link" data-ng-click="scheduleFor('2DAYS')">2 days from now</a></li>
+                   <li><a class="btn btn-link" data-ng-click="scheduleFor('1WEEK')">1 week from now</a></li>
+                   <li><a class="btn btn-link" data-ng-click="scheduleFor(null)">Unschedule</a></li>
+               </ul>
+           </div>
+       </div>
+</div>

@@ -3,7 +3,7 @@
  */
 (function() {
     function TagsDirective() {
-        function TagsDirectiveCtrl($scope) {
+        function TagsDirectiveCtrl($scope, $filter) {
             $scope.toggleTagFilter = function(tag) {
                 if ($scope.tagsToFilterBy.indexOf(tag) === -1) {
                     $scope.tagsToFilterBy.push(tag);
@@ -25,6 +25,7 @@
                 if (!$scope.task.tags) {
                     $scope.task.tags = [];
                 }
+                $scope.task.tags = $filter('orderBy')($scope.task.tags, 'toString()');
             }
 
             initialize();
@@ -36,7 +37,7 @@
                 task: '=?'
             },
             templateUrl: 'Tags.html',
-            controller: ['$scope', TagsDirectiveCtrl]
+            controller: ['$scope', '$filter', TagsDirectiveCtrl]
         }
     }
     angular
