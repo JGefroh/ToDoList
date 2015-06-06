@@ -41,22 +41,25 @@
                     </a>
                 </div>
                 <div data-ng-if="task.editing"
-                     data-ng-init="shadowInput.totalTimeTrackedAsMinutes = (task.totalTimeTracked | msToMinutes:2); shadowInput.totalTimeTrackedAsHours = (task.taskCopy.totalTimeTracked | msToHours:2)">
+                     data-ng-init="shadowInput.totalTimeTrackedAsMinutes = (task.totalTimeTracked | msToMinutes); shadowInput.totalTimeTrackedAsHours = (task.taskCopy.totalTimeTracked | msToHours:2)">
                     <div data-ng-if="remainingCtrl.viewState.isShowingMinutes"
                          class="input-group pull-right"
                          style="width: 150px;">
                         <input data-ng-init="shadowInput.totalTimeTrackedAsMinutes = ((shadowInput.totalTimeTrackedAsHours | hoursToMS) | msToMinutes)"
+                               data-ng-disabled="task.taskCopy.readOnly"
                                data-ng-model="shadowInput.totalTimeTrackedAsMinutes"
+                               data-ng-blur="task.taskCopy.totalTimeTracked = (shadowInput.totalTimeTrackedAsMinutes | minutesToMS)"
                                maxlength="7"
                                class="form-control" />
-                    <span data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
-                          class="input-group-addon"
-                          style="cursor: pointer">Minutes</span>
+                               <span data-ng-click="remainingCtrl.viewState.isShowingMinutes = !remainingCtrl.viewState.isShowingMinutes"
+                                     class="input-group-addon"
+                                     style="cursor: pointer">Minutes</span>
                     </div>
                     <div data-ng-if="!remainingCtrl.viewState.isShowingMinutes"
                          class="input-group pull-right"
                          style="width: 150px;">
-                        <input data-ng-init="shadowInput.totalTimeTrackedAsHours = ((shadowInput.totalTimeTrackedAsMinutes | minutesToMS) | msToHours)"
+                        <input data-ng-init="shadowInput.totalTimeTrackedAsHours = ((shadowInput.totalTimeTrackedAsMinutes | minutesToMS) | msToHours:2)"
+                               data-ng-disabled="task.taskCopy.readOnly"
                                data-ng-model="shadowInput.totalTimeTrackedAsHours"
                                data-ng-blur="task.taskCopy.totalTimeTracked = (shadowInput.totalTimeTrackedAsHours | hoursToMS)"
                                maxlength="7"
