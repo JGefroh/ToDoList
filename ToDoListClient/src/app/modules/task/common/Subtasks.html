@@ -1,32 +1,55 @@
-<div data-ng-if="tasks"
-     class="row">
+<div class="row">
     <div class="col-xs-12">
         <h5>
             Subtasks
+            <button class="btn btn-xs btn-link"
+                    data-ng-if="parentTask.editing"
+                    data-ng-click="subtaskCtrl.addSubtask()"><span class="fa fa-plus"></span> Add Subtask</button>
         </h5>
     </div>
     <div class="col-xs-12">
         <table class="table table-condensed">
-            <tr data-ng-repeat="subtask in tasks">
+            <tr data-ng-repeat="subtask in parentTask.subtasks">
                 <td data-ng-if="!hideButtons">
                     <button data-complete-button
+                            data-ng-if="!parentTask.editing"
                             data-task="subtask"
                             data-icon-only="true"
                             data-ng-disabled="disabled"
                             data-size="{{ size }}"></button>
-                </td>
-                <td data-ng-if="!hideButtons">
-                    <button data-edit-button
-                            data-task="subtask"
-                            data-icon-only="true"
-                            data-layout="SUBTASK"
-                            data-ng-disabled="disabled"
-                            data-size="{{ size }}"></button>
+                    <button data-ng-if="!$first && parentTask.editing"
+                            data-ng-disabled="parentTask.readOnly"
+                            data-ng-click="subtaskCtrl.increaseSubtaskPriority(subtask)"
+                            class="btn btn-xs btn-link">
+                        <span class="fa fa-arrow-up"></span>
+                    </button>
+                    <button data-ng-if="!$last && parentTask.editing"
+                            data-ng-disabled="parentTask.readOnly"
+                            data-ng-click="subtaskCtrl.decreaseSubtaskPriority(subtask)"
+                            class="btn btn-xs btn-link">
+                        <span class="fa fa-arrow-down"></span>
+                    </button>
                 </td>
                 <td class="col-xs-11"
                     data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">
-                            <span data-ng-bind="subtask.name"
-                                  data-ng-class="{'task-highlighted':task.tracking}"></span>
+                        <span data-ng-if="!parentTask.editing"
+                              data-ng-bind="subtask.name"
+                              data-ng-class="{'task-highlighted':task.tracking}"></span>
+                        <input data-ng-if="parentTask.editing"
+                               data-ng-disabled="parentTask.readOnly"
+                               data-ng-model="subtask.name"
+                               class="form-control">
+                </td>
+                <td data-ng-if="!hideButtons && parentTask.editing">
+                    <button data-ng-if="parentTask.editing"
+                            data-ng-disabled="parentTask.readOnly"
+                            data-ng-click="subtaskCtrl.removeSubtask(subtask)"
+                            data-ng-class="size"
+                            class="btn btn-default btn-block btn-danger-outline"
+                            title="Delete this subtask."
+                            tabindex="-1">
+                        <span class="fa fa-trash"></span>
+                    </button>
                 </td>
             </tr>
         </table>

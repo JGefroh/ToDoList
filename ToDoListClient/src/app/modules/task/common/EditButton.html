@@ -1,11 +1,32 @@
 <div>
     <button class="btn btn-default btn-block btn-primary-outline"
-            data-ng-click="buttonCtrl.showEdit(task, layout)"
+            data-ng-if="!task.editing"
+            data-ng-click="buttonCtrl.startEdit(task)"
             data-ng-class="size"
             data-ng-disabled="task.readOnly || disabled"
             title="Edit the details of this task.">
             <span class="fa fa-pencil"></span>
             <span class="hidden-xs"
                   data-ng-if="!iconOnly">Edit</span>
+    </button>
+    <button class="btn btn-default btn-block btn-success-outline"
+            data-ng-if="task.editing"
+            data-ng-click="buttonCtrl.finishEdit(task)"
+            data-ng-class="buttonCtrl.nextSize(buttonCtrl.nextSize(size))"
+            data-ng-disabled="task.taskCopy.readOnly || disabled"
+            title="Save changes to this task.">
+        <span data-ng-class="{'fa fa-save': buttonCtrl.operations.saveChanges.status !== 'LOADING', 'fa fa-spin fa-spinner': buttonCtrl.operations.saveChanges.status === 'LOADING'}"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Save</span>
+    </button>
+    <button class="btn btn-default btn-block btn-danger-outline"
+            data-ng-if="task.editing"
+            data-ng-click="buttonCtrl.cancelEdit(task)"
+            data-ng-class="size"
+            data-ng-disabled="task.taskCopy.readOnly || disabled"
+            title="Cancel changes to this task.">
+        <span class="fa fa-times"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Cancel</span>
     </button>
 </div>

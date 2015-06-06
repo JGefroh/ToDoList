@@ -76,6 +76,12 @@ public class Task {
     @Transient
     private boolean isReadOnly;
     
+    @Transient
+    private boolean isEditing;
+    
+    @Transient
+    private Task taskCopy;
+    
     
     public static Task create(final String ownerId, final String name, final String group) {
         Task task = new Task();
@@ -376,5 +382,13 @@ public class Task {
     
     private void setDescription(String description) {
         this.description = description;
+    }
+    
+    public void setEditing(boolean isEditing) {
+        this.isEditing = isEditing;
+    }
+    
+    public void setTaskCopy(Task taskCopy) {
+        this.taskCopy = taskCopy;
     }
 }

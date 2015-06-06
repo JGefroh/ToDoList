@@ -13,6 +13,14 @@
     </div>
     <div class="col-xs-9 col-md-10">
         <div class="row">
+            <div class="col-xs-12">
+                <input data-ng-if="task.editing"
+                       data-ng-disabled="task.taskCopy.readOnly"
+                       data-ng-model="task.taskCopy.group"
+                       class="form-control">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-xs-6">
                 <span data-ng-if="task.timestampDue"
                       data-ng-bind="task.timestampDue | date:'MMMM dd \'at\' h:mm a'"
@@ -34,22 +42,42 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                    <span data-ng-bind="task.name"
+                    <span data-ng-if="!task.editing"
+                          data-ng-bind="task.name"
                           class="task-name"
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
+                    <input data-ng-if="task.editing"
+                           data-ng-disabled="task.taskCopy.readOnly"
+                           data-ng-model="task.taskCopy.name"
+                           class="form-control">
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <span data-ng-bind-html="remainingCtrl.trustHTML(task.description)"
+                <span data-ng-if="!task.editing"
+                      data-ng-bind-html="remainingCtrl.trustHTML(task.description)"
                       data-ng-class="{'task-highlighted':task.tracking}"></span>
+                <textarea data-ng-if="task.editing"
+                          data-ng-disabled="task.taskCopy.readOnly"
+                          data-ng-model="task.taskCopy.description"
+                          class="form-control"></textarea>
             </div>
         </div>
         <div data-subtasks
-             data-tasks="task.subtasks"
+             data-ng-if="!task.editing && task.subtasks"
+             data-parent-task="task"
              data-ng-disabled="task.readOnly"></div>
-        <div data-tag-display
-             data-tags="task.tags"
+        <div data-subtasks
+             data-ng-if="task.editing"
+             data-parent-task="task.taskCopy"
+             data-ng-disabled="task.readOnly"></div>
+        <div data-tags
+             data-ng-if="!task.editing"
+             data-task="task"
+             data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"></div>
+        <div data-tags
+             data-ng-if="task.editing"
+             data-task="task.taskCopy"
              data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"></div>
     </div>
 </div>
