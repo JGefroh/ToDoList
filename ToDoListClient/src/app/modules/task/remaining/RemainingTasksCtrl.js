@@ -15,21 +15,6 @@
             },
             getTasks: {
                 status: null
-            },
-            editTask: {
-                status: null
-            },
-            markComplete: {
-                tasks: {},
-                status: null
-            },
-            markIncomplete: {
-                tasks: {},
-                status: null
-            },
-            trackingUntracking: {
-                tasks: {},
-                status: null
             }
         };
 
@@ -47,11 +32,15 @@
         };
 
         vm.getUniqueGroups = function() {
-            vm.uniqueGroups = {};
+            vm.uniqueGroups = [];
+            var groupsAsMap = {};
             var completedTasks = $filter('filter')(vm.tasks, {complete: false});
             var filteredCompletedTasks = $filter('tagFilter')(completedTasks, vm.viewState.tagsToFilterBy);
             angular.forEach(filteredCompletedTasks, function(task, index) {
-                vm.uniqueGroups[task.group] = task.group;
+                groupsAsMap[task.group] = task.group;
+            });
+            angular.forEach(groupsAsMap, function(group) {
+                vm.uniqueGroups.push(group);
             });
             return vm.uniqueGroups;
         };
@@ -82,88 +71,6 @@
             });
         };
 
-        vm.showEditSubtask = function(task) {
-            showEdit(task, 'SUBTASK');
-        };
-
-        vm.showEditTask = function(task) {
-            showEdit(task, 'FULL');
-        };
-
-        function showEdit(task, layout) {
-            var modal = $modal.open(
-                {
-                    templateUrl: '../modification/TaskModification.html',
-                    controller: 'TaskModificationCtrl',
-                    controllerAs: 'modificationCtrl',
-                    resolve: {
-                        editedTask: function() {
-                            return task;
-                        },
-                        options: function() {
-                            return {
-                                layout: layout
-                            }
-                        }
-                    }
-                }
-            );
-            modal.result.then(function(savedTask) {
-                angular.copy(savedTask, task);
-                updateTags();
-            });
-        }
-
-        vm.markComplete = function (task) {
-            task.readOnly = true;
-            vm.operations.markComplete.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.markComplete(UserService.user.id, task.id).then(function(completedTask) {
-                delete vm.operations.markComplete.tasks[task.id];
-                angular.copy(completedTask, task);
-                if (task.name != null) {
-                    AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as complete.', 2000);
-                }
-                else {
-                    AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as complete.', 2000);
-                }
-                updateTags();
-            })
-            .catch(function() {
-                vm.operations.markComplete.tasks[task.id].status = 'ERROR';
-                console.error("An error occurred while completing task.");
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
-        vm.markIncomplete = function (task) {
-            task.readOnly = true;
-            vm.operations.markIncomplete.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.markIncomplete(UserService.user.id, task.id).then(function(completedTask) {
-                delete vm.operations.markIncomplete.tasks[task.id];
-                angular.copy(completedTask, task);
-                if (task.name != null) {
-                    AlertService.setAlert('alert-success', 'Task Complete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as incomplete.', 2000);
-                }
-                else {
-                    AlertService.setAlert('alert-success', 'Task Complete!', 'A task has been marked as incomplete.', 2000);
-                }
-                updateTags();
-            })
-            .catch(function() {
-                vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
-                console.error("An error occurred while marking task as incomplete.");
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
         function updateTags() {
             updateUsedTags();
             updateFilterTags();
@@ -183,39 +90,6 @@
             vm.viewState.tagsToFilterBy = tagsToKeep;
         }
 
-        vm.startTrackingTask = function (task) {
-            task.readOnly = true;
-            vm.operations.trackingUntracking.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.trackTask(UserService.user.id, task.id).then(function(trackedTask) {
-                delete vm.operations.trackingUntracking.tasks[task.id];
-                angular.copy(trackedTask, task);
-            })
-            .catch(function(error) {
-                vm.operations.trackingUntracking.tasks[task.id].status = 'ERROR';
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
-        vm.stopTrackingTask = function (task) {
-            task.readOnly = true;
-            vm.operations.trackingUntracking.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.untrackTask(UserService.user.id, task.id).then(function(untrackedTask) {
-                delete vm.operations.trackingUntracking.tasks[task.id];
-                angular.copy(untrackedTask, task);
-            })
-            .catch(function(error) {
-                vm.operations.trackingUntracking.tasks[task.id].status = 'ERROR';
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
 
         vm.trustHTML = function(text) {
             return $sce.trustAsHtml(text);
@@ -236,6 +110,7 @@
             initializeViewState();
             initializeModalWatcher();
             initializeTimeTrackedUpdater();
+            initializeTaskEventHandlers();
             vm.getTasks();
         }
 
@@ -268,6 +143,21 @@
                     initializeTimeTrackedUpdater();
                 }
             }, TRACKED_TIME_UPDATE_INTERVAL_IN_MS);
+        }
+
+        function initializeTaskEventHandlers() {
+            $scope.$on('task.modified', function(event) {
+                event.stopPropagation();
+                updateTags();
+            });
+            $scope.$on('task.incompleted', function(event) {
+                event.stopPropagation();
+                updateTags();
+            });
+            $scope.$on('task.completed', function(event) {
+                event.stopPropagation();
+                updateTags();
+            })
         }
 
         initialize();

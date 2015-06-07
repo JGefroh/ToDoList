@@ -16,89 +16,56 @@
     <tr data-ng-if="calendarCtrl.getTasksOnDate(date).length !== 0"
         data-ng-repeat="task in calendarCtrl.getTasksOnDate(date) | tagFilter:calendarCtrl.viewState.tagsToFilterBy | orderBy: 'timestampDue'">
         <td data-ng-class="{'success': task.complete, 'warning' : !task.complete}">
-                    <span data-ng-bind="task.timestampDue | date:'h:mm a'"
-                          class="small"></span>
+            <span data-ng-if="!task.editing"
+                  data-ng-bind="task.timestampDue | date:'h:mm a'"
+                  class="small"></span>
             <div class="pull-right">
-                <button class="btn btn-default btn-xs btn-success-outline"
-                        data-ng-click="calendarCtrl.markIncomplete(task)"
-                        data-ng-disabled="task.readOnly"
-                        data-ng-if="task.complete"
-                        title="Mark this task as incompleted.">
-                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status !== 'LOADING'"
-                              class="fa fa-reply"></span>
-                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[task.id].status === 'LOADING'"
-                              class="fa fa-spin fa-spinner"></span>
-                </button>
-                <button class="btn btn-default btn-xs btn-success-outline"
-                        data-ng-click="calendarCtrl.markComplete(task)"
-                        data-ng-disabled="task.readOnly"
-                        data-ng-if="!task.complete"
-                        title="Mark this task as completed.">
-                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status !== 'LOADING'"
-                              class="fa fa-check"></span>
-                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[task.id].status === 'LOADING'"
-                              class="fa fa-spin fa-spinner"></span>
-                </button>
-                <button class="btn btn-default btn-xs btn-primary-outline"
-                        data-ng-click="calendarCtrl.showEditTask(task)"
-                        data-ng-disabled="task.readOnly"
-                        data-ng-if="!task.complete"
-                        title="Edit the details of this task.">
-                        <span class="fa fa-pencil"></span>
-                </button>
+                <button data-complete-button
+                        data-task="task"
+                        data-size="btn-sm"
+                        style="float:left;"></button>
+                <button data-edit-button-compact
+                        data-task="task"
+                        data-size="btn-sm"
+                        style="float:left;"></button>
             </div>
             <br/>
-            <span data-ng-bind="task.name"
-                  class="task-name"></span>
-            <div data-ng-if="task.subtasks"
-                 class="row">
-                <div class="col-xs-12">
-                    <h5>
-                        Subtasks
-                    </h5>
-                </div>
-                <div class="col-xs-12">
-                    <table class="table table-condensed">
-                        <tr data-ng-repeat="subtask in task.subtasks" data-ng-class="{'success': subtask.complete, 'warning' : !subtask.complete}">
-                            <td>
-                                <button class="btn btn-default btn-xs btn-success-outline"
-                                        data-ng-if="!subtask.complete"
-                                        data-ng-click="calendarCtrl.markComplete(subtask)"
-                                        data-ng-disabled="task.readOnly || subtask.readOnly"
-                                        title="Mark this subtask as completed.">
-                                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[subtask.id].status !== 'LOADING'"
-                                              class="fa fa-check"></span>
-                                        <span data-ng-if="calendarCtrl.operations.markComplete.tasks[subtask.id].status === 'LOADING'"
-                                              class="fa fa-spin fa-spinner"></span>
-                                </button>
-                                <button class="btn btn-default btn-xs btn-success-outline"
-                                        data-ng-if="subtask.complete"
-                                        data-ng-click="calendarCtrl.markIncomplete(subtask)"
-                                        data-ng-disabled="task.readOnly || subtask.readOnly"
-                                        title="Mark this subtask as incomplete.">
-                                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[subtask.id].status !== 'LOADING'"
-                                              class="fa fa-reply"></span>
-                                        <span data-ng-if="calendarCtrl.operations.markIncomplete.tasks[subtask.id].status === 'LOADING'"
-                                              class="fa fa-spin fa-spinner"></span>
-                                </button>
-                                <button class="btn btn-default btn-xs btn-primary-outline"
-                                        data-ng-click="calendarCtrl.showEditSubtask(subtask)"
-                                        data-ng-disabled="task.readOnly || subtask.readOnly"
-                                        data-ng-if="!task.complete"
-                                        title="Edit the details of this task.">
-                                    <span class="fa fa-pencil"></span>
-                                </button>
-                            </td>
-                            <td class="col-xs-11">
-                            <span data-ng-bind="subtask.name"
-                                  data-ng-class="{'task-highlighted':task.tracking}"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+
+            <div data-ng-if="task.editing">
+                <div data-date-input-field
+                     data-ng-model="task.taskCopy.timestampDue"
+                     data-ng-disabled="task.taskCopy.readOnly"
+                     data-config="datePickerConfig"
+                     data-field-title="The date the task is scheduled."
+                     data-field-placeholder="Date due..."
+                     style="max-width: 275px;"></div>
             </div>
-            <div data-tag-display
-                 data-tags="task.tags"
+            <span data-ng-if="!task.editing"
+                  data-ng-bind="task.name"
+                  class="task-name"></span>
+            <input data-ng-if="task.editing"
+                   data-ng-disabled="task.taskCopy.readOnly"
+                   data-ng-model="task.taskCopy.name"
+                   title="The name of the task."
+                   placeholder="Task Name (required)..."
+                   class="form-control">
+            <div data-subtasks
+                 data-ng-if="!task.editing && task.subtasks"
+                 data-parent-task="task"
+                 data-ng-disabled="task.readOnly"
+                 data-size="btn-sm"></div>
+            <div data-subtasks
+                 data-ng-if="task.editing"
+                 data-parent-task="task.taskCopy"
+                 data-ng-disabled="task.readOnly"
+                 data-size="btn-sm"></div>
+            <div data-tags
+                 data-ng-if="!task.editing"
+                 data-task="task"
+                 data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
+            <div data-tags
+                 data-ng-if="task.editing"
+                 data-task="task.taskCopy"
                  data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
         </td>
     </tr>

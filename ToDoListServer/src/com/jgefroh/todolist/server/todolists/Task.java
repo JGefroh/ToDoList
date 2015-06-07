@@ -76,6 +76,12 @@ public class Task {
     @Transient
     private boolean isReadOnly;
     
+    @Transient
+    private boolean isEditing;
+    
+    @Transient
+    private Task taskCopy;
+    
     
     public static Task create(final String ownerId, final String name, final String group) {
         Task task = new Task();
@@ -351,6 +357,14 @@ public class Task {
     }
     
     private void setSubtasks(final List<Task> subtasks) {
+        if (subtasks != null) {
+            for (Iterator<Task> iter = subtasks.iterator();iter.hasNext();) {
+                Task subtask = iter.next();
+                if (subtask == null || subtask.getName() == null || subtask.getName().isEmpty()) {
+                    iter.remove();
+                }
+            }
+        }
         this.subtasks = subtasks;
     }
     
@@ -367,6 +381,14 @@ public class Task {
     }
     
     private void setTags(final List<String> tags) {
+        if (tags != null) {
+            for (Iterator<String> iter = tags.iterator();iter.hasNext();) {
+                String tag = iter.next();
+                if (tag == null || tag.isEmpty()) {
+                    iter.remove();
+                }
+            }
+        }
         this.tags = tags;
     }
     
@@ -376,5 +398,13 @@ public class Task {
     
     private void setDescription(String description) {
         this.description = description;
+    }
+    
+    public void setEditing(boolean isEditing) {
+        this.isEditing = isEditing;
+    }
+    
+    public void setTaskCopy(Task taskCopy) {
+        this.taskCopy = taskCopy;
     }
 }

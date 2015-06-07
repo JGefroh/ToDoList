@@ -18,9 +18,15 @@
             return timeToConvertInHours * 60000 * 60;
         };
     }
+    function MinutesToMSFilter() {
+        return function (timeToConvertInMinutes) {
+            return timeToConvertInMinutes * 60000;
+        };
+    }
     angular
         .module('jgefroh.FiltersModule')
         .filter('msToHours', MSToHoursFilter)
         .filter('msToMinutes', MSToMinutesFilter)
-        .filter('hoursToMS', HoursToMSFilter);
+        .filter('hoursToMS', HoursToMSFilter)
+        .filter('minutesToMS', MinutesToMSFilter);
 })();

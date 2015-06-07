@@ -1,0 +1,26 @@
+<div>
+    <div data-ng-if="!task.editing">
+        <button class="btn btn-default btn-block btn-xs btn-primary-outline"
+                data-ng-if="!task.tracking"
+                data-ng-click="buttonCtrl.startTrackingTask(task)"
+                data-ng-disabled="task.readOnly"
+                title="Start a timer for this task.">
+            <span data-ng-if="buttonCtrl.operations.trackingUntracking.tasks.status !== 'LOADING'"
+                  class="fa fa-clock-o"></span>
+            <span data-ng-if="buttonCtrl.operations.trackingUntracking.tasks.status === 'LOADING'"
+                  class="fa fa-spin fa-spinner"></span>
+            <span class="hidden-xs">Start Timer</span>
+        </button>
+        <button class="btn btn-default btn-block btn-xs btn-primary-outline"
+                data-ng-if="task.tracking"
+                data-ng-click="buttonCtrl.stopTrackingTask(task)"
+                data-ng-disabled="task.readOnly"
+                title="Stop the timer for this task.">
+            <span data-ng-if="buttonCtrl.operations.trackingUntracking.status !== 'LOADING'"
+                  class="fa fa-clock-o"></span>
+            <span data-ng-if="buttonCtrl.operations.trackingUntracking.status === 'LOADING'"
+                  class="fa fa-spin fa-spinner"></span>
+            <span class="hidden-xs">Stop Timer</span>
+        </button>
+    </div>
+</div>

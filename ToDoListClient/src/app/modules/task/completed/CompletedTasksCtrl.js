@@ -2,7 +2,7 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function CompletedTasksCtrl(ViewState, TaskService, AlertService, truncateLimit, $filter, $stateParams, UserService) {
+    function CompletedTasksCtrl($scope, ViewState, TaskService, AlertService, truncateLimit, $filter, $stateParams, UserService) {
         var vm = this;
         vm.operations = {
             getTasks: {
@@ -41,56 +41,6 @@
             return vm.uniqueGroups;
         };
 
-        vm.deleteTask = function(task) {
-            task.readOnly = true;
-            vm.operations.deleteTask.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.deleteTask(UserService.user.id, task.id).then(function() {
-                delete vm.operations.deleteTask.tasks[task.id];
-                if (task.name != null) {
-                    AlertService.setAlert('alert-danger', 'Task Deleted!', $filter('limitTo')(task.name, truncateLimit) + ' has been deleted.', 2000);
-                }
-                else {
-                    AlertService.setAlert('alert-danger', 'Task Deleted!', 'A task has been marked deleted.', 2000);
-                }
-                var index = vm.tasks.indexOf(task);
-                vm.tasks.splice(index, 1);
-                updateTags();
-            })
-            .catch(function() {
-                vm.operations.deleteTask.tasks[task.id].status = 'ERROR';
-                console.error("An error occurred while deleting this task.");
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
-        vm.markIncomplete = function(task) {
-            task.readOnly = true;
-            vm.operations.markIncomplete.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.markIncomplete(UserService.user.id, task.id).then(function(incompleteTask) {
-                delete vm.operations.markIncomplete.tasks[task.id];
-                angular.copy(incompleteTask, task);
-                if (task.name != null) {
-                    AlertService.setAlert('alert-warning', 'Task Incomplete!', $filter('limitTo')(task.name, truncateLimit) + ' has been marked as incomplete.', 2000);
-                }
-                else {
-                    AlertService.setAlert('alert-warning', 'Task Incomplete!', 'A task has been marked as incomplete.', 2000);
-                }
-                updateTags();
-            })
-            .catch(function() {
-                vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
-                console.error("An error occurred while marking task as incomplete.");
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
 
         function updateTags() {
             updateUsedTags();
@@ -114,6 +64,7 @@
         function initialize() {
             UserService.reserveID($stateParams.userID);
             initializeViewState();
+            initializeTaskEventHandlers();
             vm.getTasks();
         }
 
@@ -124,9 +75,22 @@
             }
         }
 
+        function initializeTaskEventHandlers() {
+            $scope.$on('task.deleted', function(event, task) {
+                event.stopPropagation();
+                var index = vm.tasks.indexOf(task);
+                vm.tasks.splice(index, 1);
+                updateTags();
+            });
+            $scope.$on('task.incompleted', function(event) {
+                event.stopPropagation();
+                updateTags();
+            });
+        }
+
         initialize();
     }
     angular
         .module('ToDoList.TaskModule')
-        .controller('CompletedTasksCtrl', ['ViewState', 'TaskService', 'AlertService', 'truncateLimit', '$filter', '$stateParams', 'UserService', CompletedTasksCtrl]);
+        .controller('CompletedTasksCtrl', ['$scope', 'ViewState', 'TaskService', 'AlertService', 'truncateLimit', '$filter', '$stateParams', 'UserService', CompletedTasksCtrl]);
 })();
