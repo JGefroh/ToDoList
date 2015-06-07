@@ -32,11 +32,15 @@
         };
 
         vm.getUniqueGroups = function() {
-            vm.uniqueGroups = {};
+            vm.uniqueGroups = [];
+            var groupsAsMap = {};
             var completedTasks = $filter('filter')(vm.tasks, {complete: false});
             var filteredCompletedTasks = $filter('tagFilter')(completedTasks, vm.viewState.tagsToFilterBy);
             angular.forEach(filteredCompletedTasks, function(task, index) {
-                vm.uniqueGroups[task.group] = task.group;
+                groupsAsMap[task.group] = task.group;
+            });
+            angular.forEach(groupsAsMap, function(group) {
+                vm.uniqueGroups.push(group);
             });
             return vm.uniqueGroups;
         };

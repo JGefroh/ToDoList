@@ -17,6 +17,7 @@
                 <input data-ng-if="task.editing"
                        data-ng-disabled="task.taskCopy.readOnly"
                        data-ng-model="task.taskCopy.group"
+                       data-typeahead="group for group in remainingCtrl.getUniqueGroups() | filter:$viewValue | limitTo:8"
                        title="A group or category to place this task under."
                        placeholder="Group..."
                        class="form-control">

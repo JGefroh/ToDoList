@@ -357,6 +357,14 @@ public class Task {
     }
     
     private void setSubtasks(final List<Task> subtasks) {
+        if (subtasks != null) {
+            for (Iterator<Task> iter = subtasks.iterator();iter.hasNext();) {
+                Task subtask = iter.next();
+                if (subtask == null || subtask.getName() == null || subtask.getName().isEmpty()) {
+                    iter.remove();
+                }
+            }
+        }
         this.subtasks = subtasks;
     }
     
@@ -373,6 +381,14 @@ public class Task {
     }
     
     private void setTags(final List<String> tags) {
+        if (tags != null) {
+            for (Iterator<String> iter = tags.iterator();iter.hasNext();) {
+                String tag = iter.next();
+                if (tag == null || tag.isEmpty()) {
+                    iter.remove();
+                }
+            }
+        }
         this.tags = tags;
     }
     
