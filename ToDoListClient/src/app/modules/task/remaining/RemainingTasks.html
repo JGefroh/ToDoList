@@ -24,6 +24,7 @@
                         <input data-ng-model="remainingCtrl.viewState.input.group"
                                data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
                                data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
+                               data-typeahead="group for group in remainingCtrl.getUniqueGroups() | filter:$viewValue | limitTo:8"
                                class="form-control input-lg"
                                title="Use groups to organize tasks under categories."
                                maxlength="500"/>
@@ -53,7 +54,7 @@
             <div class="col-xs-12 col-sm-8">
                 <label>Tags <span class="small"> - Select to filter by specific tags</span></label>
                 <div data-tag-display
-                     data-tags="remainingCtrl.usedTags"
+                     data-tags-to-display="remainingCtrl.usedTags"
                      data-tags-to-filter-by="remainingCtrl.viewState.tagsToFilterBy"></div>
                 <br/>
             </div>
@@ -73,8 +74,8 @@
             <h3 data-ng-bind="group ? group : 'Ungrouped'"
                 class="task-group task-group-heading"></h3>
         </div>
-        <div ng-repeat="task in (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy) track by task.id">
-            <div data-ng-include data-src="'modules/task/remaining/RemainingTasksCard.html'"></div>
+        <div data-ng-repeat="task in (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy) track by task.id">
+            <div data-remaining-tasks-card></div>
             <hr data-ng-if="!$last"
                 class="hr-small">
             <div data-ng-if="$last"

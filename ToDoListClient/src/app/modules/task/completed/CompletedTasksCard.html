@@ -1,6 +1,12 @@
 <div class="row">
     <div class="col-xs-3 col-md-2">
-        <div data-ng-include data-src="'modules/task/completed/CompletedTasksActions.html'"></div>
+        <div class="text-center">
+            <button data-complete-button
+                    data-task="task"></button>
+            <button data-delete-button
+                    data-task="task"
+                    data-size="btn-xs"></button>
+        </div>
     </div>
     <div class="col-xs-9 col-md-10">
         <div class="row">
@@ -26,25 +32,13 @@
                           data-ng-class="{'task-highlighted':task.tracking}"></span>
             </div>
         </div>
-        <div data-ng-if="task.subtasks"
-             class="row">
-            <div class="col-xs-12">
-                <h5>
-                    Subtasks
-                </h5>
-            </div>
-            <div class="col-xs-12">
-                <table class="table table-condensed">
-                    <tr data-ng-repeat="subtask in task.subtasks">
-                        <td class="col-xs-12">
-                            <span data-ng-bind="subtask.name"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div data-tag-display
-             data-tags="task.tags"
+        <div data-subtasks
+             data-ng-if="task.subtasks"
+             data-parent-task="task"
+             data-hide-buttons="true"
+             data-ng-disabled="task.readOnly"></div>
+        <div data-tags
+             data-task="task"
              data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
     </div>
 </div>

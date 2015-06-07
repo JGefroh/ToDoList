@@ -2,7 +2,7 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function TaskCalendarCtrl(ViewState, UserService, $stateParams, $modal, TaskService, AlertService, $filter, truncateLimit) {
+    function TaskCalendarCtrl($scope, ViewState, UserService, $stateParams, $modal, TaskService, AlertService, $filter, truncateLimit) {
         var vm = this;
         var ENTER_KEY_ID = 13;
         var SATURDAY = 6;
@@ -88,80 +88,6 @@
             taskFields.name = null;
         }
 
-        vm.markComplete = function (task) {
-            task.readOnly = true;
-            vm.operations.markComplete.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.markComplete(UserService.user.id, task.id).then(function(completedTask) {
-                delete vm.operations.markComplete.tasks[task.id];
-                angular.copy(completedTask, task);
-            })
-            .catch(function() {
-                vm.operations.markComplete.tasks[task.id].status = 'ERROR';
-                console.error("An error occurred while completing task.");
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
-        vm.markIncomplete = function(task) {
-            task.readOnly = true;
-            vm.operations.markIncomplete.tasks[task.id] = {
-                status: 'LOADING'
-            };
-            TaskService.markIncomplete(UserService.user.id, task.id).then(function(incompleteTask) {
-                delete vm.operations.markIncomplete.tasks[task.id];
-                angular.copy(incompleteTask, task);
-            })
-            .catch(function() {
-                vm.operations.markIncomplete.tasks[task.id].status = 'ERROR';
-                console.error("An error occurred while marking task as incomplete.");
-            })
-            .finally(function() {
-                task.readOnly = false;
-            });
-        };
-
-        vm.showEditSubtask = function(task) {
-            showEdit(task, 'SUBTASK');
-        };
-
-        vm.showEditTask = function(task) {
-            showEdit(task, 'FULL');
-        };
-
-        function showEdit(task, layout) {
-            var modal = $modal.open(
-                {
-                    templateUrl: '../../modification/TaskModification.html',
-                    controller: 'TaskModificationCtrl',
-                    controllerAs: 'modificationCtrl',
-                    resolve: {
-                        editedTask: function() {
-                            return task;
-                        },
-                        options: function() {
-                            return {
-                                layout: layout
-                            }
-                        }
-                    }
-                }
-            );
-            modal.result.then(function(savedTask) {
-                if (savedTask.timestampDue && !task.timestampDue) {
-                    AlertService.setAlert('alert-info', 'Task Scheduled!', $filter('limitTo')(task.name || 'A task', truncateLimit) + ' has been scheduled.', 2000);
-                }
-                else if (!savedTask.timestampDue && task.timestampDue) {
-                    AlertService.setAlert('alert-info', 'Task Unscheduled!', $filter('limitTo')(task.name || 'A task', truncateLimit) + ' has been unscheduled.', 2000);
-                }
-                angular.copy(savedTask, task);
-                updateTags();
-            });
-        }
-
 
         vm.isToday = function(date) {
             var today = new Date();
@@ -193,6 +119,7 @@
             UserService.reserveID($stateParams.userID);
             initializeViewState();
             initializeVariables();
+            initializeTaskEventHandlers();
             vm.loadDatesOfMonth(new Date());
             vm.getTasks();
         }
@@ -204,19 +131,24 @@
         function initializeVariables() {
             vm.operations = {
                 addTask: {},
-                getTasks: {},
-                markComplete: {
-                    tasks: {},
-                    status: null
-                },
-                markIncomplete: {
-                    tasks: {},
-                    status: null
-                }
+                getTasks: {}
             };
 
             vm.monthSelectorAPI = {
             };
+        }
+
+        function initializeTaskEventHandlers() {
+            $scope.$on('task.deleted', function(event, task) {
+                event.stopPropagation();
+                var index = vm.tasks.indexOf(task);
+                vm.tasks.splice(index, 1);
+                updateTags();
+            });
+            $scope.$on('task.modified', function(event) {
+                event.stopPropagation();
+                updateTags();
+            });
         }
 
         initialize();
@@ -224,5 +156,5 @@
     }
     angular
         .module('ToDoList.PlannerModule')
-        .controller('TaskCalendarCtrl', ['ViewState', 'UserService', '$stateParams', '$modal', 'TaskService', 'AlertService', '$filter', 'truncateLimit', TaskCalendarCtrl]);
+        .controller('TaskCalendarCtrl', ['$scope', 'ViewState', 'UserService', '$stateParams', '$modal', 'TaskService', 'AlertService', '$filter', 'truncateLimit', TaskCalendarCtrl]);
 })();

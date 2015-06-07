@@ -9,7 +9,7 @@
             <div class="col-xs-12">
                 <label>Tags <span class="small"> - Select to filter by specific tags</span></label>
                 <div data-tag-display
-                     data-tags="completedCtrl.usedTags"
+                     data-tags-to-display="completedCtrl.usedTags"
                      data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
             </div>
         </div>
@@ -19,7 +19,7 @@
                 class="task-group task-group-heading"></h3>
         </div>
         <div data-ng-repeat="task in completedCtrl.tasks | filter: { complete: true, group: group}:true  | tagFilter:completedCtrl.viewState.tagsToFilterBy | orderBy:completedCtrl.viewState.sortField.value:!completedCtrl.viewState.isAscending">
-            <div data-ng-include data-src="'modules/task/completed/CompletedTasksCard.html'"></div>
+            <div data-completed-tasks-card></div>
             <hr data-ng-if="!$last"
                 class="hr-small">
             <div data-ng-if="$last"

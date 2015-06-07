@@ -2,8 +2,8 @@
  * Created by Joseph on 8/25/2014.
  */
 (function() {
-    function TagDisplayDirective() {
-        function TagDisplayDirectiveCtrl($scope) {
+    function TagsDirective() {
+        function TagsDirectiveCtrl($scope, $filter) {
             $scope.toggleTagFilter = function(tag) {
                 if ($scope.tagsToFilterBy.indexOf(tag) === -1) {
                     $scope.tagsToFilterBy.push(tag);
@@ -14,14 +14,18 @@
             };
 
             $scope.addTag = function() {
-                $scope.tagsToDisplay.push(null);
+                $scope.task.tags.push(null);
             };
 
             $scope.removeTag = function(tag) {
-                $scope.tagsToDisplay.splice($scope.tagsToDisplay.indexOf(tag), 1);
+                $scope.task.tags.splice($scope.task.tags.indexOf(tag), 1);
             };
 
             function initialize() {
+                if (!$scope.task.tags) {
+                    $scope.task.tags = [];
+                }
+                $scope.task.tags = $filter('orderBy')($scope.task.tags, 'toString()');
             }
 
             initialize();
@@ -29,14 +33,14 @@
         return {
             restrict: 'A',
             scope: {
-                tagsToDisplay: '=',
-                tagsToFilterBy: '='
+                tagsToFilterBy: '=',
+                task: '=?'
             },
-            templateUrl: 'TagDisplay.html',
-            controller: ['$scope', TagDisplayDirectiveCtrl]
+            templateUrl: 'Tags.html',
+            controller: ['$scope', '$filter', TagsDirectiveCtrl]
         }
     }
     angular
         .module('ToDoList.TaskModule')
-        .directive('tagDisplay', [TagDisplayDirective]);
+        .directive('tags', [TagsDirective]);
 })();

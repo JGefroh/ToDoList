@@ -20,9 +20,11 @@
                     <div class="form-group">
                         <label>Due Date</label>
                         <div data-date-input-field
-                             data-model="calendarCtrl.viewState.input.timestampDue"
-                             data-config="datePickerConfig"
+                             data-ng-model="calendarCtrl.viewState.input.timestampDue"
                              data-is-disabled="calendarCtrl.operations.addTask.status === 'LOADING'"
+                             data-config="datePickerConfig"
+                             data-field-title="The date to schedule the task."
+                             data-field-placeholder="Date due..."
                              data-input-size-class="input-lg"
                              data-button-size-class="btn-lg"></div>
                     </div>
@@ -44,7 +46,7 @@
             <div class="col-xs-12">
                 <label>Tags:</label>
                 <div data-tag-display
-                     data-tags="calendarCtrl.usedTags"
+                     data-tags-to-display="calendarCtrl.usedTags"
                      data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
 
                 <h3 data-ng-bind="calendarCtrl.viewState.selectedDate | date: 'MMMM yyyy'"

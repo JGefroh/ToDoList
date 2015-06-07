@@ -1,0 +1,43 @@
+<div>
+    <div data-ng-if="task.editing"
+         class="row">
+        <div class="col-xs-10">
+            <h5>
+                Tags
+                <button data-ng-disabled="task.readOnly"
+                        data-ng-click="addTag()"
+                        class="btn btn-link btn-xs">
+                    <span class="fa fa-plus"></span> Add Tag
+                </button>
+            </h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div data-ng-repeat="tag in task.tags | orderBy:'toString()' track by $index" style="display: inline;">
+                <span data-ng-if="!task.editing"
+                      data-ng-bind="tag"
+                      data-ng-click="toggleTagFilter(tag)"
+                      style="cursor: pointer;"
+                      data-ng-class="{'task-tag-inactive':tagsToFilterBy.indexOf(tag) === -1,
+                                    'task-tag-active':tagsToFilterBy.indexOf(tag) !== -1}"
+                      class="badge task-tag"></span>
+                <div style="display: inline-block;">
+                    <button data-ng-if="task.editing"
+                            data-ng-disabled="task.readOnly"
+                            data-ng-click="removeTag(task.tags[$index])"
+                            class="btn btn-xs btn-link"
+                            tabindex="-1"
+                            style="margin: 0; padding: 0;">
+                        <span class="fa fa-times"></span>
+                    </button>
+                    <input data-ng-if="task.editing"
+                           data-ng-disabled="task.readOnly"
+                           data-ng-model="task.tags[$index]"
+                           class="badge task-tag"
+                           style="width: 80px; display: inline;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

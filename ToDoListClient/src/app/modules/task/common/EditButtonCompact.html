@@ -1,0 +1,32 @@
+<div>
+    <button data-ng-if="!task.editing"
+            data-ng-click="buttonCtrl.startEdit(task)"
+            data-ng-class="size"
+            data-ng-disabled="task.readOnly || disabled"
+            class="btn btn-default btn-primary-outline"
+            title="Edit the details of this task.">
+            <span class="fa fa-pencil"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Edit</span>
+    </button>
+    <button class="btn btn-default btn-success-outline"
+            data-ng-if="task.editing"
+            data-ng-click="buttonCtrl.finishEdit(task)"
+            data-ng-class="size"
+            data-ng-disabled="task.taskCopy.readOnly || disabled"
+            title="Save changes to this task.">
+        <span data-ng-class="{'fa fa-save': buttonCtrl.operations.saveChanges.status !== 'LOADING', 'fa fa-spin fa-spinner': buttonCtrl.operations.saveChanges.status === 'LOADING'}"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Save</span>
+    </button>
+    <button class="btn btn-default btn-danger-outline"
+            data-ng-if="task.editing"
+            data-ng-click="buttonCtrl.cancelEdit(task)"
+            data-ng-class="size"
+            data-ng-disabled="task.taskCopy.readOnly || disabled"
+            title="Cancel changes to this task.">
+        <span class="fa fa-times"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Cancel</span>
+    </button>
+</div>

@@ -1,0 +1,14 @@
+<div>
+    <button class="btn btn-default btn-xs btn-block btn-danger-outline"
+            data-ng-click="buttonCtrl.deleteTask(task)"
+            data-ng-class="size"
+            data-ng-disabled="task.readOnly || disabled"
+            title="Delete this task.">
+            <span data-ng-if="buttonCtrl.operations.deleteTask.status !== 'LOADING'"
+                  class="fa fa-trash"></span>
+            <span data-ng-if="buttonCtrl.operations.deleteTask.status === 'LOADING'"
+                  class="fa fa-spin fa-spinner"></span>
+            <span class="hidden-xs"
+                  data-ng-if="!iconOnly">Delete Task</span>
+    </button>
+</div>
