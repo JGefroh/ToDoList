@@ -24,6 +24,7 @@
                         <input data-ng-model="remainingCtrl.viewState.input.group"
                                data-ng-disabled="remainingCtrl.operations.addTask.status === 'LOADING'"
                                data-ng-keypress="remainingCtrl.addTaskOnEnterKeyPressed(remainingCtrl.viewState.input, $event)"
+                               data-typeahead="group for group in remainingCtrl.getUniqueGroups() | filter:$viewValue | limitTo:8"
                                class="form-control input-lg"
                                title="Use groups to organize tasks under categories."
                                maxlength="500"/>
