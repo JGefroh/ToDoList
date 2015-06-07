@@ -16,29 +16,56 @@
     <tr data-ng-if="calendarCtrl.getTasksOnDate(date).length !== 0"
         data-ng-repeat="task in calendarCtrl.getTasksOnDate(date) | tagFilter:calendarCtrl.viewState.tagsToFilterBy | orderBy: 'timestampDue'">
         <td data-ng-class="{'success': task.complete, 'warning' : !task.complete}">
-                    <span data-ng-bind="task.timestampDue | date:'h:mm a'"
-                          class="small"></span>
+            <span data-ng-if="!task.editing"
+                  data-ng-bind="task.timestampDue | date:'h:mm a'"
+                  class="small"></span>
             <div class="pull-right">
                 <button data-complete-button
-                        data-icon-only="true"
                         data-task="task"
-                        data-size="btn-xs"
+                        data-size="btn-sm"
                         style="float:left;"></button>
-                <button data-edit-button
+                <button data-edit-button-compact
                         data-task="task"
-                        data-icon-only="true"
-                        data-size="btn-xs"
+                        data-size="btn-sm"
                         style="float:left;"></button>
             </div>
             <br/>
-            <span data-ng-bind="task.name"
+
+            <div data-ng-if="task.editing">
+                <div data-date-input-field
+                     data-ng-model="task.taskCopy.timestampDue"
+                     data-ng-disabled="task.taskCopy.readOnly"
+                     data-config="datePickerConfig"
+                     data-field-title="The date the task is scheduled."
+                     data-field-placeholder="Date due..."
+                     style="max-width: 275px;"></div>
+            </div>
+            <span data-ng-if="!task.editing"
+                  data-ng-bind="task.name"
                   class="task-name"></span>
+            <input data-ng-if="task.editing"
+                   data-ng-disabled="task.taskCopy.readOnly"
+                   data-ng-model="task.taskCopy.name"
+                   title="The name of the task."
+                   placeholder="Task Name (required)..."
+                   class="form-control">
             <div data-subtasks
-                 data-tasks="task.subtasks"
+                 data-ng-if="!task.editing && task.subtasks"
+                 data-parent-task="task"
                  data-ng-disabled="task.readOnly"
-                 data-size="btn-xs"></div>
-            <div data-tag-display
-                 data-tags="task.tags"
+                 data-size="btn-sm"></div>
+            <div data-subtasks
+                 data-ng-if="task.editing"
+                 data-parent-task="task.taskCopy"
+                 data-ng-disabled="task.readOnly"
+                 data-size="btn-sm"></div>
+            <div data-tags
+                 data-ng-if="!task.editing"
+                 data-task="task"
+                 data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
+            <div data-tags
+                 data-ng-if="task.editing"
+                 data-task="task.taskCopy"
                  data-tags-to-filter-by="calendarCtrl.viewState.tagsToFilterBy"></div>
         </td>
     </tr>
