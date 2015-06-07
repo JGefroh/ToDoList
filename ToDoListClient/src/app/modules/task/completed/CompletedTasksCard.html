@@ -33,11 +33,12 @@
             </div>
         </div>
         <div data-subtasks
-             data-tasks="task.subtasks"
+             data-ng-if="task.subtasks"
+             data-parent-task="task"
              data-hide-buttons="true"
              data-ng-disabled="task.readOnly"></div>
-        <div data-tag-display
-             data-tags="task.tags"
+        <div data-tags
+             data-task="task"
              data-tags-to-filter-by="completedCtrl.viewState.tagsToFilterBy"></div>
     </div>
 </div>
