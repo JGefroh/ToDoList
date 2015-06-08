@@ -3,7 +3,7 @@
         var self = this;
         var endpoints = {
             getID: function() {
-               return '../rest/security';
+               return './rest/security';
             }
         };
         this.user = {id: $stateParams.userID};

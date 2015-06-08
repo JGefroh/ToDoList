@@ -7,7 +7,7 @@
 
         var endpoints = {
             getTasks: function(ownerId, completed) {
-                var url = '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
+                var url = './rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
                 if (completed === true || completed === false) {
                     return url + '&completed={completed}'.replace('{completed}', completed);
                 }
@@ -16,30 +16,30 @@
                 }
             },
             saveTask: function(ownerId) {
-                return '../rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
+                return './rest/tasks?ownerId={ownerId}'.replace('{ownerId}', ownerId);
             },
             deleteTask: function(ownerId, taskId) {
-                return '../rest/tasks/{taskId}/{ownerId}'
+                return './rest/tasks/{taskId}/{ownerId}'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
             markComplete: function(ownerId, taskId) {
-                return '../rest/tasks/{taskId}/{ownerId}/markComplete'
+                return './rest/tasks/{taskId}/{ownerId}/markComplete'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
             markIncomplete: function(ownerId, taskId) {
-                return '../rest/tasks/{taskId}/{ownerId}/markIncomplete'
+                return './rest/tasks/{taskId}/{ownerId}/markIncomplete'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
             trackTask: function(ownerId, taskId) {
-                return '../rest/tasks/{taskId}/{ownerId}/track'
+                return './rest/tasks/{taskId}/{ownerId}/track'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             },
             untrackTask: function(ownerId, taskId) {
-                return '../rest/tasks/{taskId}/{ownerId}/untrack'
+                return './rest/tasks/{taskId}/{ownerId}/untrack'
                     .replace('{taskId}', taskId)
                     .replace('{ownerId}', ownerId);
             }
