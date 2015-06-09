@@ -11,7 +11,10 @@
                     name: null,
                     group: null
                 },
-                filter: ''
+                filter: '',
+                current: 'Newest First',
+                sort: 'timestampCreated',
+                reverse: true
             },
             completedTaskViewState: {
                 isShowingMinutes: null,

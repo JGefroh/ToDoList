@@ -51,7 +51,7 @@ module.exports = function (grunt) {
         copy: {
             minified_to_src: {
                 files: [
-                    {expand: true, cwd: 'prod_dist/', src: ['ToDoList.min.js'], dest: 'src/'}
+                    {expand: true, cwd: 'prod_dist/', src: ['ToDoList.min.js'], dest: 'src/app/'}
                 ]
             },
             from_src_to_prod_dist: {
@@ -112,7 +112,7 @@ module.exports = function (grunt) {
                         host: 'localhost',
                         port: 8080,
                         rewrite: {
-                            '^': '/ToDoList'
+                            '^': '/ToDoListServer'
                         }
                     }
                 ]

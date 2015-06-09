@@ -34,6 +34,7 @@
                     <input data-ng-if="task.editing"
                            data-ng-disabled="task.readOnly"
                            data-ng-model="task.tags[$index]"
+                           data-typeahead="tagHint for tagHint in usedTags | filter:$viewValue | limitTo:8"
                            class="badge task-tag"
                            style="width: 80px; display: inline;">
                 </div>
