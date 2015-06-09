@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     var appName = 'ToDoList';
-    var prodPath = '../ToDoListServer/WebContent';
+    var prodPath = './ToDoListServer/WebContent';
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
@@ -56,10 +56,10 @@ module.exports = function (grunt) {
             },
             from_src_to_prod_dist: {
                 files: [
-                    {expand: true, cwd: 'src/app', src: ['**/*.html'], dest: 'prod_dist/'},
-                    {expand: true, cwd: 'src/app', src: ['**/*.css'], dest: 'prod_dist/'},
-                    {expand: true, cwd: 'src/app', src: ['test_data/*.json'], dest: 'prod_dist/'},
-                    {expand: true, cwd: 'src/app', src: ['resources/**/*'], dest: 'prod_dist/'}
+                    {expand: true, cwd: 'src', src: ['app/**/*.html'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src', src: ['app/**/*.css'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src', src: ['app/test_data/*.json'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src', src: ['app/resources/**/*'], dest: 'prod_dist/'}
                 ]
             },
             from_prod_dist_to_server: {
@@ -112,7 +112,7 @@ module.exports = function (grunt) {
                         host: 'localhost',
                         port: 8080,
                         rewrite: {
-                            '^': '/ToDoListServer'
+                            '^': '/ToDoList'
                         }
                     }
                 ]

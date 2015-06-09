@@ -35,7 +35,9 @@ dependencies {
 
 war {
     from(applicationName + 'Server/WebContent/') {
-        include 'app/**/*.*'
+        include '**/*.*'
+        exclude 'WEB-INF'
+        exclude 'META-INF'
     }
     from(applicationName + 'Server/WebContent/WEB-INF') {
         include '*.xml'
