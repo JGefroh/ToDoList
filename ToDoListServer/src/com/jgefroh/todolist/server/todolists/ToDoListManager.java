@@ -59,7 +59,8 @@ public class ToDoListManager {
         return taskDAO.update(task);
     }
 
-    public void deleteTask(final int taskId) {
+    public void deleteTask(final String ownerId, final int taskId) {
+        Task task = getTask(ownerId, taskId);
         taskDAO.delete(Task.class, taskId);
     }
     
@@ -78,10 +79,11 @@ public class ToDoListManager {
     
     public List<Task> getIncompleteTasks(final String ownerId) {
         ToDoList list = getList(ownerId);
-        for (Task task : list.getIncompleteTasks() == null ? Collections.<Task>emptyList() : list.getIncompleteTasks()) {
+        List<Task> tasks = list.getIncompleteTasks() == null ? Collections.<Task>emptyList() : list.getIncompleteTasks();
+        for (Task task : tasks) {
             task.bankTime();
         }
-        return list.getIncompleteTasks();
+        return tasks;
     }
     
     public List<Task> getCompleteTasks(final String ownerId) {
@@ -114,17 +116,27 @@ public class ToDoListManager {
     }
     
     private void addTutorialTasks(final ToDoList list) {
-        Task firstTask = taskDAO.update(Task.create(list.getOwnerId(), "Welcome to ToDoList! You can mark this task as 'Complete', edit its details, or track time on it!", "Tutorial"));
-        firstTask.schedule(new Date());
-        firstTask.tag("Tutorial");
-        list.addTask(firstTask);
+
+        Task feedbackTask = Task.create(list.getOwnerId(), "Feel free to send me feedback!", "Tutorial");
+        feedbackTask.schedule(new Date());
+        feedbackTask.setDescription("Email me at joseph.gefroh@gmail.com with feature requests, likes/dislikes, or comments!");
+        feedbackTask.tag("tutorial");
+        feedbackTask.tag("useful");
+        feedbackTask = taskDAO.update(feedbackTask);
+        list.addTask(feedbackTask);
         
-        Task firstCompletedTask = Task.create(list.getOwnerId(), "You can mark this completed task as 'Incomplete', or delete it forever!", "Tutorial");
-        firstCompletedTask.schedule(new Date());
-        firstCompletedTask.markComplete();
-        firstCompletedTask.tag("Tutorial");
-        firstCompletedTask = taskDAO.update(firstCompletedTask);
-        list.addTask(firstCompletedTask);
+        Task tipsTask = Task.create(list.getOwnerId(), "You can mark this task as 'Complete', edit its details, or track time on it!", "Tutorial");
+        tipsTask.schedule(new Date());
+        tipsTask.tag("tutorial");
+        tipsTask.tag("useful");
+        tipsTask = taskDAO.update(tipsTask);
+        list.addTask(tipsTask);
+
+        Task welcomeTask = taskDAO.update(Task.create(list.getOwnerId(), "Welcome to ToDoList!", "Tutorial"));
+        welcomeTask.schedule(new Date());
+        welcomeTask.tag("tutorial");
+        welcomeTask.track();
+        list.addTask(welcomeTask);
         
         listDAO.update(list);
     }
