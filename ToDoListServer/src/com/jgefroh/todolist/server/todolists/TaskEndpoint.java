@@ -12,9 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import com.jgefroh.server.core.validation.ValidationException;
 import com.jgefroh.todolist.server.core.ToDoListException;
@@ -61,7 +59,7 @@ public class TaskEndpoint {
     @DELETE
     @Path("/{taskId}/{ownerId}")
     public void deleteTask(@PathParam("ownerId") final String ownerId, @PathParam("taskId") final Integer taskId) {
-        listManager.deleteTask(taskId);
+        listManager.deleteTask(ownerId, taskId);
     }
     
     @PUT
