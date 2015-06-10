@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     var appName = 'ToDoList';
-    var prodPath = '../ToDoListServer/WebContent';
+    var prodPath = './ToDoListServer/WebContent';
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
@@ -37,11 +37,11 @@ module.exports = function (grunt) {
         uglify: {
             prod: {
                 src: 'grunt_temp/' + appName + '_UNCAT.js',
-                dest: 'prod_dist/app/' + appName + '.min.js'
+                dest: 'prod_dist/' + appName + '.min.js'
             },
             dev: {
                 src: 'grunt_temp/' + appName + '_UNCAT.js',
-                dest: 'prod_dist/app/' + appName + '.min.js',
+                dest: 'prod_dist/' + appName + '.min.js',
                 options: {
                     mangle: false,
                     beautify: true
@@ -51,15 +51,15 @@ module.exports = function (grunt) {
         copy: {
             minified_to_src: {
                 files: [
-                    {expand: true, cwd: 'prod_dist/', src: ['app/ToDoList.min.js'], dest: 'src/'}
+                    {expand: true, cwd: 'prod_dist/', src: ['ToDoList.min.js'], dest: 'src/app/'}
                 ]
             },
             from_src_to_prod_dist: {
                 files: [
-                    {expand: true, cwd: 'src/', src: ['app/**/*.html'], dest: 'prod_dist/'},
-                    {expand: true, cwd: 'src/', src: ['app/**/*.css'], dest: 'prod_dist/'},
-                    {expand: true, cwd: 'src/', src: ['app/test_data/*.json'], dest: 'prod_dist/'},
-                    {expand: true, cwd: 'src/', src: ['app/resources/**/*'], dest: 'prod_dist/'}
+                    {expand: true, cwd: 'src', src: ['app/**/*.html'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src', src: ['app/**/*.css'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src', src: ['app/test_data/*.json'], dest: 'prod_dist/'},
+                    {expand: true, cwd: 'src', src: ['app/resources/**/*'], dest: 'prod_dist/'}
                 ]
             },
             from_prod_dist_to_server: {

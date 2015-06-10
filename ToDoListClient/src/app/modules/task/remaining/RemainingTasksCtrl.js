@@ -116,9 +116,6 @@
 
         function initializeViewState() {
             vm.viewState = ViewState.remainingTaskViewState;
-            if (!vm.viewState.sortField) {
-                vm.viewState.sortField = {value:'timestampCreated', label:'Date Added'};
-            }
         }
 
         function initializeModalWatcher() {

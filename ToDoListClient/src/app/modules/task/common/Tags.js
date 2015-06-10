@@ -26,6 +26,10 @@
                     $scope.task.tags = [];
                 }
                 $scope.task.tags = $filter('orderBy')($scope.task.tags, 'toString()');
+
+                if (!$scope.usedTags) {
+                    $scope.usedTags = [];
+                }
             }
 
             initialize();
@@ -34,7 +38,8 @@
             restrict: 'A',
             scope: {
                 tagsToFilterBy: '=',
-                task: '=?'
+                task: '=?',
+                usedTags: '=?'
             },
             templateUrl: 'Tags.html',
             controller: ['$scope', '$filter', TagsDirectiveCtrl]

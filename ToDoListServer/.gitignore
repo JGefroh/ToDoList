@@ -3,3 +3,7 @@
 build
 target
 WebContent/app
+WebContent/modules
+WebContent/resources
+WebContent/*.html
+WebContent/*.min.js

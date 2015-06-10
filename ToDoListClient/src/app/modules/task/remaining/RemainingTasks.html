@@ -44,13 +44,28 @@
             </div>
         </div>
 
-
         <div class="row">
-            <hr>
+            <div class="col-xs-12">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary-outline dropdown-toggle"
+                            data-toggle="dropdown">
+                        <span class="fa fa-sort"></span>
+                        Sort by: <span data-ng-bind="remainingCtrl.viewState.current"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button data-ng-click="remainingCtrl.viewState.sort = 'timestampCreated';remainingCtrl.viewState.reverse = true;remainingCtrl.viewState.current='Newest First'" class="btn btn-block btn-primary-outline"><span class="fa fa-sort-amount-asc"></span> Newest First</button></li>
+                        <li><button data-ng-click="remainingCtrl.viewState.sort = 'timestampCreated';remainingCtrl.viewState.reverse = false;remainingCtrl.viewState.current='Oldest First'" class="btn btn-block btn-primary-outline"><span class="fa fa-sort-amount-desc"></span> Oldest First</button></li>
+                        <li><button data-ng-click="remainingCtrl.viewState.sort = 'name';remainingCtrl.viewState.reverse = false;remainingCtrl.viewState.current='A to Z'"  class="btn btn-block btn-primary-outline"><span class="fa fa-sort-alpha-asc"></span> A to Z</button></li>
+                        <li><button data-ng-click="remainingCtrl.viewState.sort = 'name';remainingCtrl.viewState.reverse = true;remainingCtrl.viewState.current='Z to A'"  class="btn btn-block btn-primary-outline"><span class="fa fa-sort-alpha-desc"></span> Z to A</button></li>
+                        <li><button data-ng-click="remainingCtrl.viewState.sort = 'totalTimeTracked';remainingCtrl.viewState.reverse = true;remainingCtrl.viewState.current='Most Tracked First'" class="btn btn-block btn-primary-outline"><span class="fa fa-sort-numeric-desc"></span> Most Tracked First</button></li>
+                        <li><button data-ng-click="remainingCtrl.viewState.sort = 'totalTimeTracked';remainingCtrl.viewState.reverse = false;remainingCtrl.viewState.current='Least Tracked First'" class="btn btn-block btn-primary-outline"><span class="fa fa-sort-numeric-asc"></span> Least Tracked First</button></li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-
         <div class="row">
+            <br/>
             <div class="col-xs-12 col-sm-8">
                 <label>Tags <span class="small"> - Select to filter by specific tags</span></label>
                 <div data-tag-display
@@ -74,7 +89,7 @@
             <h3 data-ng-bind="group ? group : 'Ungrouped'"
                 class="task-group task-group-heading"></h3>
         </div>
-        <div data-ng-repeat="task in (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy) track by task.id">
+        <div data-ng-repeat="task in (remainingCtrl.tasks | filter: {complete: false, group: group}:true  | filter:remainingCtrl.viewState.filter | tagFilter:remainingCtrl.viewState.tagsToFilterBy) | orderBy:remainingCtrl.viewState.sort:remainingCtrl.viewState.reverse track by task.id">
             <div data-remaining-tasks-card></div>
             <hr data-ng-if="!$last"
                 class="hr-small">
