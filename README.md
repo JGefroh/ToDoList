@@ -18,5 +18,11 @@ Servers:
 - TomEE Server
 - MySQL Database
 
+### Licensing terms:
+
+You're free to use the source code of this application for any non-commercial, personal, or educational use.
+If you're hosting this application, please provide proper attribution and provide a link back to my Github or my personal website.  
+
+Please contact me with the specifics if you plan on using it for commercial use.
 
 ===
