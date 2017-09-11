@@ -7,6 +7,9 @@ ToDoList was made to teach myself [AngularJS](https://angularjs.org/), Javascrip
 
 The [live version](http://todolist.jgefroh.com) can be found on my website.
 
+
+![thumb-lg-2](https://user-images.githubusercontent.com/1077095/30257846-85a8fe44-9650-11e7-9a4d-ebb857cb8e68.png)
+
 ### Technologies
 Front-end
 - AngularJS
