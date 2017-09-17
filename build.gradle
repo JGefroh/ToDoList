@@ -8,6 +8,11 @@ apply plugin: 'war'
 webAppDirName = '${applicationName}Server/src'
 buildDir = 'GradleBuild'
 
+
+compileJava {
+  targetCompatibility = 1.6
+  sourceCompatibility = 1.6
+}
 sourceSets {
     main {
         java {
@@ -24,7 +29,9 @@ repositories {
 }
 
 dependencies {
-    providedCompile fileTree(dir: applicationServerLibrariesPath, include: '**/*.jar')
+    //providedCompile fileTree(dir: applicationServerLibrariesPath, include: '**/*.jar')
+    // https://mvnrepository.com/artifact/org.apache.openejb/apache-tomee
+    compile group: 'org.apache.openejb', name: 'apache-tomee', version: '1.7.4'
     compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.7'
 }
 
@@ -49,7 +56,7 @@ task gruntProd(type:Exec) {
     workingDir applicationName + 'Client'
     doFirst {
         println '\nRunning task gruntProd...'
-        commandLine 'cmd', '/c', 'grunt clean prod'
+        commandLine 'grunt', 'prod'
     }
     doLast {
         println '\n...gruntProd finished.'
