@@ -1,0 +1,20 @@
+version: '2'
+services:
+  web:
+    depends_on:
+       - db
+    build: './source/ToDoList'
+    ports:
+     - "6000:6000"
+    volumes:
+     - ./mounts/usr/local/tomee/conf:/usr/local/tomee/conf
+     - ./mounts/usr/local/tomee/lib:/usr/local/tomee/lib
+  db:
+    image: mysql:5.5
+    volumes:
+      - ./mounts/db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: <ROOT_PASSWORD_HERE>
+      MYSQL_DATABASE: <DATABASE_NAME_HERE>
+      MYSQL_USER: <USERNAME_HERE>
+      MYSQL_PASSWORD: <PASSWORD_HERE>
